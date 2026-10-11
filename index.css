@@ -1,0 +1,172 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root{
+    --bg: #ebeaea;
+    --bg2: #fafafa;
+    --active: rgba(255, 0, 0, 0.103);
+    --destaque: rgb(206, 5, 5)
+}
+
+body{
+    background: var(--bg);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav{
+    width: 89%;
+    height: 9vh;
+    display: inline-flex;
+    background: var(--bg2);
+    flex-direction: row;
+    padding: 0px 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 50px;
+    position: fixed;
+    z-index: 10000;
+    margin-top: 2vh;
+    box-shadow: 0 2px 16px 1px rgba(0, 0, 0, 0.12);
+}
+nav #navLogo{
+    width: 175px;
+    margin-right: 30px;
+    margin-left: 50px;
+}
+nav ul{
+    display: inline-flex;
+    gap: 15px;
+    list-style: none;
+}
+nav a{
+    text-decoration: none;
+    font-size: 17px;
+    padding: 8px 10px;
+    border-radius: 30px;
+    color: black;
+}
+nav li{
+    transition: 0.4s;
+}
+nav li:hover, #insta:hover, .hero button:hover{
+    transform: translateY(-3px);
+    cursor: pointer;
+}
+#active{
+    background: var(--active);
+    color: var(--destaque);
+}
+nav div{
+    display: inline-flex;
+    gap: 10px;
+}
+nav #insta{
+    width: 25px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+nav button{
+    border: none;
+    padding: 12px 18px;
+    background-color: red;
+    border-radius: 50px;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.hero{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15vh 30px;
+    background:
+        linear-gradient(
+            90deg,
+            #f8e8d4 0%,
+            rgba(248, 232, 212, 0.92) 25%,
+            rgba(248, 232, 212, 0.35) 50%,
+            rgba(248, 232, 212, 0) 65%
+        ),
+        url("images/pastel.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.hero span{
+    color: var(--destaque);
+    font-size: 18px;
+    font-weight: 550;
+}
+.hero h1{
+    margin: 4vh 0;
+    font-size: 100px;
+    font-weight: 550;
+    width: 100%;
+    text-align: justify;
+    letter-spacing: -7px;
+    line-height: 1;
+}
+.hero strong{
+    font-size: 100px;
+    font-weight: 550;
+    color: var(--destaque)
+}
+.hero p{
+    font-size: 32px;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 4vh;
+}
+.hero .hero-btn{
+    display: flex;
+    gap: 20px;
+}
+.hero button{
+    padding: 16px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    background: var(--bg2);
+    transition: 0.4s;
+}
+.hero #btn1{
+    background-color: var(--destaque);
+    color: white;
+    font-weight: 550;
+}
+
+.comidas{
+    padding: 2vh 2vh;
+    width: 100%;
+    height: 38vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.comidas .bloco{
+    width: 19%;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    align-items: center;
+    padding: 10px;
+}
+.comidas .bloco img{
+    border-radius: 11px;
+    width: 220px;
+    height: 120px;
+}
