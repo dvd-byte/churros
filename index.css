@@ -100,10 +100,10 @@ nav button{
             rgba(248, 232, 212, 0) 65%
         ),
         url("images/hamburguer.png");
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    box-shadow: 0px 8px 25px rgba(45, 30, 20, 0.07);
 }
 .hero span{
     color: var(--destaque);
@@ -150,11 +150,16 @@ nav button{
 
 .comidas {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    gap: 25px;
-    padding: 30px 20px;
-    width: 100%;
+    padding: 50px 20px;
+    width: 96%;
+    background: var(--bg);
+}
+.comidas .cards{
+    display: flex;
+    gap: 25px
 }
 .bloco {
     position: relative;
@@ -238,4 +243,624 @@ nav button{
 }
 .conteudo button:hover {
     background-color: #ffe0a3;
+}
+
+.novidades {
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    background-color: var(--bg2);
+    box-shadow: 0 8px 25px rgba(45, 30, 20, 0.07);
+}
+.subtitulo {
+    display: block;
+    color: var(--destaque);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 6px 0 20px;
+    gap: 20px;
+}
+.head h3 {
+    margin: 0;
+    color: #171717;
+    font-size: 32px;
+    font-weight: 750;
+    letter-spacing: -1px;
+}
+.novidades .linkBlog {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border: 1px solid rgba(255, 100, 100, 0.35);
+    border-radius: 30px;
+    color: #171717;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+.novidades .linkBlog:hover {
+    background-color: #ffffff;
+}
+.novidades .carrossel {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    width: 100%;
+    min-height: 250px;
+    background-color: #f9bc22;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+}
+.novidades .conteudoCarrossel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    padding: 30px 35px 32px;
+    box-sizing: border-box;
+    background-color: #f9bc22;
+    z-index: 1;
+}
+.novidades .etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #17130b;
+    font-size: 12px;
+    font-weight: 800;
+}
+.novidades .ponto {
+    width: 9px;
+    height: 9px;
+    background-color: #17130b;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(23, 19, 11, 0.10);
+}
+.novidades .conteudoCarrossel h2 {
+    max-width: 600px;
+    margin: 0 0 8px;
+    color: #100e09;
+    font-size: clamp(30px, 3vw, 44px);
+    font-weight: 850;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+}
+.novidades .conteudoCarrossel p {
+    max-width: 580px;
+    margin: 0 0 15px;
+    color: #302717;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+}
+.novidades .rodapeCarrossel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+    margin-top: auto;
+}
+.novidades .botaoPromocao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 17px;
+    border-radius: 6px;
+    background-color: #17130f;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s ease,
+                transform 0.3s ease;
+}
+.novidades .botaoPromocao:hover {
+    background-color: #393025;
+    transform: translateY(-2px);
+}
+.novidades .indicadores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.novidades .indicadores button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #17130f;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #17130f;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s ease,
+                color 0.3s ease;
+}
+.novidades .indicadores button:hover {
+    background-color: #17130f;
+    color: #ffffff;
+}
+.novidades .marcador {
+    color: #17130f;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+.novidades .imagemCarrossel {
+    position: relative;
+    min-width: 0;
+    min-height: 250px;
+    overflow: hidden;
+}
+.novidades .imagemCarrossel img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: center;
+}
+.novidades .imagemCarrossel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        #f9bc22 0%,
+        rgba(249, 188, 34, 0.75) 15%,
+        rgba(249, 188, 34, 0.25) 40%,
+        transparent 80%
+    );
+    pointer-events: none;
+}
+.novidades .tipoCarrossel {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    z-index: 2;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background-color: #17130f;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.novidades .progresso {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+.novidades .progresso span {
+    display: block;
+    width: 0%;
+    height: 100%;
+    background-color: #ff414d;
+    border-radius: 0 3px 3px 0;
+}
+
+.destaques {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    background-color: var(--bg);
+    box-shadow: 0 8px 25px rgba(45, 30, 20, 0.07);
+}
+.destaques .containeres{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+.destaques .container {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #ffffff;
+    border: 1px solid rgba(30, 20, 15, 0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(45, 30, 20, 0.07);
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+.destaques .container:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(45, 30, 20, 0.13);
+}
+.destaques .cima {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #e7bd65;
+}
+.destaques .cima > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+.destaques .container:hover .cima > img {
+    transform: scale(1.06);
+}
+.destaques .cima::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        to bottom,
+        transparent 20%,
+        rgba(15, 12, 9, 0.12) 40%,
+        rgba(15, 12, 9, 0.82) 100%
+    );
+    pointer-events: none;
+}
+.destaques .centro {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+}
+.destaques .centro h4 {
+    margin: 0 0 6px;
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.6px;
+}
+.destaques .centro small {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    font-weight: 500;
+}
+.destaques .tipoProduto {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 2;
+    margin: 0;
+    padding: 8px 11px;
+    border-radius: 30px;
+    background-color: #f9bc22;
+    color: #17130f;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.5px;
+}
+.destaques .baixo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: 22px;
+    box-sizing: border-box;
+}
+.destaques .baixo h5 {
+    margin: 0 0 9px;
+    color: #191715;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+}
+.destaques .baixo > p:not(.preco) {
+    margin: 0 0 18px;
+    color: #77716c;
+    font-size: 13px;
+    line-height: 1.7;
+}
+.destaques .baixo .preco {
+    margin: auto 0 17px;
+    color: #191715;
+    font-size: 25px;
+    font-weight: 850;
+    letter-spacing: -0.7px;
+}
+.destaques .baixo button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 17px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--destaque);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background-color 0.3s ease,
+                color 0.3s ease;
+}
+.destaques .baixo button span {
+    font-size: 17px;
+}
+.destaques .baixo button:hover {
+    background-color: #f9bc22;
+    color: #191715;
+}
+
+.galeria {
+    width: 100%;
+    padding: 50px;
+    background-color: var(--bg2);
+}
+.head a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border: 1px solid rgba(255, 100, 100, 0.35);
+    border-radius: 30px;
+    color: #171717;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+.galeria .head a:hover {
+    background-color: #ffffff;
+}
+.galeria .head a span {
+    margin-left: 5px;
+}
+.galeria .fotos {
+    width: 100%;
+}
+.galeria .divisao {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+    max-height: 500px;
+    height: 100%;
+}
+.galeria .divisao > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+}
+.galeria .divisao > div {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 18px;
+    min-height: 0;
+}
+.galeria .divisao > div img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.finalizacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: clamp(64px, 9vw, 120px) 24px;
+    background-color: var(--bg);
+    text-align: center;
+}
+.infosFinais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+.identidadeFinal {
+    margin-bottom: 22px;
+    color: var(--destaque);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.6;
+}
+.infosFinais h2 {
+    margin: 0;
+    color: #38231F;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.15;
+    text-wrap: balance;
+}
+.infosFinais h2 strong {
+    display: block;
+    margin-top: 4px;
+    color: #C98243;
+    font-weight: 800;
+}
+.infosFinais p {
+    max-width: 560px;
+    margin: 24px 0 32px;
+    color: #38231F;
+    font-size: 1rem;
+    line-height: 1.8;
+    text-wrap: pretty;
+}
+.botoesFinais {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+.botoesFinais a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 14px 24px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+}
+.btnCardapio {
+    background-color: var(--destaque);
+    color: white;
+}
+.btnCardapio:hover {
+    background-color: #f9bc22;
+    color: #100e09;
+    transform: translateY(-3px);
+}
+.btnIfood {
+    background-color: #542c2c;
+    color: white;
+    border-color: #b99587 !important;
+}
+.btnIfood:hover {
+    background-color: transparent;
+    color: black;
+    border-color: var(--dourado) !important;
+    transform: translateY(-3px);
+}
+.botoesFinais a:focus-visible {
+    outline: 3px solid var(--dourado);
+    outline-offset: 4px;
+}
+
+.footer {
+    background-color: var(--bg2);
+    padding: 50px;
+    padding-bottom: 0;
+}
+.rodape {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 0.9fr 1.3fr;
+    gap: 40px;
+    padding-bottom: 20px;
+}
+.marca img {
+    display: block;
+    width: 195px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+.marca p {
+    max-width: 260px;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+.rodape h6 {
+    margin: 0 0 22px;
+    color: #C98243;
+    font-size: 20px;
+    font-weight: 700;
+}
+.linksRodape {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.linksRodape a {
+    margin-bottom: 13px;
+    color: #100e09;
+    text-decoration: none;
+    font-size: 17px;
+    transition: color 0.25s ease;
+}
+.linksRodape a:hover,
+.contatoRodape a:hover {
+    color: #f0bd75;
+}
+.linksRodape a span {
+    display: inline-block;
+    margin-left: 4px;
+    color: #f0bd75;
+    transition: transform 0.25s ease;
+}
+.linksRodape a:hover span {
+    transform: translate(2px, -2px);
+}
+.contatoRodape {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.contatoRodape a {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: #100e09;
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    transition: color 0.25s ease;
+}
+.contatoRodape .icone {
+    flex-shrink: 0;
+    min-width: 20px;
+    color: #f0bd75;
+    font-weight: 700;
+}
+.final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 0;
+    border-top: 1px solid #634940;
+    color: #c8b5ac;
+    font-size: 0.8rem;
+    line-height: 1.7;
 }
