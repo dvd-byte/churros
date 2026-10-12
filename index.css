@@ -99,7 +99,7 @@ nav button{
             rgba(248, 232, 212, 0.35) 50%,
             rgba(248, 232, 212, 0) 65%
         ),
-        url("images/pastel.png");
+        url("images/hamburguer.png");
 
     background-size: cover;
     background-position: center;
@@ -148,25 +148,94 @@ nav button{
     font-weight: 550;
 }
 
-.comidas{
-    padding: 2vh 2vh;
+.comidas {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    padding: 30px 20px;
     width: 100%;
-    height: 38vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
-.comidas .bloco{
+.bloco {
+    position: relative;
     width: 19%;
-    background-color: red;
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    align-items: center;
-    padding: 10px;
+    height: 340px;
+    border-radius: 22px;
+    overflow: hidden;
+    background-color: #d99b18;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
 }
-.comidas .bloco img{
-    border-radius: 11px;
-    width: 220px;
-    height: 120px;
+.bloco img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+.bloco::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.02) 25%,
+        rgba(0, 0, 0, 0.10) 45%,
+        rgba(0, 0, 0, 0.78) 100%
+    );
+    pointer-events: none;
+}
+.conteudo {
+    position: absolute;
+    z-index: 1;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    color: white;
+}
+.categoria {
+    display: inline-block;
+    padding: 5px 8px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+.conteudo h3 {
+    margin: 0 0 7px;
+    font-size: 24px;
+    font-weight: 700;
+}
+.conteudo p {
+    margin: 0 0 15px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+}
+.conteudo button {
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 30px;
+    background-color: #fff;
+    color: #242424;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease,
+                transform 0.3s ease;
+}
+.bloco:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+}
+.bloco:hover img {
+    transform: scale(1.08);
+}
+.conteudo button:hover {
+    background-color: #ffe0a3;
 }
