@@ -275,24 +275,6 @@ nav button{
     font-weight: 750;
     letter-spacing: -1px;
 }
-.novidades .linkBlog {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 22px;
-    border: 1px solid rgba(255, 100, 100, 0.35);
-    border-radius: 30px;
-    color: #171717;
-    background-color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color 0.3s ease;
-}
-.novidades .linkBlog:hover {
-    background-color: #ffffff;
-}
 .novidades .carrossel {
     position: relative;
     display: grid;
@@ -543,7 +525,7 @@ nav button{
 }
 .destaques .centro h4 {
     margin: 0 0 6px;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.6px;
@@ -863,4 +845,123 @@ nav button{
     color: #c8b5ac;
     font-size: 0.8rem;
     line-height: 1.7;
+}
+
+@media (min-width: 1440px) {
+    nav {
+    height: 7vh;
+    width: 70%;
+    }
+    nav ul {
+        gap: 15px;
+    }
+    nav a {
+        font-size: 20px;
+        padding: 10px 14px;
+    }
+    nav button,
+    .conteudo button,
+    .subtitulo,
+    .comidas p,
+    .novidades .etiqueta,
+    .head a,
+    .destaques .centro small,
+    .destaques .baixo button,
+    .marca p,
+    .linksRodape,
+    .contatoRodape a {
+        font-size: 16px;
+    }
+    .hero h1,
+    .hero strong {
+        font-size: 135px;
+    }
+    .hero span {
+        font-size: 24px;
+    }
+    .hero p {
+        font-size: 40px;
+    }
+    .hero .hero-btn {
+        gap: 30px;
+    }
+    .hero button {
+        font-size: 24px;
+    }
+    .comidas .bloco {
+        height: 450px;
+    }
+    .comidas .categoria,
+    .destaques .tipoProduto {
+        font-size: 12px;
+    }
+    .comidas h3 {
+        font-size: 32px;
+    }
+    .head h3 {
+        font-size: 40px;
+    }
+    .novidades .ponto {
+        width: 12px;
+        height: 12px;
+    }
+    .novidades .conteudoCarrossel h2 {
+        max-width: 850px;
+        font-size: 60px;
+        font-weight: 800;
+    }
+    .novidades .conteudoCarrossel p {
+        max-width: 850px;
+        font-size: 24px;
+    }
+    .novidades .tipoCarrossel {
+        font-size: 14px;
+    }
+    .novidades .botaoPromocao,
+    .novidades .marcador {
+        font-size: 16px;
+    }
+    .destaques .centro h4 {
+        font-size: 30px;
+    }
+    .destaques .cima {
+        min-height: 325px;
+    }
+    .destaques .baixo > p:not(.preco) {
+        font-size: 18px;
+    }
+    .destaques .baixo h5 {
+        font-size: 26px;
+    }
+    .destaques .baixo .preco {
+        font-size: 28px;
+    }
+    .destaques .baixo button span {
+        font-size: 19px;
+    }
+    .galeria .divisao {
+        max-height: 750px;
+    }
+    .marca img {
+        width: 250px;
+    }
+    .infosFinais {
+        max-width: 1200px;
+    }
+    .identidadeFinal {
+        font-size: 20px;
+    }
+    .infosFinais h2 {
+        font-size: 80px;
+    }
+    .infosFinais p {
+        max-width: 900px;
+        font-size: 28px;
+    }
+    .botoesFinais a {
+        font-size: 20px;
+    }
+    .rodape h6 {
+        font-size: 22px;
+    }
 }
