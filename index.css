@@ -42,6 +42,9 @@ nav #navLogo{
     margin-right: 30px;
     margin-left: 50px;
 }
+nav .menu {
+    display: none;
+}
 nav ul{
     display: inline-flex;
     gap: 15px;
@@ -74,7 +77,7 @@ nav #insta{
     cursor: pointer;
     transition: 0.4s;
 }
-nav button{
+nav .direcional{
     border: none;
     padding: 12px 18px;
     background-color: red;
@@ -99,7 +102,7 @@ nav button{
             rgba(248, 232, 212, 0.35) 50%,
             rgba(248, 232, 212, 0) 65%
         ),
-        url("images/hamburguer.png");
+        var(--imagemHero, url("images/pastel.png"));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -859,7 +862,7 @@ nav button{
         font-size: 20px;
         padding: 10px 14px;
     }
-    nav button,
+    nav .direcional,
     .conteudo button,
     .subtitulo,
     .comidas p,
@@ -965,3 +968,107 @@ nav button{
         font-size: 22px;
     }
 }
+
+@media (max-width: 600px) {
+    nav {
+        width: 60%;
+        height: 7vh;
+        padding: 10px 30px;
+    }
+    nav #navLogo {
+        width: 120px;
+        margin: 10px;
+    }
+    nav .menu{
+        display: block;
+        width: 50px;
+        height: 50px;
+        border: none;
+        background-color: var(--b2)
+    }
+    nav ul {
+        display: none;
+    }
+    nav div {
+        display: none;
+    }
+    .hero{
+    background:
+        linear-gradient(
+            180deg,
+            #f8e8d4 0%,
+            rgba(248, 232, 212, 0.92) 15%,
+            rgba(248, 232, 212, 0.35) 30%,
+            rgba(248, 232, 212, 0) 60%
+        ),
+        var(--imagemHero, url("images/pastel.png"));
+    }
+    .hero h1, .hero strong{
+        font-size: 32px;
+        letter-spacing: normal;
+    }
+    .hero p{
+        font-size: 24px;
+        text-align: justify;
+    }
+    .footer {
+        padding: 45px 6% 0;
+    }
+
+    .rodape {
+        grid-template-columns: 1fr 1fr;
+        gap: 35px 22px;
+        padding-bottom: 35px;
+    }
+
+    .marca {
+        grid-column: 1 / -1;
+    }
+
+    .marca img {
+        width: 135px;
+    }
+
+    .rodape h6 {
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+
+    .linksRodape a,
+    .contatoRodape a {
+        font-size: 0.83rem;
+    }
+
+    .final {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 20px 0;
+        font-size: 0.75rem;
+    }
+}
+
+/* Controles dos carrosséis da página inicial. */
+.novidades .indicadores[hidden] {
+    display: none;
+}
+.novidades .rodapeCarrossel {
+    flex-wrap: wrap;
+}
+.novidades .tipoCarrossel {
+    max-width: calc(100% - 36px);
+    white-space: normal;
+}
+.novidades .indicadores button:focus-visible,
+.novidades .botaoPromocao:focus-visible {
+    outline: 3px solid #a52313;
+    outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero button,
+    .novidades .botaoPromocao,
+    .novidades .indicadores button {
+        transition: none;
+    }
+}
+

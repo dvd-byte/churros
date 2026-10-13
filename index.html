@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Churros em casa</title>
     <link rel="stylesheet" href="index.css">
+    <script src="js/posts-blog.js" defer></script>
+    <script src="index.js" defer></script>
 </head>
 <body>
     <main>
         <nav>
             <img src="images/logo.png" alt="logo" id="navLogo">
-            <ul>
-                <li><a href="" id="active">Início</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">Cardápio</a></li>
+             <button class="menu" id="menuToggle" aria-label="Abrir menu"
+                aria-expanded="false" aria-controls="navMenu">
+                ☰
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" id="active">Início</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="cardapio.html">Cardápio</a></li>
                 <li><a href="">Promoções</a></li>
                 <li><a href="">Onde Comprar</a></li>
                 <li><a href="">Sobre</a></li>
@@ -21,19 +27,18 @@
             </ul>
             <div>
                 <img src="images/instagram.svg" alt="logo do instagram" id="insta">
-                <button><strong>Pedir Agora</strong></button>
+                <button class="direcional"><strong>Pedir Agora</strong></button>
             </div>
         </nav>
 
-        <!--depois transformar esse hero em um carrossel com a sugestão e o ultimo post dele-->
-        <section class="hero">
+        <section class="hero" aria-label="Sabores da casa" aria-roledescription="carrossel">
             <div>
                 <span>PORTAL OFICIAL · CHURROS EM CASA</span>
                 <h1>Sabor que ganha <br>destaque <strong>a cada <br> mordida.</strong></h1>
                 <p>Acompanhe novidades, promoções, eventos e os sabores <br> que fazem a casa ser referência em Carapicuíba.</p>
                 <div class="hero-btn">
-                    <button id="btn1">Últimas novidades</button>
-                    <button>Ver cardápio</button>
+                    <button id="btn1" type="button">Últimas novidades</button>
+                    <button id="btnCardapioHero" type="button">Ver cardápio</button>
                 </div>
             </div>
         </section>
@@ -42,7 +47,7 @@
             <span class="subtitulo">DE DAR ÁGUA NA BOCA</span>
             <div class="head">
                 <h3>Para matar sua fome</h3>
-                <a href="">Ver cardápio<span>↗</span></a>
+                <a href="cardapio.html">Ver cardápio<span>↗</span></a>
             </div>
             <div class="cards">
                 <div class="bloco">
@@ -102,35 +107,31 @@
             </div>
         </section>
 
-        <section class="novidades">
+        <section class="novidades" id="novidades">
             <span class="subtitulo">ACABOU DE SAIR</span>
             <div class="head">
-                <h3>Ofertas e novidades</h3>
-                <a href="#">Ver todas <span>↗</span></a>
+                <h3>Novidades do blog</h3>
+                <a href="blog.html">Ver todas <span>↗</span></a>
             </div>
-            <div class="carrossel">
+            <div class="carrossel" role="region" aria-label="Últimos posts do blog" aria-roledescription="carrossel">
                 <div class="conteudoCarrossel">
-                    <span class="etiqueta"><span class="ponto"></span>OFERTA DA CASA</span>
-                    <h2>Churros em Casa participa de evento gastronômico em Carapicuíba</h2>
-                    <p>
-                        A operação segue ativa na cidade e participa de momentos de
-                        encontro da comunidade, trazendo sabores e novas formas de
-                        apresentar seus produtos.
-                    </p>
+                    <span class="etiqueta"><span class="ponto" aria-hidden="true"></span><span class="textoEtiqueta">SABORES DA CASA</span></span>
+                    <h2>Seu próximo favorito pode estar no recheio</h2>
+                    <p>Do doce de leite ao chocolate, os tradicionais são um bom começo. Mas o cardápio também convida a conhecer outras combinações.</p>
                     <div class="rodapeCarrossel">
-                        <a class="botaoPromocao" href="#">Ver promoção</a>
-                        <div class="indicadores">
-                            <button type="button" aria-label="Slide anterior">&#8249;</button>
-                            <span class="marcador">6 / 6</span>
-                            <button type="button" aria-label="Próximo slide">&#8250;</button>
+                        <a class="botaoPromocao" href="blog.html#post-churros">Ler postagem</a>
+                        <div class="indicadores" hidden>
+                            <button type="button" data-anterior aria-label="Post anterior">&#8249;</button>
+                            <span class="marcador">1 / 3</span>
+                            <button type="button" data-proximo aria-label="Próximo post">&#8250;</button>
                         </div>
                     </div>
                 </div>
                 <div class="imagemCarrossel">
-                    <img src="images/destaqueteste.jpg" alt="Hambúrguer artesanal da promoção">
-                    <span class="tipoCarrossel">OFERTA DA CASA</span>
+                    <img src="images/churros.png" alt="Churros recheados">
+                    <span class="tipoCarrossel">POST MODELO</span>
                 </div>
-                <div class="progresso">
+                <div class="progresso" aria-hidden="true">
                     <span></span>
                 </div>
             </div>
@@ -205,7 +206,7 @@
             </div>
         </section>
 
-        <section class="galeria">
+        <section class="galeria" id="galeria">
             <span class="subtitulo">BASTIDORES DA CHURROS</span>
             <div class="head">
                 <h3>Conheça a casa</h3>
@@ -233,8 +234,8 @@
                     e encontre a melhor forma de fazer seu pedido.
                 </p>
                 <div class="botoesFinais">
-                    <a href="#cardapio" class="btnCardapio">Explorar cardápio <span aria-hidden="true">↗</span></a>
-                    <a href="https://www.ifood.com.br/" class="btnIfood" target="_blank" rel="noopener noreferrer">Pedir pelo iFood <span aria-hidden="true">↗</span></a>
+                    <a href="cardapio.html" class="btnCardapio">Explorar cardápio <span aria-hidden="true">↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf" class="btnIfood" target="_blank" rel="noopener noreferrer">Pedir pelo iFood <span aria-hidden="true">↗</span></a>
                 </div>
             </div>
         </section>
@@ -248,17 +249,17 @@
                 <div class="linksRodape">
                     <h6>Navegação</h6>
                     <a href="#inicio">Início</a>
-                    <a href="#blog">Blog</a>
-                    <a href="#cardapio">Cardápio</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="cardapio.html">Cardápio</a>
                     <a href="#promocoes">Promoções</a>
                     <a href="#sobre">Sobre</a>
                 </div>
                 <div class="linksRodape">
                     <h6>Peça já</h6>
-                    <a href="#cardapio">Explorar o cardápio <span>↗</span></a>
-                    <a href="https://www.ifood.com.br/" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
+                    <a href="cardapio.html">Explorar o cardápio <span>↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
                 </div>
-                <div class="contatoRodape">
+                <div class="contatoRodape" id="contato">
                     <h6>Onde encontrar</h6>
                     <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">
                         <span class="icone">⌖</span>

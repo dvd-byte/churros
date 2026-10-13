@@ -1,0 +1,104 @@
+/* Estilos específicos do Blog. Base: index.css e paginas.css. */
+.paginaBlog .totalPosts {
+    font-size: 14px;
+    color: #665247;
+    white-space: nowrap;
+}
+
+.paginaBlog .listaPosts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 28px;
+    align-items: start;
+}
+
+.paginaBlog .postagem {
+    background: #fafafa;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid #2d1e1412;
+    box-shadow: 0 8px 25px #2d1e1412;
+}
+
+.paginaBlog .postagem > img {
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+.paginaBlog .postagemPrincipal {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+}
+
+.paginaBlog .postagemPrincipal > img {
+    height: 100%;
+    min-height: 360px;
+    max-height: 700px;
+}
+
+.paginaBlog .textoPost {
+    padding: 32px;
+}
+
+.paginaBlog .textoPost h2 {
+    font-size: clamp(25px, 2.5vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -.8px;
+    margin: 15px 0;
+}
+
+.paginaBlog .textoPost p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #665247;
+    margin-bottom: 20px;
+}
+
+.paginaBlog .textoPost summary {
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--destaque);
+}
+
+.paginaBlog .textoPost summary span {
+    margin-left: 15px;
+}
+
+.paginaBlog .corpoPost {
+    padding-top: 18px;
+}
+
+.paginaBlog .corpoPost a {
+    color: var(--destaque);
+    text-underline-offset: 4px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+.paginaBlog .listaPosts,
+.paginaBlog .postagemPrincipal {
+    grid-template-columns: 1fr;
+}
+
+.paginaBlog .postagemPrincipal {
+    grid-column: auto;
+}
+
+.paginaBlog .postagemPrincipal > img,
+.paginaBlog .postagem > img {
+    height: 220px;
+    min-height: 0;
+}
+
+.paginaBlog .textoPost {
+    padding: 24px;
+}
+
+}

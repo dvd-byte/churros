@@ -1,0 +1,242 @@
+/* Estilos específicos do Cardápio. Base: index.css e paginas.css. */
+.paginaCardápio .linkPrincipal {
+    background: var(--destaque);
+    color: white;
+}
+
+.paginaCardápio .linkPrincipal:hover {
+    background: #a50404;
+}
+
+.paginaCardápio .avisoPrecos {
+    color: #665247;
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 900px;
+    margin: 0 0 28px;
+}
+
+.paginaCardápio .categoriasVitrine {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0,1fr));
+    gap: 14px;
+    margin: 28px 0 32px;
+}
+
+.paginaCardápio .atalhoCategoria {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 14px 16px;
+    background: #fafafa;
+    color: #191715;
+    text-decoration: none;
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 6px 16px #2d1e140d;
+    transition: transform .2s;
+}
+
+.paginaCardápio .atalhoCategoria:hover {
+    transform: translateY(-4px);
+}
+
+.paginaCardápio .atalhoCategoria img {
+    width: calc(100% + 28px);
+    max-width: none;
+    height: 120px;
+    object-fit: cover;
+    margin: 0 -14px 8px;
+}
+
+.paginaCardápio .iconePorcao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 28px);
+    height: 120px;
+    margin: 0 -14px 8px;
+    color: #ce0505;
+    background: #f8e8d4;
+    font-size: 56px;
+}
+
+.paginaCardápio .ferramentasCardapio {
+    display: flex;
+    align-items: end;
+    gap: 18px;
+    padding: 24px;
+    background: var(--bg2);
+    border-radius: 18px;
+    border: 1px solid #2d1e1412;
+}
+
+.paginaCardápio .campoBusca {
+    flex: 1;
+}
+
+.paginaCardápio .campoCategoria {
+    width: 230px;
+}
+
+.paginaCardápio .ferramentasCardapio label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.paginaCardápio .ferramentasCardapio input,
+.paginaCardápio .ferramentasCardapio select {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid #b9b1aa;
+    border-radius: 9px;
+    background: white;
+    padding: 12px;
+    color: #242424;
+    font-size: 16px;
+}
+
+.paginaCardápio .resultadoBusca {
+    font-size: 14px;
+    color: #665247;
+    margin: 16px 0 0;
+    min-height: 20px;
+}
+
+.paginaCardápio .secaoCardapio {
+    padding: 40px 0 16px;
+}
+
+.paginaCardápio .cabecalhoCategoria {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.paginaCardápio .cabecalhoCategoria h2 {
+    font-size: 36px;
+    letter-spacing: -1px;
+    margin-top: 6px;
+}
+
+.paginaCardápio .gruposProdutos {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.paginaCardápio .grupoProdutos {
+    background: #fafafa;
+    border: 1px solid #2d1e1412;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px #2d1e1408;
+}
+
+.paginaCardápio .grupoProdutos h3 {
+    padding: 20px 24px;
+    font-size: 19px;
+    background: #f8e8d4;
+}
+
+.paginaCardápio .listaProdutos {
+    list-style: none;
+    padding: 0 24px;
+}
+
+.paginaCardápio .produto {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid #2d1e1417;
+}
+
+.paginaCardápio .produto:last-child {
+    border-bottom: 0;
+}
+
+.paginaCardápio .produto h4 {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.paginaCardápio .produto p {
+    color: #665247;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 6px;
+}
+
+.paginaCardápio .valorProduto {
+    font-size: 15px;
+    font-weight: 750;
+    white-space: nowrap;
+    color: #a50404;
+}
+
+@media (max-width: 1150px) {
+.paginaCardápio .categoriasVitrine {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+}
+
+}
+
+@media (max-width: 700px) {
+.paginaCardápio .gruposProdutos {
+    grid-template-columns: 1fr;
+}
+
+.paginaCardápio .categoriasVitrine {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 12px;
+}
+
+.paginaCardápio .ferramentasCardapio {
+    flex-wrap: wrap;
+    padding: 18px;
+}
+
+.paginaCardápio .campoBusca,
+.paginaCardápio .campoCategoria {
+    width: 100%;
+    flex: auto;
+}
+
+.paginaCardápio .ferramentasCardapio button {
+    width: 100%;
+}
+
+.paginaCardápio .cabecalhoCategoria {
+    flex-wrap: wrap;
+}
+
+.paginaCardápio .cabecalhoCategoria h2 {
+    font-size: 30px;
+}
+
+.paginaCardápio .listaProdutos {
+    padding: 0 18px;
+}
+
+.paginaCardápio .produto {
+    gap: 10px;
+}
+
+.paginaCardápio .produto h4,
+.paginaCardápio .valorProduto {
+    font-size: 14px;
+}
+
+}
