@@ -1047,8 +1047,6 @@ nav .direcional{
         font-size: 0.75rem;
     }
 }
-
-/* Controles dos carrosséis da página inicial. */
 .novidades .indicadores[hidden] {
     display: none;
 }
