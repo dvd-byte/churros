@@ -1,0 +1,20 @@
+/* Galeria: fotos reais cadastradas em js/galeria.js; integração administrativa futura. */
+.paginaInstitucional .gradeGaleria { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.paginaInstitucional .fotoGaleria { min-width: 0; background: var(--bg2); border: 1px solid #2d1e1412; border-radius: 22px; overflow: hidden; box-shadow: 0 8px 25px #2d1e1412; }
+.paginaInstitucional .fotoGaleria a { display: block; }
+.paginaInstitucional .fotoGaleria a:focus-visible { outline-offset: -5px; }
+.paginaInstitucional .fotoGaleria img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.paginaInstitucional .fotoGaleria figcaption { padding: 18px 22px; color: #665247; font-size: 15px; line-height: 1.7; overflow-wrap: anywhere; }
+.paginaInstitucional .estadoGaleria { min-height: 340px; }
+.paginaInstitucional .moldeGaleria { margin-top: 28px; }
+.paginaInstitucional .moldeGaleria summary { cursor: pointer; color: var(--accent, #ce0505); font-weight: 600; padding: 12px 0; }
+.paginaInstitucional .moldeGaleria summary:focus-visible { outline: 2px solid #ce0505; outline-offset: 4px; }
+.paginaInstitucional .moldeGaleria .notaInformacao { margin: 12px 0 24px; }
+.paginaInstitucional .fotoReservada { display: grid; place-items: center; aspect-ratio: 4 / 3; background: #f8e8d4; color: #665247; border-bottom: 1px dashed #b99587; font-weight: 600; }
+@media (min-width: 1440px) { .paginaInstitucional .gradeGaleria { gap: 32px; } }
+@media (max-width: 1000px) { .paginaInstitucional .gradeGaleria { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 600px) {
+    .paginaInstitucional .gradeGaleria { grid-template-columns: 1fr; gap: 20px; }
+    .paginaInstitucional .estadoGaleria { min-height: 280px; }
+}
+

@@ -119,7 +119,7 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
                 imagem.src = post.imagem;
                 imagem.alt = post.alt;
                 carrossel.querySelector(".tipoCarrossel").textContent = post.categoria;
-                carrossel.querySelector(".botaoPromocao").href = "blog.html#" + encodeURIComponent(post.id);
+                carrossel.querySelector(".botaoPromocao").href = "paginas/blog.html#" + encodeURIComponent(post.id);
                 carrossel.querySelector(".marcador").textContent = (indice + 1) + " / " + posts.length;
             }
         });
@@ -129,7 +129,7 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
         window.location.hash = "novidades";
     });
     document.getElementById("btnCardapioHero")?.addEventListener("click", () => {
-        window.location.href = "cardapio.html";
+        window.location.href = "paginas/cardapio.html";
     });
 })();
 

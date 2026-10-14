@@ -14,7 +14,7 @@ window.postsBlog = [
         "paragrafos": [
             "Tem dia que pede o sabor conhecido. Em outros, a vontade é experimentar algo diferente. Na nossa vitrine, você encontra churros tradicionais e opções gourmet para escolher de acordo com o seu momento.",
             "Brigadeiro, paçoca e leite Ninho estão entre os sabores do cardápio enviado pela casa. Prefere combinar? Vale conhecer também as opções com dois sabores.",
-            "Explore o cardápio por aqui e confira no iFood os sabores disponíveis e os valores para o seu pedido."
+            "Explore o cardápio por aqui e confira no iFood ou na 99 Food os sabores disponíveis e os valores para o seu pedido."
         ],
         "link": "cardapio.html#churros",
         "textoLink": "Conhecer os churros"
@@ -29,7 +29,7 @@ window.postsBlog = [
         "paragrafos": [
             "O pastel pode ser o protagonista do lanche ou dividir a mesa com um churro. O cardápio reúne recheios como carne, frango, queijo e calabresa, além de combinações e versões doces.",
             "Para quem gosta de juntar salgado e sobremesa, há combos de pastel com churro e bebida. A composição varia entre as opções: confira os itens de cada combo para escolher o que combina com você.",
-            "A seleção e a finalização do pedido acontecem no iFood. Aqui, você conhece as opções com calma."
+            "A seleção e a finalização do pedido acontecem no iFood ou na 99 Food. Aqui, você conhece as opções com calma."
         ],
         "link": "cardapio.html#combos",
         "textoLink": "Explorar os combos"
@@ -37,16 +37,16 @@ window.postsBlog = [
     {
         "id": "post-ifood",
         "categoria": "GUIA DA CASA · POST MODELO",
-        "titulo": "Conheça por aqui. Peça pelo iFood.",
-        "resumo": "Nosso site é uma vitrine dos sabores da casa. Quando bater a vontade, o próximo passo é visitar nossa loja no iFood.",
+        "titulo": "Conheça por aqui. Peça pelo seu app.",
+        "resumo": "Nosso site é uma vitrine dos sabores da casa. Quando bater a vontade, o próximo passo é visitar nossa loja no iFood ou na 99 Food.",
         "imagem": "images/hamburguercard.jpeg",
         "alt": "Hambúrguer da casa",
         "paragrafos": [
             "Use as categorias do cardápio para conhecer churros, pastéis, hambúrgueres, bebidas e acompanhamentos. Você também pode buscar um sabor pelo nome.",
-            "Ao tocar em “Ver no iFood”, você será levado à loja da Churros em Casa. É lá que você consulta a disponibilidade, escolhe os produtos e verifica entrega e pagamento.",
-            "Não recebemos pedidos nem pagamentos por este site. Os preços e as condições válidos para a compra são os apresentados no iFood."
+            "Ao escolher o iFood ou a 99 Food, você será levado à loja da Churros em Casa no aplicativo escolhido. É lá que você consulta a disponibilidade, escolhe os produtos e verifica entrega e pagamento.",
+            "Não recebemos pedidos nem pagamentos por este site. Os preços e as condições válidos para a compra são os apresentados no aplicativo escolhido."
         ],
-        "link": "https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf",
+        "link": "https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share",
         "textoLink": "Visitar a loja no iFood ↗"
     }
 ];

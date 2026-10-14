@@ -1,4 +1,4 @@
-/* Menu compartilhado das páginas internas. */
+/* Menu compartilhado da página inicial, Blog e Cardápio. */
 "use strict";
 document.body.classList.add("js");
 

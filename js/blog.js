@@ -15,7 +15,8 @@
         const artigo = criar("article", indice === 0 ? "postagem postagemPrincipal" : "postagem");
         artigo.id = post.id;
         const imagem = criar("img");
-        imagem.src = post.imagem;
+        // Os dados usam caminhos a partir da raiz; o Blog fica em paginas/.
+        imagem.src = "../" + post.imagem;
         imagem.alt = post.alt;
         imagem.loading = "lazy";
         const texto = criar("div", "textoPost");
@@ -35,6 +36,13 @@
             link.rel = "noopener noreferrer";
         }
         corpo.append(link);
+        if (post.link.startsWith("https://www.ifood.com.br/")) {
+            const link99 = criar("a", "", "Visitar a loja na 99 Food ↗");
+            link99.href = "https://oia.99app.com/dlp9/KAuIUf?share_media=";
+            link99.target = "_blank";
+            link99.rel = "noopener noreferrer";
+            corpo.append(link99);
+        }
         detalhes.append(resumo, corpo);
         texto.append(detalhes);
         artigo.append(imagem, texto);

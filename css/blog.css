@@ -75,13 +75,15 @@
 }
 
 .paginaBlog .corpoPost a {
+    display: inline-block;
+    margin: 6px 16px 6px 0;
     color: var(--destaque);
     text-underline-offset: 4px;
     font-weight: 700;
     line-height: 1.6;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
 .paginaBlog .listaPosts,
 .paginaBlog .postagemPrincipal {
     grid-template-columns: 1fr;
@@ -102,3 +104,24 @@
 }
 
 }
+
+.paginaBlog .textoPost { overflow-wrap: break-word; }
+.paginaBlog .textoPost summary { min-height: 44px; }
+@media (min-width: 1440px) {
+    .paginaBlog .listaPosts { gap: 32px; }
+    .paginaBlog .textoPost { padding: 36px; }
+    .paginaBlog .postagem > img { height: 300px; }
+    .paginaBlog .postagemPrincipal > img { height: 100%; min-height: 380px; }
+}
+@media (min-width: 601px) and (max-width: 1000px) {
+    .paginaBlog .postagemPrincipal { grid-template-columns: 1fr; }
+    .paginaBlog .postagemPrincipal > img { min-height: 0; height: 300px; }
+    .paginaBlog .textoPost { padding: 24px; }
+    .paginaBlog .textoPost h2 { font-size: 26px; }
+}
+@media (max-width: 600px) {
+    .paginaBlog .textoPost { padding: 22px; }
+    .paginaBlog .textoPost h2 { font-size: 25px; }
+    .paginaBlog .postagem > img, .paginaBlog .postagemPrincipal > img { height: 220px; min-height: 0; }
+}
+

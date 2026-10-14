@@ -1,0 +1,50 @@
+/* Onde Comprar: componentes comuns em paginas.css. */
+.paginaInstitucional .cardsInformacoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+}
+.paginaInstitucional .cardsInformacoes .cardInstitucional { display: flex; flex-direction: column; align-items: flex-start; }
+.paginaInstitucional .cardsInformacoes .linkPill { margin-top: auto; }
+.paginaInstitucional address { font-style: normal; font-size: 17px; line-height: 1.8; margin-bottom: 16px; }
+.paginaInstitucional .perfilInstagram { color: var(--destaque); font-weight: 700; }
+.paginaInstitucional .statusFuncionamento { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding: 10px 20px; border: 1px solid currentColor; border-radius: 999px; font-size: 15px; font-weight: 700; cursor: default; color: #665247; background: var(--bg2); }
+.paginaInstitucional .statusFuncionamento[data-estado="aberto"] { color: #166534; background: #dcfce7; }
+.paginaInstitucional .statusFuncionamento[data-estado="fechado"] { color: #991b1b; background: #fee2e2; }
+.paginaInstitucional .statusFuncionamento[data-estado]::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.paginaInstitucional .areaMapa { padding-top: 0; }
+.paginaInstitucional .mapaLoja { min-height: 420px; overflow: hidden; border: 1px solid #b99587; border-radius: 22px; background: var(--bg2); }
+.paginaInstitucional .alternativaMapa { margin-top: 20px; }
+.paginaInstitucional .mapaLoja iframe { display: block; width: 100%; height: 460px; border: 0; }
+.paginaInstitucional .cardDelivery {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, .55fr);
+    align-items: center;
+    gap: 40px;
+    padding: clamp(28px, 4vw, 64px);
+}
+.paginaInstitucional .textoDelivery { min-width: 0; }
+.paginaInstitucional .cardDelivery h2 { margin: 16px 0; font-size: clamp(28px, 3vw, 44px); line-height: 1.15; letter-spacing: -.6px; }
+.paginaInstitucional .cardDelivery p { margin-bottom: 0; max-width: 640px; }
+.paginaInstitucional .cardDelivery .botoesFinais { margin: 0; width: 100%; display: flex; flex-direction: column; gap: 14px; }
+.paginaInstitucional .cardDelivery .botoesFinais a { width: 100%; max-width: 360px; text-align: center; white-space: normal; }
+@media (max-width: 1000px) {
+    .paginaInstitucional .cardDelivery { grid-template-columns: 1fr; gap: 28px; }
+    .paginaInstitucional .cardDelivery .botoesFinais { flex-direction: row; justify-content: flex-start; flex-wrap: wrap; }
+    .paginaInstitucional .cardDelivery .botoesFinais a { width: auto; }
+}
+@media (max-width: 600px) {
+    .paginaInstitucional .cardDelivery { padding: 28px 20px; gap: 24px; }
+    .paginaInstitucional .cardDelivery .botoesFinais { flex-direction: column; align-items: stretch; }
+    .paginaInstitucional .cardDelivery .botoesFinais a { width: 100%; max-width: none; }
+}
+@media (min-width: 1440px) {
+    .paginaInstitucional .cardsInformacoes { gap: 32px; }
+    .paginaInstitucional .mapaLoja { min-height: 460px; }
+}
+@media (max-width: 700px) {
+    .paginaInstitucional .cardsInformacoes { grid-template-columns: 1fr; gap: 20px; }
+    .paginaInstitucional .mapaLoja { min-height: 320px; }
+    .paginaInstitucional .mapaLoja iframe { height: 340px; }
+}
+

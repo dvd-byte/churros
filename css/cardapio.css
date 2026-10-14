@@ -193,7 +193,7 @@
 
 }
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
 .paginaCardápio .gruposProdutos {
     grid-template-columns: 1fr;
 }
@@ -240,3 +240,32 @@
 }
 
 }
+
+.paginaCardápio :is(.campoBusca, .campoCategoria, .grupoProdutos, .produto > div) { min-width: 0; }
+.paginaCardápio .produto > div { flex: 1; overflow-wrap: anywhere; }
+.paginaCardápio .valorProduto { flex-shrink: 0; }
+@media (min-width: 1440px) {
+    .paginaCardápio .categoriasVitrine { gap: 20px; }
+    .paginaCardápio .atalhoCategoria img, .paginaCardápio .iconePorcao { height: 150px; }
+    .paginaCardápio .gruposProdutos { gap: 28px; }
+    .paginaCardápio .produto h4, .paginaCardápio .valorProduto { font-size: 16px; }
+}
+@media (min-width: 601px) and (max-width: 1000px) {
+    .paginaCardápio .ferramentasCardapio { flex-wrap: wrap; padding: 20px; }
+    .paginaCardápio .campoBusca { flex: 1 1 100%; }
+    .paginaCardápio .campoCategoria { flex: 1 1 220px; }
+    .paginaCardápio .listaProdutos { padding: 0 18px; }
+    .paginaCardápio .produto { gap: 12px; }
+    .paginaCardápio .grupoProdutos h3 { padding: 20px 18px; }
+}
+@media (min-width: 601px) and (max-width: 800px) {
+    .paginaCardápio .gruposProdutos { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .paginaCardápio .atalhoCategoria { font-size: 13px; }
+    .paginaCardápio .cabecalhoCategoria { align-items: flex-start; }
+    .paginaCardápio .cabecalhoCategoria h2 { font-size: 28px; overflow-wrap: anywhere; }
+    .paginaCardápio .ferramentasCardapio { padding: 16px; }
+    .paginaCardápio .produto h4, .paginaCardápio .valorProduto { font-size: 14px; }
+}
+
