@@ -264,5 +264,16 @@
     .paginaCardápio .cabecalhoCategoria h2 { font-size: 28px; overflow-wrap: anywhere; }
     .paginaCardápio .ferramentasCardapio { padding: 16px; }
     .paginaCardápio .produto h4, .paginaCardápio .valorProduto { font-size: 14px; }
+    .paginaCardápio .aberturaTexto .linkPrincipal {
+    display: flex;
+    width: 100%;
+    min-height: 46px;
+    padding: 13px 20px;
+    font-size: 14px;
+}
+
+.paginaCardápio .aberturaTexto .linkPrincipal + .linkPrincipal {
+    margin-top: 12px;
+}
 }
 
