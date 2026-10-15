@@ -115,6 +115,7 @@
 
 .paginaCardápio .cabecalhoCategoria {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
@@ -216,10 +217,6 @@
 
 .paginaCardápio .ferramentasCardapio button {
     width: 100%;
-}
-
-.paginaCardápio .cabecalhoCategoria {
-    flex-wrap: wrap;
 }
 
 .paginaCardápio .cabecalhoCategoria h2 {

@@ -60,7 +60,7 @@
         if (!artigo?.matches(".postagem")) return;
         const detalhes = artigo.querySelector("details");
         if (detalhes) detalhes.open = true;
-        artigo.scrollIntoView({ block: "start", behavior: "instant" });
+        artigo.scrollIntoView({ block: "start", behavior: "auto" });
     };
     window.addEventListener("hashchange", abrirPostIndicado);
     abrirPostIndicado();

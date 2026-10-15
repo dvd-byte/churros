@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +10,25 @@
     <script src="index.js" defer></script>
 </head>
 <body class="paginaInicio">
-    <main>
-        <nav>
+    <main id="conteudoPrincipal" tabindex="-1">
+        <nav aria-label="Navegação principal">
             <img src="images/logo.png" alt="logo" id="navLogo">
              <button class="menu" id="menuToggle" aria-label="Abrir menu"
                 aria-expanded="false" aria-controls="navMenu">
                 ☰
             </button>
             <ul id="navMenu">
-                <li><a href="index.html" id="active">Início</a></li>
+                <li><a href="index.html" id="active" aria-current="page">Início</a></li>
                 <li><a href="paginas/blog.html">Blog</a></li>
                 <li><a href="paginas/cardapio.html">Cardápio</a></li>
-                <li><a href="">Promoções</a></li>
+                <li><a href="paginas/promocoes.html">Promoções</a></li>
                 <li><a href="paginas/onde-comprar.html">Onde Comprar</a></li>
                 <li><a href="paginas/sobre.html">Sobre</a></li>
                 <li><a href="paginas/galeria.html">Galeria</a></li>
             </ul>
             <div>
-                <img src="images/instagram.svg" alt="logo do instagram" id="insta">
-                <button class="direcional"><strong>Pedir Agora</strong></button>
+                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)"><img src="images/instagram.svg" alt="" id="insta"></a>
+                <a class="direcional" href="paginas/onde-comprar.html#tituloDelivery"><strong>Pedir Agora</strong></a>
             </div>
         </nav>
 
@@ -52,57 +52,57 @@
             </div>
             <div class="cards">
                 <div class="bloco">
-                    <img src="images/churroscard.jpg" alt="Churros">
+                    <img src="images/churroscard.jpg" alt="Churros" loading="lazy" decoding="async">
                     
                     <div class="conteudo">
                         <span class="categoria">DOCE</span>
                         <h3>Churros</h3>
                         <p>Churros crocantes e recheados para adoçar seu dia.</p>
-                        <button>Ver cardápio</button>
+                        <a class="botaoCardapio" href="paginas/cardapio.html#churros">Ver cardápio</a>
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <img src="images/pasteiscard.jpg" alt="Pastéis">
+                    <img src="images/pasteiscard.jpg" alt="Pastéis" loading="lazy" decoding="async">
                     
                     <div class="conteudo">
                         <span class="categoria">SALGADO</span>
                         <h3>Pastéis</h3>
                         <p>Pastéis dourados, crocantes e deliciosos.</p>
-                        <button>Ver cardápio</button>
+                        <a class="botaoCardapio" href="paginas/cardapio.html#pasteis">Ver cardápio</a>
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <img src="images/hamburguercard.jpeg" alt="Hambúrgueres">
+                    <img src="images/hamburguercard.jpeg" alt="Hambúrgueres" loading="lazy" decoding="async">
                     
                     <div class="conteudo">
                         <span class="categoria">ARTESANAL</span>
                         <h3>Hambúrgueres</h3>
                         <p>Combinações irresistíveis para matar sua fome.</p>
-                        <button>Ver cardápio</button>
+                        <a class="botaoCardapio" href="paginas/cardapio.html#hamburgueres">Ver cardápio</a>
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <img src="images/refricard.jpg" alt="Bebidas">
+                    <img src="images/refricard.jpg" alt="Bebidas" loading="lazy" decoding="async">
                     
                     <div class="conteudo">
                         <span class="categoria">REFRESCANTE</span>
                         <h3>Bebidas</h3>
                         <p>Bebidas geladas para acompanhar seu pedido.</p>
-                        <button>Ver cardápio</button>
+                        <a class="botaoCardapio" href="paginas/cardapio.html#bebidas">Ver cardápio</a>
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <img src="images/comboscard.jpg" alt="Combos">
+                    <img src="images/comboscard.jpg" alt="Combos" loading="lazy" decoding="async">
                     
                     <div class="conteudo">
                         <span class="categoria">OFERTA</span>
                         <h3>Combos</h3>
                         <p>Seus favoritos reunidos em uma combinação especial.</p>
-                        <button>Ver cardápio</button>
+                        <a class="botaoCardapio" href="paginas/cardapio.html#combos">Ver cardápio</a>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="imagemCarrossel">
-                    <img src="images/churros.png" alt="Churros recheados">
+                    <img src="images/churros.png" alt="Churros recheados" loading="lazy" decoding="async">
                     <span class="tipoCarrossel">POST MODELO</span>
                 </div>
                 <div class="progresso" aria-hidden="true">
@@ -142,12 +142,13 @@
             <span class="subtitulo">ESCOLHIDOS A DEDO</span>
             <div class="head">
                 <h3>Nossos destaques</h3>
-                <a href="">Veja mais <span>↗</span></a>
+                <a href="paginas/cardapio.html">Veja mais <span>↗</span></a>
             </div>
+            <p class="notaDemonstracao">Cards de demonstração: produtos e preços ilustrativos. Confirme os valores e a disponibilidade no aplicativo escolhido.</p>
             <div class="containeres">
                 <article class="container">
                     <div class="cima">
-                        <img src="images/churros.png" alt="Churros recheados">
+                        <img src="images/churros.png" alt="Churros recheados" loading="lazy" decoding="async">
                         <div class="centro">
                             <h4>Churros recheados</h4>
                             <small>Especialidade da casa</small>
@@ -161,13 +162,14 @@
                             recheados com muito doce de leite.
                         </p>
                         <p class="preco">R$ 12,90</p>
-                        <button type="button">Pedir no iFood <span>↗</span></button>
+                        <a class="botaoDelivery" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
+                        <a class="botaoDelivery" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir na 99 Food <span>↗</span></a>
                     </div>
                 </article>
 
                 <article class="container">
                     <div class="cima">
-                        <img src="images/hamburguer.png" alt="Hambúrguer artesanal">
+                        <img src="images/hamburguer.png" alt="Hambúrguer artesanal" loading="lazy" decoding="async">
                         <div class="centro">
                             <h4>Smash burger</h4>
                             <small>Hambúrgueres · Artesanais</small>
@@ -181,13 +183,14 @@
                             molho especial em um pão macio.
                         </p>
                         <p class="preco">R$ 24,90</p>
-                        <button type="button">Pedir no iFood <span>↗</span></button>
+                        <a class="botaoDelivery" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
+                        <a class="botaoDelivery" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir na 99 Food <span>↗</span></a>
                     </div>
                 </article>
 
                 <article class="container">
                     <div class="cima">
-                        <img src="images/pastel.png" alt="Pastel dourado e crocante">
+                        <img src="images/pastel.png" alt="Pastel dourado e crocante" loading="lazy" decoding="async">
                         <div class="centro">
                             <h4>Pastel especial</h4>
                             <small>Salgados · Feitos na hora</small>
@@ -201,7 +204,8 @@
                             generoso de queijo derretido.
                         </p>
                         <p class="preco">R$ 10,00</p>
-                        <button type="button">Pedir no iFood <span>↗</span></button>
+                        <a class="botaoDelivery" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
+                        <a class="botaoDelivery" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir na 99 Food <span>↗</span></a>
                     </div>
                 </article>
             </div>
@@ -216,11 +220,11 @@
 
             <div class="fotos">
                 <div class="divisao">
-                    <img src="images/burger.jpg" alt="Ambiente da casa de churros">
+                    <img src="images/burger.jpg" alt="Hambúrguer em imagem ilustrativa do cardápio" loading="lazy" decoding="async">
 
                     <div>
-                        <img src="images/churroscard.jpg" alt="Churros recheados preparados na casa">
-                        <img src="images/refricard.jpg" alt="Preparação dos churros na cozinha">
+                        <img src="images/churroscard.jpg" alt="Churros recheados preparados na casa" loading="lazy" decoding="async">
+                        <img src="images/refricard.jpg" alt="Bebida em imagem ilustrativa do cardápio" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -245,15 +249,15 @@
         <footer class="footer">
             <div class="rodape">
                 <div class="marca">
-                    <img src="images/logo.png" alt="Churros em Casa">
+                    <img src="images/logo.png" alt="Churros em Casa" loading="lazy" decoding="async">
                     <p>Churros, pastéis, lanches e novidades em Carapicuíba.</p>
                 </div>
                 <div class="linksRodape">
                     <h6>Navegação</h6>
-                    <a href="#inicio">Início</a>
+                    <a href="index.html">Início</a>
                     <a href="paginas/blog.html">Blog</a>
                     <a href="paginas/cardapio.html">Cardápio</a>
-                    <a href="#promocoes">Promoções</a>
+                    <a href="paginas/promocoes.html">Promoções</a>
                     <a href="paginas/onde-comprar.html">Onde Comprar</a>
                     <a href="paginas/sobre.html">Sobre</a>
                     <a href="paginas/galeria.html">Galeria</a>

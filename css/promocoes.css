@@ -1,0 +1,26 @@
+/* Reutiliza abertura, cards e botões de paginas.css. */
+.paginaPromocoes .gradeCupons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.paginaPromocoes [hidden] { display: none !important; }
+.paginaPromocoes .cardCupom { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.paginaPromocoes .cardCupom h3, .paginaPromocoes .cardCupom p { margin: 0; }
+.paginaPromocoes .cardCupom .linkPill { margin-top: auto; }
+.paginaPromocoes .statusCupom { border: 1px solid #b99587; border-radius: 999px; padding: 6px 14px; font-size: 14px; }
+.paginaPromocoes .comoResgatar { margin-bottom: 32px; }
+.paginaPromocoes .comoResgatar h2 { font-size: clamp(24px, 3vw, 36px); margin-bottom: 16px; }
+.paginaPromocoes .comoResgatar p:last-child { margin-bottom: 0; }
+.paginaPromocoes .dialogoResgate { margin: auto; width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; color: #2d1e14; }
+.paginaPromocoes .dialogoResgate::backdrop { background: #2d1e1480; }
+.paginaPromocoes .dialogoResgate h2 { font-size: 28px; margin-bottom: 16px; }
+.paginaPromocoes .dialogoResgate label { display: block; font-weight: 600; margin-bottom: 8px; }
+.paginaPromocoes .dialogoResgate input { width: 100%; min-width: 0; padding: 14px; border: 1px solid #b99587; border-radius: 12px; font: inherit; background: white; }
+.paginaPromocoes .acoesResgate { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.paginaPromocoes main button { font: inherit; cursor: pointer; }
+.paginaPromocoes main button:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+.paginaPromocoes main :is(input, button):focus-visible { outline: 3px solid #ce0505; outline-offset: 4px; }
+.paginaPromocoes #mensagemResgate { margin-top: 16px; }
+.paginaPromocoes [data-estado="erro"] { color: #991b1b; }
+.paginaPromocoes #resultadoResgate { margin-top: 20px; padding: 20px; border: 1px dashed #b99587; border-radius: 12px; }
+.paginaPromocoes code { font-size: 22px; overflow-wrap: anywhere; }
+@media (min-width: 1440px) { .paginaPromocoes .gradeCupons { gap: 32px; } }
+@media (max-width: 1000px) { .paginaPromocoes .gradeCupons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .paginaPromocoes .gradeCupons { grid-template-columns: 1fr; } .paginaPromocoes .acoesResgate button { width: 100%; } }

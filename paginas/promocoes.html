@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções | Churros em Casa</title>
+    <meta name="description" content="Promoções e cupons da Churros em Casa para iFood e 99 Food.">
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="../css/paginas.css">
+    <link rel="stylesheet" href="../css/promocoes.css">
+    <script src="../js/paginas.js" defer></script>
+    <script src="../js/promocoes.js" defer></script>
+</head>
+<body class="paginaInterna paginaInstitucional paginaPromocoes">
+    <header><nav aria-label="Navegação principal">
+            <img src="../images/logo.png" alt="logo" id="navLogo">
+             <button class="menu" id="menuToggle" aria-label="Abrir menu"
+                aria-expanded="false" aria-controls="navMenu">
+                ☰
+            </button>
+            <ul id="navMenu">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="cardapio.html">Cardápio</a></li>
+                <li><a href="promocoes.html" id="active" aria-current="page">Promoções</a></li>
+                <li><a href="onde-comprar.html">Onde Comprar</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+            </ul>
+            <div>
+                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)"><img src="../images/instagram.svg" alt="" id="insta"></a>
+                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood ↗</a>
+            </div>
+        </nav></header>
+    <main id="conteudoPrincipal">
+        <section class="aberturaPagina aberturaInstitucional">
+            <div class="aberturaTexto">
+                <span class="subtitulo">PROMOÇÕES · CHURROS EM CASA</span>
+                <h1>Um motivo a mais<br><strong>para aproveitar.</strong></h1>
+                <p>Confira os cupons publicados pela casa e a plataforma em que cada um pode ser usado.</p>
+            </div>
+        </section>
+        <section class="areaPagina" aria-labelledby="tituloCupons">
+            <div class="cardInstitucional comoResgatar">
+                <h2>Como vai funcionar o resgate</h2>
+                <p>Escolha uma promoção e confira a plataforma, a validade e as condições informadas pela loja.</p>
+                <p>Quando o serviço de resgates estiver ativo, seu CPF será usado para verificar se você já resgatou aquele cupom. A regra será de um resgate por CPF para cada cupom, validada pelo servidor.</p>
+                <p id="avisoIntegracao">O resgate ainda não está disponível. Nenhum CPF é coletado nesta etapa. Os pedidos e o uso dos cupons acontecerão no iFood ou na 99 Food, conforme a promoção.</p>
+            </div>
+            <span class="subtitulo">CUPONS DA CASA</span>
+            <div class="head"><h2 id="tituloCupons">Promoções disponíveis</h2></div>
+            <div class="gradeCupons" id="gradeCupons" hidden aria-busy="false"></div>
+            <div class="espacoReservado" id="estadoCupons" role="status" aria-live="polite">Ainda não há cupons disponíveis. Quando a loja publicar novas promoções, elas aparecerão aqui.</div>
+            <noscript><p class="notaInformacao">Ative o JavaScript para consultar os cupons quando o serviço estiver disponível.</p></noscript>
+        </section>
+        <dialog class="cardInstitucional dialogoResgate" id="resgateCupom" aria-labelledby="tituloResgate" aria-describedby="explicacaoCpf">
+            <h2 id="tituloResgate">Solicitar resgate</h2>
+            <p id="explicacaoCpf">Seu CPF será usado pelo serviço para verificar se este cupom já foi resgatado por você. A confirmação depende do servidor.</p>
+            <form id="formResgate" autocomplete="off" novalidate>
+                <label for="cpfResgate">CPF</label>
+                <input id="cpfResgate" type="text" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" aria-describedby="ajudaCpf mensagemResgate" disabled>
+                <p id="ajudaCpf" class="notaInformacao">Use 11 dígitos, com ou sem pontos e hífen.</p>
+                <p id="mensagemResgate" role="status" aria-live="polite" aria-atomic="true"></p>
+                <div id="resultadoResgate" role="status" hidden></div>
+                <div class="acoesResgate">
+                    <button class="linkPill" id="enviarResgate" type="submit" disabled>Solicitar resgate</button>
+                    <button class="linkPill" id="fecharResgate" type="button" autofocus>Fechar</button>
+                </div>
+            </form>
+        </dialog>
+    </main>
+    <footer class="footer">
+            <div class="rodape">
+                <div class="marca">
+                    <img src="../images/logo.png" alt="Churros em Casa">
+                    <p>Churros, pastéis, lanches e novidades em Carapicuíba.</p>
+                </div>
+                <div class="linksRodape">
+                    <h6>Navegação</h6>
+                    <a href="../index.html">Início</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="cardapio.html">Cardápio</a>
+                    <a href="promocoes.html">Promoções</a>
+                    <a href="onde-comprar.html">Onde Comprar</a>
+                    <a href="sobre.html">Sobre</a>
+                    <a href="galeria.html">Galeria</a>
+                </div>
+                <div class="linksRodape">
+                    <h6>Peça já</h6>
+                    <a href="cardapio.html">Explorar o cardápio <span>↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
+<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir no 99 Food <span>↗</span></a>
+                </div>
+                <div class="contatoRodape">
+                    <h6>Onde encontrar</h6>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">
+                        <span class="icone">⌖</span>
+                        <span>
+                            R. Dalva de Oliveira, 15 b - Parque Santa Teresa, Carapicuíba - SP, 06341-130
+                        </span>
+                    </a>
+
+                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)">
+                        <span class="icone">↗</span>
+                        (11) 99408-9606
+                    </a>
+
+                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer">
+                        <span class="icone">@</span>
+                        @churrosemcasaof
+                    </a>
+                </div>
+            </div>
+            <div class="final">
+                <span> © 2026 Churros em Casa. Todos os direitos reservados. </span>
+                <span> Feito com carinho em Carapicuíba, SP.</span>
+            </div>
+        </footer>
+</body>
+</html>

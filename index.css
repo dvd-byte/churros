@@ -16,6 +16,30 @@ body{
     background: var(--bg);
 }
 
+/* Navegação nativa: sem interceptar links, alterar histórico ou ocultar o body. */
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+    @view-transition { navigation: auto; }
+    ::view-transition-group(root),
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 180ms;
+        animation-timing-function: ease-out;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    @view-transition { navigation: none; }
+}
+
+/* Nesta faixa o nav deixa de ser fixo: dispensa o recuo usado no desktop. */
+@media (max-width: 1150px) {
+    :is(.paginaInicio, .paginaInterna) main :is(section[id], article[id], h2[id], div[id]) {
+        scroll-margin-top: 24px;
+    }
+}
+
+
 main{
     display: flex;
     flex-direction: column;
@@ -24,7 +48,7 @@ main{
 
 nav{
     width: 89%;
-    height: 9vh;
+    height: 7vh;
     display: inline-flex;
     background: var(--bg2);
     flex-direction: row;
@@ -50,7 +74,7 @@ nav ul{
     gap: 15px;
     list-style: none;
 }
-nav a{
+nav a:where(:not(.direcional, .linkInstagram)){
     text-decoration: none;
     font-size: 17px;
     padding: 8px 10px;
@@ -77,7 +101,13 @@ nav #insta{
     cursor: pointer;
     transition: 0.4s;
 }
+/* Mantém o ícone alinhado quando envolvido por um link acessível. */
+nav .linkInstagram {
+    display: inline-flex;
+    align-items: center;
+}
 nav .direcional{
+    text-decoration: none;
     border: none;
     padding: 12px 18px;
     background-color: red;
@@ -224,7 +254,10 @@ nav .direcional{
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.85);
 }
-.conteudo button {
+.conteudo :is(button, .botaoCardapio) {
+    display: block;
+    text-align: center;
+    text-decoration: none;
     width: 100%;
     padding: 12px 10px;
     border: none;
@@ -244,7 +277,7 @@ nav .direcional{
 .bloco:hover img {
     transform: scale(1.08);
 }
-.conteudo button:hover {
+.conteudo :is(button, .botaoCardapio):hover {
     background-color: #ffe0a3;
 }
 
@@ -582,7 +615,8 @@ nav .direcional{
     font-weight: 850;
     letter-spacing: -0.7px;
 }
-.destaques .baixo button {
+.destaques .baixo :is(button, .botaoDelivery) {
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -599,13 +633,15 @@ nav .direcional{
     transition: background-color 0.3s ease,
                 color 0.3s ease;
 }
-.destaques .baixo button span {
+.destaques .baixo :is(button, .botaoDelivery) span {
     font-size: 17px;
 }
-.destaques .baixo button:hover {
+.destaques .baixo :is(button, .botaoDelivery):hover {
     background-color: #f9bc22;
     color: #191715;
 }
+.destaques .baixo .botaoDelivery + .botaoDelivery { margin-top: 12px; }
+.notaDemonstracao { color: #665247; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
 
 .galeria {
     width: 100%;
@@ -742,15 +778,15 @@ nav .direcional{
     color: #100e09;
     transform: translateY(-3px);
 }
-.btnIfood {
+.botoesFinais .btnIfood {
     background-color: #542c2c;
     color: white;
-    border-color: #b99587 !important;
+    border-color: #b99587;
 }
-.btnIfood:hover {
+.botoesFinais .btnIfood:hover {
     background-color: transparent;
     color: black;
-    border-color: var(--dourado) !important;
+    border-color: var(--dourado);
     transform: translateY(-3px);
 }
 .botoesFinais a:focus-visible {
@@ -858,18 +894,18 @@ nav .direcional{
     nav ul {
         gap: 15px;
     }
-    nav a {
+    nav a:where(:not(.direcional, .linkInstagram)) {
         font-size: 20px;
         padding: 10px 14px;
     }
     nav .direcional,
-    .conteudo button,
+    .conteudo :is(button, .botaoCardapio),
     .subtitulo,
     .comidas p,
     .novidades .etiqueta,
     .head a,
     .destaques .centro small,
-    .destaques .baixo button,
+    .destaques .baixo :is(button, .botaoDelivery),
     .marca p,
     .linksRodape,
     .contatoRodape a {
@@ -939,7 +975,7 @@ nav .direcional{
     .destaques .baixo .preco {
         font-size: 28px;
     }
-    .destaques .baixo button span {
+    .destaques .baixo :is(button, .botaoDelivery) span {
         font-size: 19px;
     }
     .galeria .divisao {
@@ -1074,19 +1110,19 @@ nav .direcional{
 .paginaInicio { --dourado: #c98243; --b2: var(--bg2); }
 .paginaInicio main { width: 100%; }
 .paginaInicio :is(section[id], div[id]) { scroll-margin-top: 110px; }
-.paginaInicio :is(a, button):focus-visible { outline: 3px solid #a52313; outline-offset: 4px; }
-.paginaInicio nav {
+.paginaInicio :is(a, button):focus-visible, :is(.paginaInicio, .paginaInterna) nav :is(a, button):focus-visible { outline: 3px solid #a52313; outline-offset: 4px; }
+:is(.paginaInicio, .paginaInterna) nav {
     left: 50%; transform: translateX(-50%); width: calc(100% - 48px);
     max-width: 1432px; height: 76px; padding: 12px 18px; gap: 14px;
 }
-.paginaInicio nav #navLogo { width: 145px; margin: 0; flex-shrink: 0; }
-.paginaInicio nav ul { gap: 2px; }
-.paginaInicio nav a { display: block; font-size: 15px; padding: 10px 9px; white-space: nowrap; }
-.paginaInicio nav .menu { display: none; }
-.paginaInicio nav .direcional { font-size: 14px; min-height: 44px; white-space: nowrap; }
+:is(.paginaInicio, .paginaInterna) nav #navLogo { width: 145px; margin: 0; flex-shrink: 0; }
+:is(.paginaInicio, .paginaInterna) nav ul { gap: 2px; }
+:is(.paginaInicio, .paginaInterna) nav a:where(:not(.direcional, .linkInstagram)) { display: block; font-size: 15px; padding: 10px 9px; white-space: nowrap; }
+:is(.paginaInicio, .paginaInterna) nav .menu { display: none; }
+:is(.paginaInicio, .paginaInterna) nav .direcional { font-size: 14px; min-height: 44px; white-space: nowrap; }
 .paginaInicio .hero {
-    height: auto; min-height: min(850px, 100svh);
-    padding: 140px max(30px, calc((100% - 1380px) / 2)) 64px;
+    height: auto; min-height: min(700px, 100svh);
+    padding: 100px max(30px, calc((100% - 1380px) / 2)) 64px;
     justify-content: center;
 }
 .paginaInicio .hero > div { min-width: 0; }
@@ -1107,7 +1143,7 @@ nav .direcional{
 .paginaInicio .comidas .bloco { width: auto; height: 340px; }
 .paginaInicio .comidas .conteudo h3 { font-size: 24px; }
 .paginaInicio .comidas .conteudo p { font-size: 13px; }
-.paginaInicio .conteudo button { font-size: 13px; min-height: 44px; }
+.paginaInicio .conteudo :is(button, .botaoCardapio) { font-size: 13px; min-height: 44px; }
 .paginaInicio .head { flex-wrap: wrap; }
 .paginaInicio .head h3 { font-size: clamp(27px, 2.7vw, 40px); }
 .paginaInicio .head a { max-width: 100%; white-space: normal; }
@@ -1130,18 +1166,18 @@ nav .direcional{
     .paginaInicio .hero p { max-width: 760px; }
 }
 @media (max-width: 1150px) {
-    .paginaInicio nav {
+    :is(.paginaInicio, .paginaInterna) nav {
         position: relative; left: auto; transform: none; width: calc(100% - 48px);
         height: auto; min-height: 72px; margin: 16px auto; flex-wrap: wrap; border-radius: 26px;
     }
-    .paginaInicio nav ul { display: flex; order: 3; width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; }
-    .paginaInicio nav > div { margin-left: auto; }
-    .paginaInicio.js nav .menu {
+    :is(.paginaInicio, .paginaInterna) nav ul { display: flex; order: 3; width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    :is(.paginaInicio, .paginaInterna) nav > div { margin-left: auto; }
+    :is(.paginaInicio, .paginaInterna).js nav .menu {
         display: block; order: 2; width: 44px; height: 44px;
         border: none; border-radius: 50%; background: #f8e8d4; color: #191715; font-size: 24px; cursor: pointer;
     }
-    .paginaInicio.js nav ul { display: none; }
-    .paginaInicio.js nav ul.menuAberto { display: flex; }
+    :is(.paginaInicio, .paginaInterna).js nav ul { display: none; }
+    :is(.paginaInicio, .paginaInterna).js nav ul.menuAberto { display: flex; }
     .paginaInicio .hero { padding: 48px 32px 64px; min-height: 600px; }
     .paginaInicio .hero h1 { font-size: clamp(52px, 8vw, 86px); }
     .paginaInicio .hero p { max-width: 620px; font-size: 24px; }
@@ -1159,13 +1195,19 @@ nav .direcional{
     .paginaInicio .galeria .divisao { height: 380px; }
 }
 @media (max-width: 600px) {
-    .paginaInicio nav { width: calc(100% - 32px); padding: 12px 16px; min-height: 68px; }
-    .paginaInicio nav #navLogo { width: 125px; }
-    .paginaInicio nav > div { display: none; }
-    .paginaInicio nav .menu { margin-left: auto; }
-    .paginaInicio nav ul, .paginaInicio.js nav ul.menuAberto { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px; }
-    .paginaInicio.js nav ul:not(.menuAberto) { display: none; }
-    .paginaInicio nav a { white-space: normal; min-height: 44px; font-size: 14px; }
+    :is(.paginaInicio, .paginaInterna) nav {
+        display: flex;
+        width: calc(100% - 32px);
+        padding: 12px 16px;
+        min-height: 68px;
+        margin-inline: auto;
+    }
+    :is(.paginaInicio, .paginaInterna) nav #navLogo { width: 125px; }
+    :is(.paginaInicio, .paginaInterna) nav > div { display: none; }
+    :is(.paginaInicio, .paginaInterna) nav .menu { margin-left: auto; }
+    :is(.paginaInicio, .paginaInterna) nav ul, :is(.paginaInicio, .paginaInterna).js nav ul.menuAberto { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px; }
+    :is(.paginaInicio, .paginaInterna).js nav ul:not(.menuAberto) { display: none; }
+    :is(.paginaInicio, .paginaInterna) nav a:where(:not(.direcional, .linkInstagram)) { white-space: normal; min-height: 44px; font-size: 14px; }
     .paginaInicio .hero {
         min-height: 650px; padding: 36px 20px 260px; justify-content: flex-start;
         background-size: cover; background-position: center;
