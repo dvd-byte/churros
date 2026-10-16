@@ -84,19 +84,46 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
 }
 
 (() => {
+    const navInicio = document.querySelector(".paginaInicio nav");
+    if (navInicio) {
+        const atualizarNav = () => navInicio.classList.toggle("navVisivel", window.scrollY >= 100);
+        atualizarNav();
+        document.body.classList.add("navPorRolagem");
+        window.addEventListener("scroll", atualizarNav, { passive: true });
+        window.addEventListener("pageshow", atualizarNav);
+    }
     const hero = document.querySelector(".hero");
     if (hero) {
         const imagens = ["images/pastel.png", "images/hamburguer.png", "images/churros.png"];
-        imagens.forEach((caminho) => { const imagem = new Image(); imagem.src = caminho; });
-        iniciarCarrossel({
+        const imagensMoveis = ["images/churroscelular.png", "images/hamburguercelular.jpg", "images/pastelcelular.png"];
+        const telaMovel = window.matchMedia("(width < 600px)");
+        let indiceAtual = 0;
+        [...imagens, ...imagensMoveis].forEach((caminho) => { const imagem = new Image(); imagem.src = caminho; });
+        const configuracaoHero = {
             raiz: hero,
             total: imagens.length,
             duracao: TEMPO_HERO,
             mostrar: (indice) => {
-                // A variável troca somente a foto e preserva o degradê de desktop/celular.
-                hero.style.setProperty("--imagemHero", 'url("' + imagens[indice] + '")');
+                indiceAtual = indice;
+                const anterior = getComputedStyle(hero).backgroundImage;
+                hero.querySelector(".heroTransicao")?.remove();
+                const conjunto = telaMovel.matches ? imagensMoveis : imagens;
+                hero.style.setProperty("--imagemHero", 'url("' + conjunto[indice] + '")');
+                if (anterior === getComputedStyle(hero).backgroundImage ||
+                    window.matchMedia("(prefers-reduced-motion: reduce)").matches || !hero.animate) return;
+                const camada = document.createElement("div");
+                camada.className = "heroTransicao";
+                camada.setAttribute("aria-hidden", "true");
+                camada.style.backgroundImage = anterior;
+                hero.prepend(camada);
+                const animacao = camada.animate([{ opacity: 1 }, { opacity: 0 }], {
+                    duration: 650, easing: "ease-in-out", fill: "forwards"
+                });
+                animacao.finished.then(() => camada.remove(), () => camada.remove());
             }
-        });
+        };
+        iniciarCarrossel(configuracaoHero);
+        telaMovel.addEventListener("change", () => configuracaoHero.mostrar(indiceAtual));
     }
 
     const carrossel = document.querySelector(".novidades .carrossel");
