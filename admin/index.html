@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Administração · Churros em Casa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+  <script src="api.js" defer></script>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <section id="entrada" class="entrada">
+    <form id="login" class="card login">
+      <img src="../images/logo.png" alt="Churros em Casa" width="210">
+      <p class="etiqueta">ÁREA DO PROPRIETÁRIO</p>
+      <h1>Bem-vindo à casa</h1>
+      <p>Entre para administrar os conteúdos publicados no site.</p>
+      <label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="username" required maxlength="254">
+      <label for="senha">Senha</label><input id="senha" name="senha" type="password" autocomplete="current-password" required maxlength="256">
+      <button type="submit">Entrar</button>
+      <p id="loginEstado" role="status">Verificando disponibilidade do serviço…</p>
+      <button id="previa" class="secundario" type="button">Conhecer a interface sem dados</button>
+      <a href="../index.html">← Voltar ao site</a>
+    </form>
+  </section>
+  <div id="painel" class="estrutura" hidden>
+    <aside id="lateral">
+      <a class="marca" href="#dashboard"><img src="../images/logo.png" alt="Churros em Casa"></a>
+      <p class="etiqueta">ADMINISTRAÇÃO</p>
+      <nav id="navegacao" aria-label="Áreas administrativas"></nav>
+      <footer><a href="../index.html">↗ Ver site</a><button id="sair" class="secundario">Sair</button></footer>
+    </aside>
+    <main>
+      <header><div><button id="menu" class="secundario" aria-expanded="false" aria-controls="lateral">☰ Menu</button><h1 id="titulo">Visão geral</h1></div><span id="sessao" class="selo"></span></header>
+      <p id="aviso" class="aviso" hidden>Prévia da interface: sem dados administrativos, sem autenticação e sem gravação. O site público não será alterado.</p>
+      <p id="mensagem" role="status" aria-live="polite"></p>
+      <div id="conteudo" aria-busy="false"></div>
+    </main>
+  </div>
+  <dialog id="editor" aria-labelledby="tituloEditor"><form id="formEditor"><header><h2 id="tituloEditor"></h2><button type="button" id="fechar" class="secundario">Fechar</button></header><div id="campos" class="campos"></div><p id="erroEditor" role="alert"></p><footer><button id="salvar" type="submit">Salvar alterações</button><span>Publicação depende de confirmação do servidor.</span></footer></form></dialog>
+  <noscript>Este painel precisa de JavaScript. O site público continua disponível no link ../index.html.</noscript>
+</body>
+</html>
