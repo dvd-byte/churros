@@ -1,0 +1,16 @@
+
+CREATE TABLE loja (
+    id TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    descricao TEXT NULL,
+    telefone VARCHAR(30) NULL,
+    endereco VARCHAR(255) NULL,
+    link_ifood VARCHAR(500) NULL,
+    link_99food VARCHAR(500) NULL,
+    instagram_url VARCHAR(500) NULL,
+    publicada BOOLEAN NOT NULL DEFAULT TRUE,
+    criado_em DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    atualizado_em DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
