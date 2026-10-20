@@ -9,7 +9,12 @@ const app = express();
 const PORTA = process.env.PORT || 3000;
 
 
-app.use(express.json());
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+    res.set('X-Content-Type-Options', 'nosniff');
+    next();
+});
+app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 app.use('/api/admin', rotasAdmin);
 const pastaAdmin = path.join(__dirname, '..', 'admin');
@@ -22,6 +27,8 @@ const arquivosPublicosAdmin = new Set([
 ]);
 
 app.use('/admin', (req, res, next) => {
+    if (!['GET', 'HEAD'].includes(req.method)) return res.sendStatus(405);
+    if (req.originalUrl.split('?')[0] === '/admin') return res.redirect(308, '/admin/');
     const arquivo = req.path === '/'
         ? 'index.html'
         : req.path.slice(1);
@@ -33,10 +40,26 @@ app.use('/admin', (req, res, next) => {
     res.sendFile(path.join(pastaAdmin, arquivo));
 });
 
-app.use((req, res, next) => {
-    console.log('Requisição recebida:', req.method, req.url);
-    next();
+// Servir somente recursos públicos; nunca expor a raiz do repositório.
+const raizSite = path.join(__dirname, '..');
+const paginasPublicas = new Set(['blog.html', 'cardapio.html', 'promocoes.html', 'onde-comprar.html', 'sobre.html', 'galeria.html']);
+app.get(['/', '/index.html', '/index.css', '/index.js'], (req, res) => {
+    res.sendFile(path.join(raizSite, req.path === '/' ? 'index.html' : req.path.slice(1)));
 });
+app.use('/paginas', (req, res, next) => {
+    if (!paginasPublicas.has(req.path.slice(1))) return res.sendStatus(404);
+    if (!['GET', 'HEAD'].includes(req.method)) return res.sendStatus(405);
+    res.sendFile(path.join(raizSite, 'paginas', req.path.slice(1)));
+});
+for (const [pasta, extensoes] of [
+    ['css', new Set(['.css'])], ['js', new Set(['.js'])],
+    ['images', new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif', '.svg', '.gif', '.ico'])]
+]) {
+    app.use('/' + pasta, (req, res, next) => {
+        if (!extensoes.has(path.extname(req.path).toLowerCase())) return res.sendStatus(404);
+        next();
+    }, express.static(path.join(raizSite, pasta), { dotfiles: 'deny', index: false, redirect: false }));
+}
 
 app.get('/api/teste', (req, res) => {
     res.json({ mensagem: 'Rota de teste funcionando!' });
@@ -76,8 +99,10 @@ app.get('/api/produtos', async (req, res) => {
                 ON c.id = p.categoria_id
             INNER JOIN grupos_cardapio AS g
                 ON g.id = p.grupo_id
-            WHERE c.ativa = 1
+            WHERE c.status = 'publicado'
+              AND p.status = 'publicado'
               AND g.ativo = 1
+              AND g.categoria_id = p.categoria_id
             ORDER BY
                 c.ordem,
                 g.ordem,
@@ -97,9 +122,8 @@ app.get('/api/produtos', async (req, res) => {
             erro.code || 'desconhecido'
         );
 
-        res.status(500).json({
-            erro: 'Não foi possível consultar os produtos.'
-        });
+        res.status(500).json({ ok: false, data: null,
+            erro: 'Não foi possível consultar os produtos.' });
     } finally {
         if (conexao) {
             conexao.release();
@@ -108,17 +132,26 @@ app.get('/api/produtos', async (req, res) => {
 });
 
 
-console.log(
-    'Rotas registradas:',
-    app.router.stack
-        .filter((camada) => camada.route)
-        .map((camada) => camada.route.path)
-);
+app.use('/api', (req, res) => {
+    res.status(404).json({ ok: false, data: null, erro: 'Rota não disponível.' });
+});
+app.use((erro, req, res, next) => {
+    if (res.headersSent) return next(erro);
+    const status = erro.type === 'entity.parse.failed' ? 400
+        : erro.type === 'entity.too.large' ? 413
+        : erro.status === 404 ? 404 : 500;
+    // Não expor corpo recebido, query string, stack ou caminho do servidor.
+    res.status(status).json({ ok: false, data: null,
+        erro: status === 400 ? 'JSON inválido.' : status === 413 ? 'Requisição muito grande.' : 'Não foi possível atender à solicitação.' });
+});
 
 const HOST = process.env.NODE_ENV === 'test'
     ? '127.0.0.1'
     : '0.0.0.0';
 
-app.listen(PORTA, HOST, () => {
-    console.log(`Servidor rodando em http://${HOST}:${PORTA}`);
-});
+if (require.main === module) {
+    app.listen(PORTA, HOST, () => {
+        console.log(`Servidor rodando em http://${HOST}:${PORTA}`);
+    });
+}
+module.exports = app;

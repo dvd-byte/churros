@@ -1,4 +1,6 @@
 -- SOMENTE banco DESCARTAVEL, vazio, apos 001..021. Nao usar em producao.
+-- LEGADO: preferir testes_integridade_seguro.sql depois de 001..022.
+-- Este arquivo nao possui guarda de ambiente. Nao executar automaticamente.
 -- Requer permissoes CREATE ROUTINE. Em erro: ROLLBACK e descarte a base de teste.
 -- Nao executar com opcao --force. Helpers existem somente nesta base de teste.
 DELIMITER //
@@ -23,9 +25,9 @@ START TRANSACTION;
 INSERT INTO loja (id,nome,historia_json) VALUES (1,'TESTE - rollback',JSON_ARRAY('Teste'));
 CALL teste_banco_espera_erro('INSERT INTO loja(id,nome) VALUES(2,''Teste'')',1062);
 CALL teste_banco_espera_erro('UPDATE loja SET historia_json=JSON_OBJECT() WHERE id=1',4025);
-INSERT INTO horarios_semanais (dia_semana,hora_abertura,hora_fechamento) VALUES (1,'10:00:00','22:40:00');
-CALL teste_banco_espera_erro('INSERT INTO horarios_semanais(dia_semana,hora_abertura,hora_fechamento) VALUES(2,''22:00:00'',''10:00:00'')',4025);
-CALL teste_banco_espera_erro('INSERT INTO horarios_semanais(dia_semana,fechado,hora_abertura,hora_fechamento) VALUES(3,TRUE,''10:00:00'',''20:00:00'')',4025);
+INSERT INTO horarios_semanais (loja_id,dia_semana,hora_abertura,hora_fechamento) VALUES (1,1,'10:00:00','22:40:00');
+CALL teste_banco_espera_erro('INSERT INTO horarios_semanais(loja_id,dia_semana,hora_abertura,hora_fechamento) VALUES(1,2,''22:00:00'',''10:00:00'')',4025);
+CALL teste_banco_espera_erro('INSERT INTO horarios_semanais(loja_id,dia_semana,fechado,hora_abertura,hora_fechamento) VALUES(1,3,TRUE,''10:00:00'',''20:00:00'')',4025);
 
 INSERT INTO categorias_cardapio(nome,slug) VALUES ('Teste A','teste-a'); SET @cat_a=LAST_INSERT_ID();
 INSERT INTO categorias_cardapio(nome,slug) VALUES ('Teste B','teste-b'); SET @cat_b=LAST_INSERT_ID();

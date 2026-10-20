@@ -1,14 +1,14 @@
-# Banco para integração — 19/10/2026
+# Banco para integração — atualizado em 20/10/2026
 
-O responsável pela API agora é o amigo do usuário; nossa etapa será integrar painel/site à API. Usuário confirmou MariaDB e que os scripts ainda não foram executados. Versão exata ainda não informada. Não há banco provisionado/conectado por esta entrega.
+O colaborador entregou API inicial e autenticação local; CRUD e integração pública ainda faltam. O relatório de 20/10 informa testes em `churros_em_casa_teste_017` e preservação do banco original `churros_em_casa`. Esses testes reais foram relatados pelo colaborador, não reproduzidos nesta revisão. Não executar migrações/testes no banco original. Confirmar quem assume os endpoints restantes. Versão exata do MariaDB ainda precisa ser registrada.
 
 ## Aplicação
 
 1. Usar um banco MariaDB de desenvolvimento vazio, criado pelo responsável. Confirmar versão com `SELECT VERSION()` e usar SQL mode estrito, FKs e CHECKs habilitados. A sintaxe foi preparada para MariaDB moderno; não foi executada aqui. Não presumir compatibilidade MySQL.
 2. Aplicar 001 a 016 em ordem, uma única vez. Nenhum desses arquivos foi alterado.
 3. Rodar `verificacoes/antes_017.sql`; todas as contagens de problemas devem ser zero. Em base vazia serão zero. Convencionar segunda=1 e domingo=7 nos horários.
-4. Aplicar 017 a 021 em ordem, parando no primeiro erro. O executor deve registrar as migrações concluídas. Não usar opção de ignorar erros, nem repetir arquivos parcialmente aplicados às cegas.
-5. Executar `verificacoes/testes_integridade.sql` SOMENTE em banco descartável de teste. Ele cria procedimentos temporários de teste e usa transação/rollback para os registros de teste. Não provisiona usuário real nem conteúdo público.
+4. Base nova: aplicar 017 a 022 em ordem, parando no primeiro erro. Base já em 021: aplicar somente 022, após confirmar versão e backup. Não reaplicar migrações históricas. A 017 histórica ainda exige loja 1 se já houver horários ao aplicá-la; nesse caso o preflight bloqueia e a importação deve ser revisada, sem renumerar a loja automaticamente.
+5. Executar `verificacoes/testes_integridade_seguro.sql` SOMENTE em `churros_em_casa_teste_integridade`, vazio e com 001..022. Usa bloco anônimo MariaDB e guarda de ambiente antes de qualquer escrita; não cria rotinas. Reverte registros ao terminar ou falhar, mas contadores AUTO_INCREMENT podem avançar. O teste antigo sem guarda é legado e não deve ser executado automaticamente.
 6. Rodar `verificacoes/depois_021.sql` e revisar pendências de conteúdo. Importar os conteúdos aprovados do site atual em etapa separada.
 
 ALTER TABLE/CREATE TABLE no MariaDB causam commits implícitos: um BEGIN não torna a sequência inteira reversível. Em base já utilizada: backup restaurável, janela de manutenção e teste prévio numa cópia. Nesta entrega não houve conexão com servidor, execução de SQL nem exclusão de dados.
@@ -17,15 +17,16 @@ Referências de sintaxe: https://mariadb.com/docs/server/reference/sql-statement
 
 ## O que mudou
 
-- 017: sessão com suporte a CSRF; Loja completa; loja única com id=1; vínculo dos horários, validação de intervalo; autor opcional da mídia.
+- 017: sessão com suporte a CSRF; Loja completa; no máximo uma loja via loja_unica, com ID não fixo; vínculo dos horários, validação de intervalo; autor opcional da mídia. Arquivo preservado nesta revisão porque já foi aplicado pelo colaborador.
 - 018: slug/imagem/status de categoria; destaque/alt/status de produto; versões; relação composta impede produto em grupo de outra categoria.
 - 019: parágrafos/categoria/link/alt no Blog; legenda própria e estados de publicação na Galeria.
 - 020: plataformas, dois códigos, condições e arquivamento de promoções; exigências para ativação; índice temporal dos resgates.
 - 021: métricas por página/origem/dispositivo/canal, preservando tabela antiga sem inventar dados históricos.
+- 022: remove o DEFAULT 1 de horarios_semanais.loja_id; a API informa o ID real da loja, sem alterar registros existentes.
 
 ## Contrato HTTP: não mudar as chaves que o painel já usa
 
-As rotas existentes são `/api/admin/session`, `login`, `logout`, `midias`, `dashboard`, `resgates`, `loja`, `blog`, `galeria`, `categorias`, `grupos`, `produtos`, `cupons`. Listagens de recursos retornam `{ok:true,data:{items:[]}}`; Loja retorna objeto em data; dashboard conforme documento do painel. Erro: HTTP apropriado; nunca sucesso falso. Login/sessão por cookie, permissões e CSRF conforme `../admin/INTEGRACAO.md`.
+Rotas implementadas: `/api/admin/session`, `/api/admin/login`, `/api/admin/logout` e `/api/produtos`. Rotas administrativas previstas mas ainda não implementadas: `midias`, `dashboard`, `resgates`, `loja`, `blog`, `galeria`, `categorias`, `grupos`, `produtos`, `cupons`. Listagens retornam `{ok:true,data:{items:[]}}`; Loja retorna objeto em data; dashboard conforme documento do painel. Login/sessão por cookie, permissões e CSRF conforme `../admin/INTEGRACAO.md`. A consulta pública de produtos agora exige categoria/produto publicados e grupo ativo; produto publicado indisponível pode ser exibido como indisponível.
 
 ### Mapeamento obrigatório
 
@@ -75,7 +76,7 @@ Galeria: texto alternativo é obrigatório na API; legado nulo deve ser revisado
 
 ### Loja e horários
 
-Primeira gravação insere loja id=1; demais atualizam esse registro. Nome/endereço/história devem vir dos conteúdos aprovados, sem seed fictício. A API deve tratar a ausência inicial do registro claramente.
+Consultar a loja por loja_unica=1 e usar seu ID real. Primeira gravação insere sem forçar ID; capturar insertId e usá-lo em todos os horários. Demais gravações usam o ID encontrado. A restrição UNIQUE protege contra duas lojas concorrentes. Nome/endereço/história vêm de conteúdo aprovado, sem seed fictício. Ausência inicial deve ser tratada claramente. Não assumir que ID=1 em queries ou código.
 
 Dias JSON: nomes em português do formulário, convertidos explicitamente para segunda=1, terça=2, quarta=3, quinta=4, sexta=5, sábado=6, domingo=7. Uma transação atualiza loja e os sete dias. Dia fechado tem ambos horários NULL. O editor atual só representa um mesmo intervalo nos dias abertos; não devolver horários distintos como se fossem iguais. Regra sem passagem pela meia-noite. Aberto quando abertura <= hora atual < fechamento, em America/Sao_Paulo.
 
@@ -83,7 +84,7 @@ Não aceitar o envio arbitrário de metricas_inicio_em/fuso pela atualização c
 
 ### Datas e edição concorrente
 
-Conexão MariaDB em UTC (`SET time_zone = '+00:00'`). DATETIME não converte fuso automaticamente. Converter datas de formulário de São Paulo para UTC ao gravar e de volta ao ler. Respostas públicas usam ISO com offset. `atualizado_em` é atualizado explicitamente pela API em toda alteração.
+Conexão configurada em UTC pelo connector Node (`timezone: '+00:00'`, que também define o fuso da sessão). DATETIME não converte registros antigos automaticamente. Conferir o fuso utilizado nos dados importados antes de homologar; não aplicar offsets indiscriminadamente. Converter datas de formulário de São Paulo para UTC ao gravar e de volta ao ler. Respostas públicas usam ISO com offset. `atualizado_em` é atualizado explicitamente pela API em toda alteração.
 
 PUT/PATCH/DELETE recebem versão atual. UPDATE ... SET versao=versao+1, atualizado_em=... WHERE id=? AND versao=?; zero registros afetados exige distinguir ausente de conflito (404/409). Não sobrescrever silenciosamente edições. INSERT começa em versao=1.
 
@@ -121,4 +122,4 @@ Incrementar métricas por UPSERT atômico. Rotas/eventos/categorias em listas pe
 
 ## Verificação ainda necessária
 
-Não foram executados MariaDB, transações, login, upload, API nem navegação integrada nesta entrega. Testar migrações limpas, restrições, duas conexões simultâneas, permissões, CSRF, limite de resgates, UTC/São Paulo e publicação em outro navegador antes de disponibilizar. Arquivos SQL de testes não substituem a execução.
+Revisão de 20/10: testes HTTP locais com Express/Argon2 reais e banco simulado; nenhuma conexão ao MariaDB ou escrita em banco nesta revisão. Não houve teste visual. A 022 e o teste SQL atualizado precisam ser executados em base descartável. Testar migrações limpas, restrições, duas conexões simultâneas, permissões, CSRF, resgates, UTC/São Paulo e publicação em outro navegador. Detalhes da execução e próximos passos em `../api/README.md`.

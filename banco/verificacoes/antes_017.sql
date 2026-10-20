@@ -4,9 +4,9 @@
 SELECT VERSION() AS versao_servidor, @@sql_mode AS sql_mode,
        @@session.time_zone AS fuso_sessao, @@foreign_key_checks AS fks_ativas;
 
-SELECT 'loja: id diferente de 1' AS problema, COUNT(*) AS quantidade FROM loja WHERE id <> 1
+SELECT 'mais de uma loja' AS problema, GREATEST(COUNT(*) - 1, 0) AS quantidade FROM loja
 UNION ALL
-SELECT 'horarios sem loja 1', COUNT(*) FROM horarios_semanais WHERE NOT EXISTS (SELECT 1 FROM loja WHERE id = 1)
+SELECT '017 historica exige loja 1 se ja houver horarios: revisar importacao', COUNT(*) FROM horarios_semanais WHERE NOT EXISTS (SELECT 1 FROM loja WHERE id = 1)
 UNION ALL
 SELECT 'horarios invalidos', COUNT(*) FROM horarios_semanais
 WHERE NOT (

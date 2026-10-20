@@ -1,0 +1,51 @@
+# API — revisão de integração de 20/10/2026
+
+## Estado e limites
+
+Node/Express inicial com login, sessão, logout e GET /api/produtos. CRUD, upload, dashboard e endpoints públicos de conteúdo ainda não estão prontos. A aplicação continua restrita a NODE_ENV=test e DB_NAME=churros_em_casa_teste_017. Não conectar ao banco original churros_em_casa; não remover essas proteções para publicar.
+
+Esta revisão não criou administrador, não leu arquivos .env reais e não conectou ao banco. O relatório de entrega anterior registra testes do colaborador, não os desta revisão.
+
+## Correções aplicadas
+
+- Produtos públicos exigem p.status e c.status publicados, grupo ativo e categoria do grupo coerente. Produto publicado indisponível continua elegível para exibição como indisponível. Não retornar rascunhos para obter a contagem antiga de 152; revisar os estados no banco de testes.
+- Dotenv resolve api/.env.teste pelo diretório do módulo, não pela pasta do terminal. Validação de banco/ambiente antes de criar pool. Conector configurado com timezone UTC.
+- Recursos públicos e logo servidos em diretórios limitados; não servir a raiz inteira, banco, api, documentos ou arquivos ocultos. /admin redireciona para /admin/ para manter caminhos relativos.
+- Erros de JSON, tamanho e API desconhecida respondem JSON; não registrar URL completa, corpo ou stack para o visitante.
+- Migração 022 remove DEFAULT 1 nos horários; loja deve ser encontrada por loja_unica=1 e horários recebem seu ID real. As migrações 001..021 foram preservadas.
+- Teste SQL seguro usa bloco anônimo, verifica banco antes de escrever e tem rollback em erro. Inclui loja ID 42, horários, preço, categoria, códigos, duplicidade de resgate e métrica. Necessita execução real para homologação.
+
+## Executar testes sem banco
+
+Dentro de api:
+
+```powershell
+npm ci --ignore-scripts
+npm test
+```
+
+As dependências não tiveram versões alteradas. Testes usam Node test runner, Express e Argon2 reais, HTTP loopback e um double de banco em memória injetado somente no processo de testes. Não lê .env nem usa credenciais. O cenário de falha do banco imprime TESTE_DB intencionalmente.
+
+Cobertura: arquivos públicos/privados; redirecionamento do painel; presença dos filtros na SQL (não execução SQL); erros JSON/413/404/500; login/session/logout/CSRF; caminho absoluto de configuração; UTC configurado; bloqueio de produção/banco original. Não cobre transações reais, concorrência, driver conectado, visualização ou dependências auditadas.
+
+## Executar API com banco de testes
+
+1. Confirmar MariaDB e registros das migrações. Não reaplicar 001..021 em base existente; aplicar 022 só se pendente e após backup. Banco vazio: seguir banco/INTEGRACAO-API.md.
+2. Criar api/.env.teste a partir do exemplo, com usuário restrito ao banco de testes. Não usar credenciais de produção.
+3. Usar administrador de teste existente ou provisionar conforme criar-admin-inicial.js, com autorização explícita.
+4. Executar:
+
+```powershell
+$env:NODE_ENV = 'test'
+npm start
+```
+
+Com PORT=3001, painel em http://127.0.0.1:3001/admin/ e site em http://127.0.0.1:3001/. O site público ainda usa suas fontes estáticas; servir arquivos não significa que o CRUD esteja integrado.
+
+Conferir UTC da sessão e interpretação dos DATETIME já importados: a mudança da conexão não converte histórico gravado em horário local. Fonte técnica: https://mariadb.com/docs/connectors/mariadb-connector-nodejs/node-js-connection-options
+
+## Próximo passo
+
+Alinhar quem implementa os endpoints que o colaborador deixou pendentes. Depois homologar banco/API de teste e implementar um fluxo completo de Loja: GET/PUT autenticados e autorizados, CSRF, validação, versão e transação dos horários; GET público com campos permitidos; integração da página Onde Comprar/Sobre/rodapé. Só considerar concluído quando salvar no painel e enxergar o resultado em outra sessão, sem afetar o banco original.
+
+Produção exige configuração própria: HTTPS, cookies/proxy/origem definidos, credenciais mínimas, recuperação de acesso, armazenamento persistente, backups e teste de restauração. Não está habilitada. CPF continua pendente de decisão.
