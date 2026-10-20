@@ -21,7 +21,7 @@ DELIMITER ;
 
 START TRANSACTION;
 INSERT INTO loja (id,nome,historia_json) VALUES (1,'TESTE - rollback',JSON_ARRAY('Teste'));
-CALL teste_banco_espera_erro('INSERT INTO loja(id,nome) VALUES(2,''Teste'')',4025);
+CALL teste_banco_espera_erro('INSERT INTO loja(id,nome) VALUES(2,''Teste'')',1062);
 CALL teste_banco_espera_erro('UPDATE loja SET historia_json=JSON_OBJECT() WHERE id=1',4025);
 INSERT INTO horarios_semanais (dia_semana,hora_abertura,hora_fechamento) VALUES (1,'10:00:00','22:40:00');
 CALL teste_banco_espera_erro('INSERT INTO horarios_semanais(dia_semana,hora_abertura,hora_fechamento) VALUES(2,''22:00:00'',''10:00:00'')',4025);

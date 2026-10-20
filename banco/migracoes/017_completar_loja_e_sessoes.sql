@@ -16,7 +16,9 @@ ALTER TABLE loja
     ADD COLUMN alt_sobre VARCHAR(500) NULL,
     ADD COLUMN fuso VARCHAR(64) NOT NULL DEFAULT 'America/Sao_Paulo',
     ADD COLUMN versao INT UNSIGNED NOT NULL DEFAULT 1,
-    ADD CONSTRAINT chk_loja_unica CHECK (id = 1),
+    ADD COLUMN loja_unica TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    ADD CONSTRAINT chk_loja_unica CHECK (loja_unica = 1),
+    ADD CONSTRAINT uq_loja_unica UNIQUE (loja_unica),
     ADD CONSTRAINT chk_loja_historia CHECK (historia_json IS NULL OR JSON_TYPE(historia_json) = 'ARRAY'),
     ADD CONSTRAINT chk_loja_versao CHECK (versao > 0),
     ADD CONSTRAINT fk_loja_imagem_sobre FOREIGN KEY (imagem_sobre_id)

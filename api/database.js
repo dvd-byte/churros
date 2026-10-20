@@ -1,5 +1,17 @@
 
-require('dotenv').config();
+const caminhoEnv = process.env.NODE_ENV === 'test'
+    ? '.env.teste'
+    : '.env';
+
+require('dotenv').config({ path: caminhoEnv });
+if (
+    process.env.NODE_ENV === 'test' &&
+    process.env.DB_NAME !== 'churros_em_casa_teste_017'
+) {
+    throw new Error(
+        'Segurança: ambiente de teste configurado com banco não autorizado.'
+    );
+}
 
 const mariadb = require('mariadb');
 

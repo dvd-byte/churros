@@ -1,12 +1,37 @@
 
 const express = require('express');
 const pool = require('./database');
+const cookieParser = require('cookie-parser');
+const rotasAdmin = require('./rotas-admin');
+const path = require('node:path');
 
 const app = express();
 const PORTA = process.env.PORT || 3000;
 
 
 app.use(express.json());
+app.use(cookieParser());
+app.use('/api/admin', rotasAdmin);
+const pastaAdmin = path.join(__dirname, '..', 'admin');
+
+const arquivosPublicosAdmin = new Set([
+    'index.html',
+    'admin.css',
+    'admin.js',
+    'api.js'
+]);
+
+app.use('/admin', (req, res, next) => {
+    const arquivo = req.path === '/'
+        ? 'index.html'
+        : req.path.slice(1);
+
+    if (!arquivosPublicosAdmin.has(arquivo)) {
+        return res.sendStatus(404);
+    }
+
+    res.sendFile(path.join(pastaAdmin, arquivo));
+});
 
 app.use((req, res, next) => {
     console.log('Requisição recebida:', req.method, req.url);
@@ -60,7 +85,12 @@ app.get('/api/produtos', async (req, res) => {
                 p.nome
         `);
 
-        res.json(produtos);
+        res.json({
+    ok: true,
+    data: {
+        items: produtos
+    }
+});
     } catch (erro) {
         console.error(
             'Erro ao consultar produtos:',
@@ -85,6 +115,10 @@ console.log(
         .map((camada) => camada.route.path)
 );
 
-app.listen(PORTA, () => {
-    console.log(`Servidor rodando em http://localhost:${PORTA}`);
+const HOST = process.env.NODE_ENV === 'test'
+    ? '127.0.0.1'
+    : '0.0.0.0';
+
+app.listen(PORTA, HOST, () => {
+    console.log(`Servidor rodando em http://${HOST}:${PORTA}`);
 });
