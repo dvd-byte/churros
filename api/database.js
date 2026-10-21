@@ -35,7 +35,7 @@ const pool = mariadb.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     connectionLimit: 5,
-    timezone: '-03:00'
+    timezone: '+00:00'
 });
 
 module.exports = pool;
