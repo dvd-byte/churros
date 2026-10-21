@@ -42,6 +42,8 @@ npm start
 
 Com PORT=3001, painel em http://127.0.0.1:3001/admin/ e site em http://127.0.0.1:3001/. O site público ainda usa suas fontes estáticas; servir arquivos não significa que o CRUD esteja integrado.
 
+Após restaurar `timezone: '+00:00'` no conector MariaDB, o login foi testado no ambiente local de testes. A sessão recém-criada apresentou duração de aproximadamente 28.800 segundos (8 horas), com `revogado_em` nulo. Verificação realizada em 21/10/2026 no banco `churros_em_casa_teste_017`. Esse teste confirma a duração da sessão observada, mas não substitui a homologação completa de datas, horários e registros históricos.
+
 Conferir UTC da sessão e interpretação dos DATETIME já importados: a mudança da conexão não converte histórico gravado em horário local. Fonte técnica: https://mariadb.com/docs/connectors/mariadb-connector-nodejs/node-js-connection-options
 
 ## Próximo passo
