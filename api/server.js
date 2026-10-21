@@ -4,16 +4,18 @@ const pool = require('./database');
 const cookieParser = require('cookie-parser');
 const rotasAdmin = require('./rotas-admin');
 const path = require('node:path');
+const helmet = require('helmet');
 
 const app = express();
 const PORTA = process.env.PORT || 3000;
 
 
 app.disable('x-powered-by');
-app.use((req, res, next) => {
-    res.set('X-Content-Type-Options', 'nosniff');
-    next();
-});
+
+app.use(helmet({
+    contentSecurityPolicy: false,
+    strictTransportSecurity: false
+}));
 app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 app.use('/api/admin', rotasAdmin);
@@ -137,6 +139,11 @@ app.use('/api', (req, res) => {
 });
 app.use((erro, req, res, next) => {
     if (res.headersSent) return next(erro);
+        console.error(
+    'Erro global da API:',
+    erro.name,
+    erro.message
+);
     const status = erro.type === 'entity.parse.failed' ? 400
         : erro.type === 'entity.too.large' ? 413
         : erro.status === 404 ? 404 : 500;
