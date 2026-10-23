@@ -291,19 +291,14 @@ if (tokenValido(tokenAnterior)) {
 }
         const token = gerarToken();
         const csrf = gerarCsrf(token);
-        const expiraEm = new Date(
-            Date.now() + DURACAO_SESSAO_MS
-        );
-
         await conexao.query(
             `INSERT INTO sessoes_admin
                 (administrador_id, token_hash, csrf_hash, expira_em)
-             VALUES (?, ?, ?, ?)`,
+             VALUES (?, ?, ?, DATE_ADD(NOW(3), INTERVAL 8 HOUR))`,
             [
                 usuario.id,
                 hashToken(token),
-                hashToken(csrf),
-                expiraEm
+                hashToken(csrf)
             ]
         );
 

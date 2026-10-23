@@ -19,6 +19,7 @@ app.use(helmet({
 app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 app.use('/api/admin', rotasAdmin);
+app.use('/api/public', require('./rotas-publicas'));
 const pastaAdmin = path.join(__dirname, '..', 'admin');
 
 const arquivosPublicosAdmin = new Set([

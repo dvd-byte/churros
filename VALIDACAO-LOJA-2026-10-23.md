@@ -1,5 +1,36 @@
 # Validação local do módulo Loja — 23/10/2026
 
+## Resultado final desta etapa
+
+Validação e integração pública de Loja concluídas no ambiente local de testes. O primeiro commit, `e18b100`, já foi enviado para `dvd-byte/churros`, branch main, após confirmação explícita do destino pelo responsável. Nenhuma credencial foi incluída.
+
+### Implementação adicional
+
+- `api/rotas-publicas.js` e registro em `api/server.js`: GET /api/public/loja sem autenticação, somente loja publicada e campos permitidos, leitura consistente da loja e horários. Não retorna ID, versão ou dados de administração. 404 para ausente/não publicada; 503 genérico em falha; no-store.
+- `js/loja-publica.js`, `index.html` e seis HTMLs em `paginas/`: fonte compartilhada para Sobre, Onde Comprar, links públicos e rodapés. Reconsulta ao recarregar ou voltar à página. Fetch sem cookies, textos sem interpretação HTML, iframe limitado a Google Maps e imagens restritas à pasta pública. Dados vazios não reaproveitam contatos estáticos. Em falha, mostra aviso e oculta dados antigos; file:// preserva demonstração.
+- `js/onde-comprar.js`: status usa horários recebidos e fuso America/Sao_Paulo, com abertura inclusiva, fechamento exclusivo e estado indisponível se o dia não tiver informação. Não verifica aplicativos nem feriados.
+- `index.css`: respeito ao atributo hidden, estilo do aviso e preservação de quebras de linha em endereço.
+- `api/rotas-admin.js`: expiração de novas sessões calculada no próprio MariaDB com NOW(3) + 8 horas. Encontrada diferença observável de três horas entre Date do Node e NOW/UTC_TIMESTAMP do banco; a primeira sessão temporária de dez minutos foi rejeitada pelo CHECK de expiração, sem criar registro. O ensaio foi corrigido e repetido com sucesso. Não se alteraram relógios do sistema ou datas históricas.
+- Contratos atualizados: api/README.md, admin/INTEGRACAO.md e banco/INTEGRACAO-API.md.
+
+### Verificações finais
+
+- `npm.cmd test`: 9 aprovados; HTTP/Express/Argon2 reais com banco simulado, contrato público e teste de limites de horário/fuso com relógio controlado.
+- `node testes/estrutura-real.js`: consultas somente de leitura, comparando os arquivos 001–022. Presentes 15 tabelas InnoDB, 161 colunas, 37 restrições nomeadas e composição de 10 índices nomeados. FKs e CHECKs habilitados, loja_id sem DEFAULT. Isso não comprova histórico de migrações nem equivalência integral dos tipos/expressões de CHECK/FK. Nenhuma migração reaplicada.
+- `node testes/concorrencia-loja-real.js --confirmar-banco-teste`: sessão temporária real para proprietário existente, duas requisições paralelas retornaram 200 e 409. A API pública sem cookie mostrou a edição persistida. Conteúdo original restaurado pela API; apenas versão e timestamps avançaram. Logout sem token recusado, logout válido confirmou revogação no banco, cookie expirado e acesso posterior 401. Somente a sessão gerada pelo ensaio foi removida. Não foi um novo teste de senha/login; o login real havia sido executado pelo responsável no navegador.
+- Navegador: nome temporário `[integracao]` salvo pelo painel apareceu em Sobre e no rodapé de Onde Comprar; história/endereço/horários vieram do banco. Nome restaurado e restauração observada no site público. A consulta pública não envia cookies administrativos. Conferência visual na largura padrão do navegador; não se declara uma matriz completa de testes responsivos.
+- Servidor isolado sem banco em 127.0.0.1:3002: erro público 503 mostrou aviso no navegador, sem reutilizar contatos, mapa ou horários da demonstração. Servidor encerrado após o ensaio.
+- Rollback repetido com o código final: uma alteração real da loja e duas de horários antes de falha controlada; HTTP 500, um rollback, nenhum commit e comparação integral confirmando estado final idêntico ao inicial, versão 9.
+- Sintaxe dos JavaScripts novos/alterados e git diff --check aprovados; sete páginas conferidas com carregador público e campos de rodapé. Não houve execução de migração, modificação de privilégios pela aplicação ou acesso aos registros do banco original.
+
+Estado final observado: nome `Churros em Casa`, versão 9, sete horários preservados. A API final foi reiniciada em 127.0.0.1:3001, ainda com NODE_ENV=test e banco exclusivo autorizado. Não foi removida nenhuma trava.
+
+### Limites e continuidade
+
+Esta etapa cobre Loja; não conclui os outros módulos do painel. Upload, CRUDs restantes, métricas/dashboard, publicação/HTTPS e configuração de produção continuam pendentes. Dados atuais de teste incluem endereço de teste e links vazios; seu preenchimento com conteúdo real deve ser feito pelo responsável, sem importar conteúdo automaticamente. Revisão integral do histórico/schema e teste de migração em base nova continuam separados; este ensaio de leitura não é certificação de equivalência completa. Também não foram simulados queda de conexão, falha do servidor ou commit de resultado incerto. A correção do login para oito horas tem SQL coberto na suíte e operação DATE_ADD exercitada no ensaio real de sessão, mas não houve novo login com senha após essa correção.
+
+Os registros abaixo são cronológicos e descrevem o estado e pendências de momentos anteriores; o resultado final acima prevalece.
+
 ## Escopo executado
 
 - Código conferido em `api/database.js`, `api/server.js`, `api/rotas-admin.js`, `admin/api.js`, trechos do editor em `admin/admin.js`, testes e contratos.

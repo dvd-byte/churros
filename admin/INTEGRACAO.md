@@ -1,5 +1,11 @@
 # Painel novo — contrato e limites da entrega
 
+## Atualização: Loja integrada no ambiente local de testes
+
+`GET /api/public/loja` foi implementado e consumido nas páginas públicas por `js/loja-publica.js`. Sobre recebe nome/história/imagem; Onde Comprar recebe endereço/horários/mapa/contatos; todas as páginas recebem links e rodapé. Campos sem configuração ficam ocultos e falhas não reutilizam dados estáticos como atuais. O HTML de demonstração é preservado para file://.
+
+Validado em MariaDB real: consulta/edição pelo painel, rejeição de formulário antigo, duas requisições simultâneas (200/409), rollback controlado e logout por HTTP com sessão temporária real. Também foi observada uma edição do painel aparecer no site público sem enviar cookie administrativo na consulta. Produção, upload e demais módulos continuam fora dessa entrega. O estado anterior descrito abaixo não substitui o relatório atualizado em `../VALIDACAO-LOJA-2026-10-23.md`.
+
 ## Estado atual
 Atualizado em 23/10/2026. Frontend em admin/index.html. API implementada: login, sessão, logout, consulta pública de produtos e GET/PUT administrativos de Loja. A revisão atual passou em sete testes automatizados com banco simulado; não homologou MariaDB real nem navegador. Demais módulos de CRUD, upload e métricas continuam pendentes. A imagem de Loja permanece somente leitura até o serviço de mídia existir. Não publicar como painel operacional. A prévia não concede autenticação, não lê registros privados, não grava no navegador e não modifica o site. Campos SQL e migrações atuais: ../banco/INTEGRACAO-API.md; execução: ../api/README.md.
 

@@ -1,5 +1,13 @@
 # Banco para integração — atualizado em 23/10/2026
 
+## Atualização após testes no computador do responsável
+
+MariaDB observado: 13.0.2. Conta da API de testes restrita ao banco permitido, com SELECT/INSERT/UPDATE/DELETE. Validados GET/PUT Loja, conflito entre formulários, concorrência real (200/409), rollback real após exceção controlada no adaptador e logout HTTP com revogação persistida. Estrutura: verificada presença de 15 tabelas, 161 colunas, 37 restrições nomeadas e composição de 10 índices nomeados das migrações 001–022; `horarios_semanais.loja_id` sem DEFAULT. Não há histórico de migrações no banco e essa checagem não prova equivalência integral de todos os tipos, CHECKs e FKs. Nenhuma migração reaplicada.
+
+Endpoint público implementado: `GET /api/public/loja`. Retorno `{ok:true,data:{nome,endereco,telefone,ifood,food99,instagram,whatsapp,mapa,historia,imagemSobre,altSobre,fuso,horarios}}`. `horarios` contém `{dia,fechado,abertura,fechamento}`, segunda=1/domingo=7, horários `HH:mm:ss` ou null em dias fechados. Não retorna ID, versão nem campos de administração. Somente loja publicada. Leitura consistente em transação READ ONLY, Cache-Control no-store, 404 para ausente/não publicada e 503 genérico em falhas. Consumido em Sobre, Onde Comprar, links e rodapés.
+
+Sessões novas usam expiração calculada no MariaDB (`NOW(3) + INTERVAL 8 HOUR`); não dependem do relógio do Node para expiração persistida. Nenhuma conversão de histórico realizada. Relatório e limites completos: `../VALIDACAO-LOJA-2026-10-23.md`. As seções abaixo são a referência anterior; os itens de Loja pública e validação real foram atualizados por esta seção.
+
 API atual: autenticação, consulta pública de produtos e GET/PUT administrativos de Loja. Demais módulos de CRUD e integração pública de Loja ainda faltam. Em 23/10, sete testes automatizados passaram com banco simulado; nenhum SQL foi executado em MariaDB nesta etapa. O relatório de 20/10 informa testes em `churros_em_casa_teste_017` e preservação do banco original `churros_em_casa`. Esses testes reais foram relatados pelo colaborador, não reproduzidos nesta revisão. Não executar migrações/testes no banco original. Confirmar quem assume os endpoints restantes. Versão exata do MariaDB ainda precisa ser registrada.
 
 Não houve alteração de estrutura ou nova migração em 23/10. Loja usa `loja_unica=1`, ID real, versão e transação com horários. Deve existir uma loja inicial com conteúdo aprovado antes de usar o editor. A mídia existente é resolvida por `midias.caminho_arquivo` e preservada; upload/substituição continuam pendentes. Próximo requisito: configurar o ambiente local de testes e homologar a gravação real antes da integração pública.

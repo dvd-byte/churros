@@ -14,6 +14,7 @@ const conexao = {
     async rollback() { if (snapshot) { ({loja, horarios} = snapshot); snapshot = undefined; } }, release() {},
     async query(sql, params = []) {
         consultas.push(sql);
+        if (sql.startsWith('SET TRANSACTION') || sql.startsWith('START TRANSACTION')) return [];
         if (sql.includes('FROM produtos AS p')) {
             if (falharProdutos) throw Object.assign(new Error('segredo de teste'), {code:'TESTE_DB'});
             assert.match(sql, /c\.status\s*=\s*'publicado'/);
@@ -26,6 +27,8 @@ const conexao = {
             return params[0] === 'teste@example.invalid' ? [{id:1,nome:'Teste',ativo:1,senha_hash:senhaHash}] : [];
         }
         if (sql.includes('INSERT INTO sessoes_admin')) {
+            assert.match(sql, /DATE_ADD\(NOW\(3\), INTERVAL 8 HOUR\)/);
+            assert.equal(params.length,3);
             sessao = {token:params[1],csrf:params[2],revogada:false}; return {affectedRows:1};
         }
         if (sql.includes('FROM sessoes_admin s')) {
@@ -38,7 +41,14 @@ const conexao = {
             }
             return {affectedRows:0};
         }
-        if (sql.includes('FROM loja')) return loja ? [structuredClone(loja)] : [];
+        if (sql.includes('FROM loja')) {
+            if (sql.includes('publicada = 1')) {
+                assert.match(sql, /loja_unica = 1/);
+                assert(!sql.includes('SELECT *'));
+                return loja?.publicada === 1 ? [structuredClone(loja)] : [];
+            }
+            return loja ? [structuredClone(loja)] : [];
+        }
         if (sql.includes('FROM midias')) return params[0] === 7 ? [{caminho_arquivo:'/images/sobre.png'}] : [];
         if (sql.includes('FROM horarios_semanais')) { assert.equal(params[0],42); return structuredClone(horarios); }
         if (sql.includes('UPDATE loja')) {
@@ -166,4 +176,26 @@ test('cliente administrativo preserva erros de validacao sem expor falhas intern
     await assert.rejects(context.window.apiAdmin.request('loja'),/O servidor não confirmou/);
     response={ok:false,status:409,json:async()=>{throw new Error('HTML');}};
     await assert.rejects(context.window.apiAdmin.request('loja'),/Este registro mudou/);
+});
+
+test('Loja publica: campos permitidos, publicacao, links e falha sem detalhes', async()=>{
+    loja.publicada=1;
+    loja.historia_json='["Texto <script> inerte"]';
+    loja.link_ifood='javascript:alert(1)';
+    loja.instagram_url='https://www.instagram.com/casa/';
+    let res=await fetch(base+'/api/public/loja');
+    assert.equal(res.status,200);
+    assert.equal(res.headers.get('cache-control'),'no-store');
+    const data=(await res.json()).data;
+    assert.deepEqual(Object.keys(data).sort(), ['nome','endereco','telefone','ifood','food99','instagram','whatsapp','mapa','historia','imagemSobre','altSobre','fuso','horarios'].sort());
+    assert.equal(data.ifood,'');
+    assert.equal(data.imagemSobre,'/images/sobre.png');
+    assert.equal(data.historia[0],'Texto <script> inerte');
+    assert.equal(data.versao,undefined);
+    assert.equal(data.id,undefined);
+    loja.publicada=0; res=await fetch(base+'/api/public/loja'); assert.equal(res.status,404);
+    loja.publicada=1; loja.historia_json='invalido';
+    res=await fetch(base+'/api/public/loja'); assert.equal(res.status,503);
+    assert.deepEqual(await res.json(),{ok:false,data:null});
+    loja.historia_json='[]';
 });
