@@ -41,3 +41,7 @@ node operacoes/restaurar-teste.js 'CAMINHO_LOCAL_DO_BACKUP' --confirmar-restaura
 O backup é salvo em backups/, fora do Git. Contém dados privados: não enviar ao chat/GitHub. A restauração só aceita o banco separado `churros_em_casa_teste_restauracao`, vazio, com conta exclusiva e `.env.restauracao` local. Compara SHA-256 do dump, schemas, registros e uploads disponíveis. Não apaga nem sobrescreve uma base já preenchida. Rotinas, triggers e eventos não são incluídos neste dump de tabelas; definir backup completo do ambiente real na publicação.
 
 `node operacoes/limpar-midias.js` é somente leitura por padrão. O parâmetro `--excluir` remove explicitamente apenas mídias sem referência e arquivos sem registro com pelo menos 48 horas, dentro da pasta de uploads do banco de testes. Não foi executada exclusão por esse utilitário nesta etapa.
+
+## Atualização da preparação — 23/10/2026
+
+Entrega consolidada: [ENTREGA-API.md](ENTREGA-API.md). Modelo sem segredos em `api/producao.env.example`; pré-voo isolado `node api/operacoes/validar-producao.js`. O servidor ainda não consome esse modelo e continua bloqueado fora de testes. O pré-voo não verifica conexão, compatibilidade SQL ou volume real. Domínio, disponibilidade de Node na conta, proxy e armazenamento persistente aguardam confirmação. Recuperação administrativa documentada em [ACESSO-ADMINISTRATIVO.md](ACESSO-ADMINISTRATIVO.md), sem reset executado.

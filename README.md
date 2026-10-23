@@ -12,3 +12,7 @@ CRUDs de conteúdo, upload, Loja, dashboard/métricas e consultas públicas impl
 - [Preparação para Hostinger Unlimited](PUBLICACAO-HOSTINGER.md).
 
 Dentro de api, use `npm ci --ignore-scripts`, `npm test` e configure `.env.teste` localmente. Para iniciar, defina NODE_ENV=test no processo e execute npm start. Nunca versionar credenciais, backups, uploads ou node_modules.
+
+## Entrega consolidada atual
+
+Contrato HTTP, evidências de validação e pendências: [ENTREGA-API.md](ENTREGA-API.md). Preparação de variáveis de produção: `api/producao.env.example` e `api/operacoes/validar-producao.js` (pré-voo sem conexão e sem habilitar produção). Procedimento de recuperação proposto: [ACESSO-ADMINISTRATIVO.md](ACESSO-ADMINISTRATIVO.md).
