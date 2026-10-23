@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/paginas.css">
     <link rel="stylesheet" href="../css/promocoes.css">
     <script src="../js/paginas.js" defer></script>
+    <script src="../js/conteudo-publico.js" defer></script>
     <script src="../js/loja-publica.js" defer></script>
     <script src="../js/promocoes.js" defer></script>
     <script src="../js/servico-publico.js" defer></script>
@@ -47,10 +48,10 @@
         </section>
         <section class="areaPagina" aria-labelledby="tituloCupons">
             <div class="cardInstitucional comoResgatar">
-                <h2>Como vai funcionar o resgate</h2>
+                <h2>Confira antes de pedir</h2>
                 <p>Escolha uma promoção e confira a plataforma, a validade e as condições informadas pela loja.</p>
-                <p>Quando o serviço de resgates estiver ativo, seu CPF será usado para verificar se você já resgatou aquele cupom. A regra será de um resgate por CPF para cada cupom, validada pelo servidor.</p>
-                <p id="avisoIntegracao">O resgate ainda não está disponível. Nenhum CPF é coletado nesta etapa. Os pedidos e o uso dos cupons acontecerão no iFood ou na 99 Food, conforme a promoção.</p>
+                <p>A disponibilidade e a aceitação do cupom são confirmadas pelo aplicativo escolhido.</p>
+                <p id="avisoIntegracao">Os pedidos são feitos no iFood ou na 99 Food. O resgate pelo site ainda não está disponível.</p>
             </div>
             <span class="subtitulo">CUPONS DA CASA</span>
             <div class="head"><h2 id="tituloCupons">Promoções disponíveis</h2></div>
@@ -60,18 +61,18 @@
         </section>
         <dialog class="cardInstitucional dialogoResgate" id="resgateCupom" aria-labelledby="tituloResgate" aria-describedby="explicacaoCpf">
             <h2 id="tituloResgate">Solicitar resgate</h2>
-            <p id="explicacaoCpf">Seu CPF será usado pelo serviço para verificar se este cupom já foi resgatado por você. A confirmação depende do servidor.</p>
+            <p id="explicacaoCpf">Confira as condições da promoção no aplicativo escolhido.</p>
+            <p id="mensagemResgate" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div id="resultadoResgate" role="status" hidden></div>
             <form id="formResgate" autocomplete="off" novalidate>
                 <label for="cpfResgate">CPF</label>
                 <input id="cpfResgate" type="text" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" aria-describedby="ajudaCpf mensagemResgate" disabled>
                 <p id="ajudaCpf" class="notaInformacao">Use 11 dígitos, com ou sem pontos e hífen.</p>
-                <p id="mensagemResgate" role="status" aria-live="polite" aria-atomic="true"></p>
-                <div id="resultadoResgate" role="status" hidden></div>
                 <div class="acoesResgate">
                     <button class="linkPill" id="enviarResgate" type="submit" disabled>Solicitar resgate</button>
-                    <button class="linkPill" id="fecharResgate" type="button" autofocus>Fechar</button>
                 </div>
             </form>
+            <button class="linkPill" id="fecharResgate" type="button" autofocus>Fechar</button>
         </dialog>
     </main>
     <footer class="footer">

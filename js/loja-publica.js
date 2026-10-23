@@ -60,7 +60,7 @@
         document.querySelectorAll('[data-loja-foto]').forEach(el => {
             const src = dados.imagemSobre;
             el.replaceChildren();
-            if (/^\/images\/(?:[\w-]+\/)*[\w.-]+\.(?:png|jpe?g|webp|avif)$/i.test(src) && !src.includes('..')) {
+            if (/^\/(?:images|uploads)\/(?:[\w-]+\/)*[\w.-]+\.(?:png|jpe?g|webp|avif)$/i.test(src) && !src.includes('..')) {
                 const img = document.createElement('img'); img.src = new URL(src, raiz); img.alt = dados.altSobre || '';
                 img.loading = 'lazy'; el.append(img); el.hidden = false;
             } else {

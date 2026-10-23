@@ -1,5 +1,8 @@
 
 const path = require('node:path');
+// O conector usa getters/construtores locais de Date ao codificar DATETIME.
+// UTC no processo e na sessão SQL evita aplicar o offset de São Paulo duas vezes.
+process.env.TZ = 'UTC';
 const caminhoEnv = process.env.NODE_ENV === 'test'
     ? '.env.teste'
     : '.env';

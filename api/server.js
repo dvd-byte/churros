@@ -20,6 +20,11 @@ app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 app.use('/api/admin', rotasAdmin);
 app.use('/api/public', require('./rotas-publicas'));
+app.use('/uploads', (req,res,next)=>{
+    if(!/^\/[a-f0-9-]{36}\.webp$/.test(req.path))return res.sendStatus(404);
+    res.set('X-Content-Type-Options','nosniff');
+    next();
+}, express.static(require('./rotas-midias').pasta,{dotfiles:'deny',index:false,redirect:false}));
 const pastaAdmin = path.join(__dirname, '..', 'admin');
 
 const arquivosPublicosAdmin = new Set([

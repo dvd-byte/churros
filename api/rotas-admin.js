@@ -829,14 +829,20 @@ if (Number(lojaAtual.versao) !== versao) {
     });
 }
 
-// Não substituir nem remover uma imagem enquanto o serviço de mídia não existir.
+let novaImagemId;
+// Trocas usam exclusivamente referências registradas pelo serviço de mídia.
 if (imagemSobre != null) {
     const midias = lojaAtual.imagem_sobre_id == null ? [] : await conexao.query(
         'SELECT caminho_arquivo FROM midias WHERE id = ?', [lojaAtual.imagem_sobre_id]);
     if (imagemSobre !== (midias[0]?.caminho_arquivo ?? '')) {
+        const novas = imagemSobre ? await conexao.query('SELECT id FROM midias WHERE caminho_arquivo = ? LIMIT 1', [imagemSobre]) : [];
+        if (novas[0] && typeof altSobre === 'string' && altSobre.trim()) {
+            novaImagemId = novas[0].id;
+        } else {
         await conexao.rollback();
         return res.status(400).json({ok: false, data: null,
-            mensagem: 'A imagem atual deve ser preservada. O gerenciamento de imagens ainda não está disponível.'});
+            mensagem: 'Use uma imagem cadastrada e preencha sua descrição. A remoção da foto não está disponível neste fluxo.'});
+        }
     }
 }
 
@@ -931,6 +937,7 @@ for (const horario of horariosParaSalvar) {
     );
 }
 
+if (novaImagemId !== undefined) await conexao.query('UPDATE loja SET imagem_sobre_id=? WHERE id=?', [novaImagemId, lojaAtual.id]);
 await conexao.commit();
 } catch (erro) {
     if (conexao) {
@@ -960,4 +967,7 @@ await conexao.commit();
 });
     }
 );
+router.use(require('./rotas-conteudo')({autenticar:exigirAutenticacao,csrf:exigirCsrf,proprietario:exigirPermissao('conteudo')}));
+router.use(require('./rotas-midias')({autenticar:exigirAutenticacao,csrf:exigirCsrf,proprietario:exigirPermissao('midias')}));
+router.use(require('./rotas-relatorios')({autenticar:exigirAutenticacao,proprietario:exigirPermissao('relatorios')}));
 module.exports = router;

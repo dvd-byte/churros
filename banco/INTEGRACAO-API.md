@@ -1,5 +1,13 @@
 # Banco para integração — atualizado em 23/10/2026
 
+## Estado mais recente dos módulos
+
+CRUDs de categorias/grupos/produtos/blog/galeria/cupons, mídia, métricas/dashboard e listagem administrativa de resgates implementados sobre o schema existente. Não houve migração nova. Escritas usam transação, versão e auditoria sem dados sensíveis; exclusões com dependências falham com 409 e cupons são arquivados. Os mapeamentos abaixo permanecem como contrato. Novas mídias são referências locais reprocessadas; foto da Loja pode ser trocada por uma referência cadastrada, com alt.
+
+Novas consultas públicas são `/api/public/catalogo`, `/blog`, `/galeria` e `/cupons`, com campos permitidos, filtragem de publicação e datas, sem códigos. `/api/public/eventos` aceita apenas enums e páginas permitidas; registra agregados na tabela de dimensões e ativa metricas_inicio_em, sem incrementar a versão editorial da Loja. Resgates públicos seguem bloqueados.
+
+Node agora também roda em TZ=UTC, além da sessão SQL UTC; isso corrige leitura/escrita de DATETIME pelo conector local. Conversão dos formulários de São Paulo validada com SQL bruto e ISO. Não corrigir históricos com offsets em lote. Backup/restauração de 15 tabelas aprovados em base separada; não é prova de migração limpa nem de compatibilidade com o banco remoto da Hostinger. Detalhes e limites: `../RELATORIO-MODULOS-2026-10-23.md`.
+
 ## Atualização após testes no computador do responsável
 
 MariaDB observado: 13.0.2. Conta da API de testes restrita ao banco permitido, com SELECT/INSERT/UPDATE/DELETE. Validados GET/PUT Loja, conflito entre formulários, concorrência real (200/409), rollback real após exceção controlada no adaptador e logout HTTP com revogação persistida. Estrutura: verificada presença de 15 tabelas, 161 colunas, 37 restrições nomeadas e composição de 10 índices nomeados das migrações 001–022; `horarios_semanais.loja_id` sem DEFAULT. Não há histórico de migrações no banco e essa checagem não prova equivalência integral de todos os tipos, CHECKs e FKs. Nenhuma migração reaplicada.

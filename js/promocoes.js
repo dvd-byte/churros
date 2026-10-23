@@ -50,12 +50,14 @@
         resultado.replaceChildren();
         resultado.hidden = true;
         porId("tituloResgate").textContent = cupom.nome;
+        porId('explicacaoCpf').textContent=cupom.condicoes||'Confira as condições no aplicativo escolhido.';
         const disponivel = !!servico && situacao(cupom) === "ativo";
+        formulario.hidden = !servico;
         cpf.disabled = !disponivel;
         enviar.disabled = !disponivel;
         avisar(disponivel ? "Informe seu CPF para solicitar o resgate." :
             situacao(cupom) !== "ativo" ? "Este cupom não está disponível para resgate." :
-                "O resgate ainda não está disponível. Nenhum CPF será solicitado até a integração do serviço.");
+                "O resgate pelo site ainda não está disponível. Confira a promoção no aplicativo escolhido.");
         dialogo.showModal();
     }
     function exibir(cupons = []) {
@@ -75,7 +77,7 @@
                     .format(new Date(cupom.validade)) + " (horário de São Paulo)."));
             if (typeof cupom.condicoes === "string") card.append(texto("p", cupom.condicoes));
             // Código não pertence à listagem pública: apenas à resposta de resgate confirmado.
-            const botao = texto("button", status === "ativo" ? "Solicitar resgate" : "Cupom indisponível", "linkPill");
+            const botao = texto("button", status === "ativo" ? servico ? "Solicitar resgate" : "Ver condições" : "Cupom indisponível", "linkPill");
             botao.type = "button";
             botao.disabled = status !== "ativo";
             botao.addEventListener("click", () => abrir(cupom));

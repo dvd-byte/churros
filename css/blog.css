@@ -39,6 +39,7 @@
     min-height: 360px;
     max-height: 700px;
 }
+.paginaBlog .postagemPrincipal:has(> img[hidden]) { grid-template-columns: 1fr; }
 
 .paginaBlog .textoPost {
     padding: 32px;

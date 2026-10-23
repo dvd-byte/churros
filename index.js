@@ -83,7 +83,7 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
     sincronizar();
 }
 
-(() => {
+(async () => {
     const navInicio = document.querySelector(".paginaInicio nav");
     if (navInicio) {
         const atualizarNav = () => navInicio.classList.toggle("navVisivel", window.scrollY >= 100);
@@ -127,9 +127,15 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
     }
 
     const carrossel = document.querySelector(".novidades .carrossel");
-    const posts = Array.isArray(window.postsBlog) ? window.postsBlog.slice(0, 3) : [];
+    let posts = Array.isArray(window.postsBlog) ? window.postsBlog.slice(0, 3) : [];
+    if (!window.conteudoCasa.demo) {
+        if(carrossel)carrossel.closest('.novidades').hidden=true;
+        try { posts=(await window.conteudoCasa.consultar('blog')).items.slice(0,3); }
+        catch { posts=[]; }
+        if(carrossel)carrossel.closest('.novidades').hidden=posts.length===0;
+    }
     if (carrossel && posts.length) {
-        posts.forEach((post) => { const imagem = new Image(); imagem.src = post.imagem; });
+        posts.forEach((post) => { const src=window.conteudoCasa.imagem(post.imagem);if(src){const imagem = new Image(); imagem.src = src;} });
         iniciarCarrossel({
             raiz: carrossel,
             total: posts.length,
@@ -143,7 +149,9 @@ function iniciarCarrossel({ raiz, total, duracao, mostrar, barra, controles, pau
                 carrossel.querySelector("h2").textContent = post.titulo;
                 carrossel.querySelector(".conteudoCarrossel p").textContent = post.resumo;
                 const imagem = carrossel.querySelector(".imagemCarrossel img");
-                imagem.src = post.imagem;
+                const src=window.conteudoCasa.imagem(post.imagem);
+                imagem.hidden=!src;
+                if(src)imagem.src=src;
                 imagem.alt = post.alt;
                 carrossel.querySelector(".tipoCarrossel").textContent = post.categoria;
                 carrossel.querySelector(".botaoPromocao").href = "paginas/blog.html#" + encodeURIComponent(post.id);

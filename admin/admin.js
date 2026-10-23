@@ -85,6 +85,7 @@
             if (!Array.isArray(data?.diario) || !data.diario.length) { host.append(empty("Sem dados de evolução. A coleta centralizada precisa estar ativa.")); return; }
             for (const [key,label] of [["visualizacoes","Visualizações por dia"],["resgates","Resgates por dia"]]) {
                 const card = make("section", "", "card barras"); card.append(make("h2",label));
+                if(!data.diario.some(d=>d[key]!=null)){card.append(empty('Coleta ainda não iniciada para este indicador.'));host.append(card);continue;}
                 const max = Math.max(1,...data.diario.map(d => Number(d[key]) || 0));
                 for (const d of data.diario) { const row = make("div","","linhaGrafico"); const bar = make("div","","barra"); bar.setAttribute("aria-hidden","true"); const fill = make("span"); fill.style.width = Math.max(0,Math.min(100,(Number(d[key]) || 0)/max*100))+"%"; bar.append(fill); row.append(make("span",d.data),bar,make("strong",String(d[key] ?? 0))); card.append(row); }
                 host.append(card);
@@ -140,6 +141,7 @@
             tile.append(make("h3",label),make("strong",Number.isInteger(value) && value >= 0 ? String(value) : "—")); tiles.append(tile);
         }
         channels.append(tiles); host.append(channels);
+        if(data?.cobertura?.parcial)host.append(make('p','A coleta cobre apenas parte do período selecionado.','nota'));
         if (!data) host.append(empty("Sem conexão com os dados. Os traços não representam zero nem resultados fictícios."));
         const shortcuts=make("div","","acoes"); for(const [id,title] of [["galeria","Gerenciar fotos"],["cupons","Gerenciar cupons"],["loja","Editar loja"]]) shortcuts.append(button(title,()=>{location.hash=id;})); host.append(shortcuts);
     }
@@ -164,9 +166,9 @@
         const list=make("div","","lista");
         for(const item of items){const card=make("article","","card item");const image=item.src||item.imagem;if(image&&safeImage(image)){const img=make("img");img.src=safeImage(image);img.alt=item.alt||"";img.loading="lazy";card.append(img);}
             const info=make("div","","texto");info.append(make("h3",item.nome||item.titulo||item.legenda||item.alt||"Registro"),make("small",[item.statusCalculado||item.status,item.ordem!=null?"Ordem: "+item.ordem:""].filter(Boolean).join(" · ")));card.append(info);
-            const tools=make("div","","acoes");const editButton=button("Editar",()=>edit(resource,item));editButton.disabled=!permitted(resource);tools.append(editButton);
-            if(schema.fields.some(f=>f.key==="status")){const toggle=button(["ativo","publicado"].includes(item.status)?"Desativar":"Ativar",()=>mutate(resource,item.id,"PATCH",{status:["ativo","publicado"].includes(item.status)?"inativo":resource==="cupons"?"ativo":"publicado",versao:item.versao}));toggle.disabled=!permitted(resource);tools.append(toggle);}
-            const remove=button("Excluir",()=>{if(confirm("Excluir este registro? Essa ação pode retirar conteúdo do site público."))mutate(resource,item.id,"DELETE",{versao:item.versao});},"secundario perigo");remove.disabled=!permitted(resource);tools.append(remove);card.append(tools);list.append(card);
+            const tools=make("div","","acoes");const editButton=button("Editar",()=>edit(resource,item));editButton.disabled=!permitted(resource)||item.arquivado;tools.append(editButton);
+            if(schema.fields.some(f=>f.key==="status")){const toggle=button(["ativo","publicado"].includes(item.status)?"Desativar":"Ativar",()=>mutate(resource,item.id,"PATCH",{status:["ativo","publicado"].includes(item.status)?"inativo":resource==="cupons"?"ativo":"publicado",versao:item.versao}));toggle.disabled=!permitted(resource)||item.arquivado;tools.append(toggle);}
+            const remove=button(resource==="cupons"?"Arquivar":"Excluir",()=>{if(confirm(resource==="cupons"?"Arquivar esta campanha? O histórico será preservado.":"Excluir este registro? Essa ação pode retirar conteúdo do site público."))mutate(resource,item.id,"DELETE",{versao:item.versao});},"secundario perigo");remove.disabled=!permitted(resource)||item.arquivado;tools.append(remove);card.append(tools);list.append(card);
         }host.append(list);
     }
     async function mutate(resource,id,method,data){if(busy)return;busy=true;notice("Aguardando confirmação…");try{await window.apiAdmin.request(resource+"/"+encodeURIComponent(id),{method,data});notice("Operação confirmada pelo servidor.");await render();}catch(error){notice(error.message);}finally{busy=false;}}
@@ -182,9 +184,7 @@
             if(f.type==="checkbox")input.checked=!!item[f.key];else if(f.type==="days")for(const opt of input.options)opt.selected=(item[f.key]||[]).includes(opt.value);else input.value=f.type==="paragraphs"?(item[f.key]||[]).join("\n\n"):item[f.key]??(f.type==="select"?f.options[0]:"");box.append(input);
             if(f.type==="image"){const upload=make("input");upload.type="file";upload.accept="image/jpeg,image/png,image/webp";upload.setAttribute("aria-label","Enviar arquivo: "+f.label);upload.disabled=preview;upload.addEventListener("change",async()=>{const file=upload.files[0];if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>8*1024*1024){$("erroEditor").textContent="Use JPG, PNG ou WebP de até 8 MB.";return;}$("salvar").disabled=true;upload.disabled=true;try{const form=new FormData();form.append("arquivo",file);const media=await window.apiAdmin.request("midias",{method:"POST",data:form});if(typeof media?.src!=="string"||!safeImage(media.src))throw new Error("Referência de imagem inválida.");input.value=media.src;$("erroEditor").textContent="Upload confirmado. Salve o registro para associar a foto.";}catch(error){$("erroEditor").textContent=error.message;}finally{upload.disabled=false;$("salvar").disabled=!permitted(resource);}});box.append(upload,make("small","Imagens são armazenadas no serviço de mídia, não no navegador."));}
             if (resource === "loja" && f.type === "image") {
-                input.readOnly = true;
-                box.querySelector('input[type="file"]').disabled = true;
-                box.querySelector("small").textContent = "Imagem atual preservada. Substituição e upload dependem do serviço de mídia ainda não implementado.";
+                box.querySelector("small").textContent = "Envie a foto e preencha a descrição. Salve para associá-la à loja; a foto anterior é preservada até salvar.";
             }
             $("campos").append(box);
         }

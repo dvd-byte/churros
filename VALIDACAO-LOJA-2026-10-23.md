@@ -1,5 +1,7 @@
 # Validação local do módulo Loja — 23/10/2026
 
+> Continuidade posterior: veja RELATORIO-MODULOS-2026-10-23.md. Novos módulos/mídia foram implementados e a versão final da Loja passou a 11 após ensaio de foto com restauração. A hipótese de relógios divergentes registrada abaixo foi corrigida: o problema observado era interpretação local de DATETIME pelo conector. O processo agora também usa TZ=UTC, sem converter dados históricos.
+
 ## Resultado final desta etapa
 
 Validação e integração pública de Loja concluídas no ambiente local de testes. O primeiro commit, `e18b100`, já foi enviado para `dvd-byte/churros`, branch main, após confirmação explícita do destino pelo responsável. Nenhuma credencial foi incluída.

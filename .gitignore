@@ -1,5 +1,6 @@
 ﻿/backups/
 **/node_modules/
+/api/var/
 **/.env
 **/.env.*
 !**/.env.example

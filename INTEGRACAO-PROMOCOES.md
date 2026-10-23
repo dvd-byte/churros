@@ -1,5 +1,11 @@
 # Promoções — implementação e integração futura
 
+## Atualização de 23/10/2026
+
+CRUD administrativo e consulta pública de condições implementados no ambiente de testes. DELETE arquiva campanhas; códigos/plataformas não mudam após resgates. A listagem pública não retorna códigos. A página consulta a API, mostra condições/validade e mantém o formulário CPF oculto. POST público de resgates retorna 409 sem criar registro.
+
+A identificação e a política de resgate continuam sem definição; os contratos de CPF/resposta de resgate abaixo são históricos e não foram ativados. Nenhuma validação de CPF no navegador comprova identidade ou impede reutilização do código no aplicativo. Relatório atual: `RELATORIO-MODULOS-2026-10-23.md`.
+
 Rota: `paginas/promocoes.html`. Estilos: `css/promocoes.css`. Lógica: `js/promocoes.js`.
 
 ## Situação atual

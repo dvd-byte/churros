@@ -97,7 +97,7 @@ test('erros de API retornam JSON sem stack ou detalhes internos',async()=>{
     assert.equal(res.status,400);assert.equal((await res.json()).ok,false);
     res=await fetch(base+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:base},body:JSON.stringify({dados:'x'.repeat(110000)})});
     assert.equal(res.status,413);assert.equal((await res.json()).ok,false);
-    res=await fetch(base+'/api/admin/dashboard');assert.equal(res.status,404);assert.equal((await res.json()).ok,false);
+    res=await fetch(base+'/api/admin/recurso-inexistente');assert.equal(res.status,404);assert.equal((await res.json()).ok,false);
     falharProdutos=true;
     try { res=await fetch(base+'/api/produtos');assert.equal(res.status,500);const text=await res.text();assert.equal(JSON.parse(text).ok,false);assert(!text.includes('segredo')); }
     finally {falharProdutos=false;}
@@ -130,6 +130,7 @@ test('configuracao absoluta, UTC e bloqueios antes do pool',()=>{
     }
     const env={NODE_ENV:'test',DB_NAME:'churros_em_casa_teste_017',DB_HOST:'localhost',DB_USER:'teste'};
     const result=load(env);assert.equal(result.dotenvPath,path.resolve(__dirname,'../.env.teste'));
+    assert.equal(env.TZ,'UTC');
     assert.equal(result.poolOptions.timezone,'+00:00');assert.equal(result.poolOptions.port,3306);
     assert.throws(()=>load({...env,NODE_ENV:'production'}),/bloqueada/);
     assert.throws(()=>load({...env,DB_NAME:'churros_em_casa'}),/não autorizado/);

@@ -38,7 +38,7 @@ router.get('/loja', async (req, res) => {
         await c.commit();
         const imagem = midias[0]?.caminho_arquivo ?? '';
         // Apenas arquivos da pasta pública já servida pela API.
-        const imagemSobre = /^(?:\/)?images\/(?:[\w-]+\/)*[\w.-]+\.(?:png|jpe?g|webp|avif)$/i.test(imagem)
+        const imagemSobre = /^(?:\/)?(?:images|uploads)\/(?:[\w-]+\/)*[\w.-]+\.(?:png|jpe?g|webp|avif)$/i.test(imagem)
             && !imagem.includes('..') ? '/' + imagem.replace(/^\//, '') : '';
         return res.json({ok: true, data: {
             nome: loja.nome, endereco: loja.endereco ?? '', telefone: loja.telefone ?? '',
@@ -57,4 +57,5 @@ router.get('/loja', async (req, res) => {
     } finally { if (c) c.release(); }
 });
 
+router.use(require('./rotas-catalogo'));
 module.exports = router;
