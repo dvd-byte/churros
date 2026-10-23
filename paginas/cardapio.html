@@ -13,7 +13,10 @@
     <link rel="stylesheet" href="../css/paginas.css">
     <link rel="stylesheet" href="../css/cardapio.css">
     <script src="../js/paginas.js" defer></script>
+    <script src="../js/conteudo-publico.js" defer></script>
+    <script src="../js/loja-publica.js" defer></script>
     <script src="../js/cardapio.js" defer></script>
+    <script src="../js/catalogo-publico.js" defer></script>
 </head>
 <body class="paginaInterna paginaCardápio">
     <header><nav aria-label="Navegação principal">
@@ -32,8 +35,8 @@
                 <li><a href="galeria.html">Galeria</a></li>
             </ul>
             <div>
-                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)"><img src="../images/instagram.svg" alt="" id="insta"></a>
-                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood ↗</a>
+                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)" data-loja-link="instagram"><img src="../images/instagram.svg" alt="" id="insta"></a>
+                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood ↗</a>
             </div>
         </nav></header>
 
@@ -43,8 +46,8 @@
                 <span class="subtitulo">DE DAR ÁGUA NA BOCA · NOSSO CARDÁPIO</span>
                 <h1>Seu próximo<br><strong>favorito está aqui.</strong></h1>
                 <p>Do churro ao pastel, do lanche à sobremesa. Conheça os sabores da casa e faça seu pedido no iFood ou na 99 Food.</p>
-                <a class="linkPill linkPrincipal" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Visitar nossa loja no iFood ↗</a>
-<a class="linkPill linkPrincipal" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Visitar nossa loja no 99 Food ↗</a>
+                <a class="linkPill linkPrincipal" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Visitar nossa loja no iFood ↗</a>
+<a class="linkPill linkPrincipal" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Visitar nossa loja no 99 Food ↗</a>
             </div>
             <img src="../images/hamburguer.png" alt="Hambúrguer da casa" class="aberturaImagem">
         </section>
@@ -68,8 +71,8 @@
             <p id="resultadoBusca" class="resultadoBusca" role="status" aria-live="polite"></p>
             <p id="semResultados" class="avisoModelo" hidden>Nenhum sabor encontrado. Tente outro termo ou limpe os filtros.</p>
         <section class="secaoCardapio" id="churros" aria-labelledby="titulo-churros" data-categoria="churros">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 01</span><h2 id="titulo-churros">Churros</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver churros na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver churros na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 01</span><h2 id="titulo-churros">Churros</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver churros na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver churros na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Tradicionais</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Churros Tradicionais Chocolate "><div><h4>Chocolate</h4></div><span class="valorProduto">R$ 7,80</span></li>
@@ -127,8 +130,8 @@
             </div>
         </section>
         <section class="secaoCardapio" id="pasteis" aria-labelledby="titulo-pasteis" data-categoria="pasteis">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 02</span><h2 id="titulo-pasteis">Pastéis</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver pastéis na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver pastéis na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 02</span><h2 id="titulo-pasteis">Pastéis</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver pastéis na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver pastéis na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Carne</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Pastéis Carne Carne "><div><h4>Carne</h4></div><span class="valorProduto">R$ 12,00</span></li>
@@ -206,8 +209,8 @@
             </div>
         </section>
         <section class="secaoCardapio" id="hamburgueres" aria-labelledby="titulo-hamburgueres" data-categoria="hamburgueres">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 03</span><h2 id="titulo-hamburgueres">Hambúrgueres</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver hambúrgueres na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver hambúrgueres na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 03</span><h2 id="titulo-hamburgueres">Hambúrgueres</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver hambúrgueres na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver hambúrgueres na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Tradicionais</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Hambúrgueres Tradicionais X Burger "><div><h4>X Burger</h4></div><span class="valorProduto">R$ 15,90</span></li>
@@ -235,8 +238,8 @@
             </div>
         </section>
         <section class="secaoCardapio" id="combos" aria-labelledby="titulo-combos" data-categoria="combos">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 04</span><h2 id="titulo-combos">Combos</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver combos na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver combos na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 04</span><h2 id="titulo-combos">Combos</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver combos na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver combos na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Pastel, churro e bebida</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Combos Pastel, churro e bebida Combo 1 1 pastel de carne, 1 churro de doce de leite e 1 Dollynho 350 ml."><div><h4>Combo 1</h4><p>1 pastel de carne, 1 churro de doce de leite e 1 Dollynho 350 ml.</p></div><span class="valorProduto">R$ 21,90</span></li>
@@ -255,8 +258,8 @@
             </div>
         </section>
         <section class="secaoCardapio" id="porcoes" aria-labelledby="titulo-porcoes" data-categoria="porcoes">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 05</span><h2 id="titulo-porcoes">Porções</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver porções na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver porções na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 05</span><h2 id="titulo-porcoes">Porções</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver porções na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver porções na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Batatas</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Porções Batatas Batata P — 100 g "><div><h4>Batata P — 100 g</h4></div><span class="valorProduto">R$ 9,90</span></li>
@@ -269,8 +272,8 @@
             </div>
         </section>
         <section class="secaoCardapio" id="bebidas" aria-labelledby="titulo-bebidas" data-categoria="bebidas">
-            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 06</span><h2 id="titulo-bebidas">Bebidas</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver bebidas na loja do iFood (abre em outra aba)">Ver no iFood ↗</a>
-<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver bebidas na loja do 99 Food (abre em outra aba)">Ver no 99 Food ↗</a></div>
+            <div class="cabecalhoCategoria"><div><span class="subtitulo">SABORES DA CASA · 06</span><h2 id="titulo-bebidas">Bebidas</h2></div><a class="linkPill" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" aria-label="Ver bebidas na loja do iFood (abre em outra aba)" data-loja-link="ifood">Ver no iFood ↗</a>
+<a class="linkPill" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" aria-label="Ver bebidas na loja do 99 Food (abre em outra aba)" data-loja-link="food99">Ver no 99 Food ↗</a></div>
             <div class="gruposProdutos">
                 <section class="grupoProdutos"><h3>Sucos — 400 ml</h3><ul class="listaProdutos">
                     <li class="produto" data-busca="Bebidas Sucos — 400 ml Laranja "><div><h4>Laranja</h4></div><span class="valorProduto">R$ 12,00</span></li>
@@ -300,8 +303,8 @@
             </div>
         </section>
         </section>
-        <section class="finalizacao" aria-labelledby="tituloFinal"><div class="infosFinais"><span class="identidadeFinal">CHURROS EM CASA · CARAPICUÍBA</span><h2 id="tituloFinal">Já encontrou seu favorito?<strong>Escolha seu aplicativo de delivery.</strong></h2><p>Confira as opções disponíveis, entrega e pagamento diretamente na nossa loja.</p><div class="botoesFinais"><a class="btnCardapio" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Ir para a loja no iFood ↗</a>
-<a class="btnCardapio" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Ir para a loja no 99 Food ↗</a><a class="btnIfood" href="#tituloVitrine">Voltar aos sabores ↑</a></div></div></section>
+        <section class="finalizacao" aria-labelledby="tituloFinal"><div class="infosFinais"><span class="identidadeFinal">CHURROS EM CASA · CARAPICUÍBA</span><h2 id="tituloFinal">Já encontrou seu favorito?<strong>Escolha seu aplicativo de delivery.</strong></h2><p>Confira as opções disponíveis, entrega e pagamento diretamente na nossa loja.</p><div class="botoesFinais"><a class="btnCardapio" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Ir para a loja no iFood ↗</a>
+<a class="btnCardapio" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Ir para a loja no 99 Food ↗</a><a class="btnIfood" href="#tituloVitrine">Voltar aos sabores ↑</a></div></div></section>
     </main>
     <footer class="footer">
             <div class="rodape">
@@ -322,31 +325,31 @@
                 <div class="linksRodape">
                     <h6>Peça já</h6>
                     <a href="cardapio.html">Explorar o cardápio <span>↗</span></a>
-                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
-<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir no 99 Food <span>↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood <span>↗</span></a>
+<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Pedir no 99 Food <span>↗</span></a>
                 </div>
                 <div class="contatoRodape">
                     <h6>Onde encontrar</h6>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer" data-loja-link="endereco">
                         <span class="icone">⌖</span>
-                        <span>
+                        <span data-loja="endereco">
                             R. Dalva de Oliveira, 15 b - Parque Santa Teresa, Carapicuíba - SP, 06341-130
                         </span>
                     </a>
 
-                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)">
+                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)" data-loja-link="whatsapp">
                         <span class="icone">↗</span>
-                        (11) 99408-9606
+                        <span data-loja="telefone">(11) 99408-9606</span>
                     </a>
 
-                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" data-loja-link="instagram">
                         <span class="icone">@</span>
-                        @churrosemcasaof
+                        <span data-loja="instagramNome">@churrosemcasaof</span>
                     </a>
                 </div>
             </div>
             <div class="final">
-                <span> © 2026 Churros em Casa. Todos os direitos reservados. </span>
+                <span data-loja-copyright> © 2026 Churros em Casa. Todos os direitos reservados. </span>
                 <span> Feito com carinho em Carapicuíba, SP.</span>
             </div>
         </footer>

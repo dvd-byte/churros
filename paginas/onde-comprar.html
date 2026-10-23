@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../css/paginas.css">
     <link rel="stylesheet" href="../css/onde-comprar.css">
     <script src="../js/paginas.js" defer></script>
+    <script src="../js/conteudo-publico.js" defer></script>
+    <script src="../js/loja-publica.js" defer></script>
     <script src="../js/onde-comprar.js" defer></script>
 </head>
 <body class="paginaInterna paginaInstitucional">
@@ -32,8 +34,8 @@
                 <li><a href="galeria.html">Galeria</a></li>
             </ul>
             <div>
-                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)"><img src="../images/instagram.svg" alt="" id="insta"></a>
-                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood ↗</a>
+                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)" data-loja-link="instagram"><img src="../images/instagram.svg" alt="" id="insta"></a>
+                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood ↗</a>
             </div>
         </nav></header>
     <main id="conteudoPrincipal">
@@ -52,29 +54,31 @@
                     <span class="subtitulo">01 · LOCALIZAÇÃO</span>
                     <h3>Endereço</h3>
                     <!-- Endereço confirmado pelo responsável pelo projeto em 14/10/2026. -->
-                    <address>R. Dalva de Oliveira, 15 B<br>Parque Santa Teresa, Carapicuíba – SP<br>CEP 06341-130</address>
-                    <a class="linkPill" href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">Abrir no Google Maps ↗</a>
+                    <address data-loja="endereco">R. Dalva de Oliveira, 15 B<br>Parque Santa Teresa, Carapicuíba – SP<br>CEP 06341-130</address>
+                    <a class="linkPill" href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer" data-loja-link="endereco">Abrir no Google Maps ↗</a>
                 </article>
                 <article class="cardInstitucional">
                     <span class="subtitulo">02 · SUA VISITA</span>
                     <h3>Horário de funcionamento</h3>
-                    <p>Segunda a sábado</p>
-                    <p><strong>Das <time datetime="10:00">10h</time> às <time datetime="22:40">22h40</time></strong></p>
+                    <div data-loja-horarios>
+                        <p>Segunda a sábado</p>
+                        <p><strong>Das <time datetime="10:00">10h</time> às <time datetime="22:40">22h40</time></strong></p>
+                    </div>
                     <span class="statusFuncionamento" id="statusFuncionamento" role="status" aria-live="polite" aria-atomic="true">Consulte o horário acima</span>
                 </article>
                 <article class="cardInstitucional">
                     <span class="subtitulo">03 · CONTATO DIRETO</span>
                     <h3>Fale com o proprietário</h3>
                     <p>Converse com o proprietário pelo WhatsApp:</p>
-                    <a class="linkPill" href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)">(11) 99408-9606</a>
+                    <a class="linkPill" href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)" data-loja-link="whatsapp"><span data-loja="telefone">(11) 99408-9606</span></a>
                 </article>
                 <article class="cardInstitucional">
                     <span class="subtitulo">04 · ACOMPANHE A CASA</span>
                     <h3>Instagram</h3>
                     <!-- Perfil reutilizado da navegação e do rodapé existentes. -->
-                    <p class="perfilInstagram">@churrosemcasaof</p>
+                    <p class="perfilInstagram" data-loja="instagramNome">@churrosemcasaof</p>
                     <p>Visite o perfil da Churros em Casa e acompanhe as publicações da loja.</p>
-                    <a class="linkPill" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer">Visitar Instagram ↗</a>
+                    <a class="linkPill" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" data-loja-link="instagram">Visitar Instagram ↗</a>
                 </article>
             </div>
         </section>
@@ -86,8 +90,8 @@
                     <p>Confira os produtos disponíveis, preços e condições de entrega no aplicativo escolhido.</p>
                 </div>
                 <div class="botoesFinais">
-                <a class="btnCardapio" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood ↗</a>
-                <a class="btnIfood" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir na 99 Food ↗</a>
+                <a class="btnCardapio" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood ↗</a>
+                <a class="btnIfood" href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Pedir na 99 Food ↗</a>
                 </div>
             </div>
         </section>
@@ -106,7 +110,7 @@
                     allowfullscreen>
                 </iframe>
             </div>
-            <p class="alternativaMapa"><a class="linkPill" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">Abrir mapa em outra aba ↗</a></p>
+            <p class="alternativaMapa"><a class="linkPill" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer" data-loja-link="endereco">Abrir mapa em outra aba ↗</a></p>
         </section>
 
     </main>
@@ -129,31 +133,31 @@
                 <div class="linksRodape">
                     <h6>Peça já</h6>
                     <a href="cardapio.html">Explorar o cardápio <span>↗</span></a>
-                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
-<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir no 99 Food <span>↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood <span>↗</span></a>
+<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Pedir no 99 Food <span>↗</span></a>
                 </div>
                 <div class="contatoRodape">
                     <h6>Onde encontrar</h6>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer" data-loja-link="endereco">
                         <span class="icone">⌖</span>
-                        <span>
+                        <span data-loja="endereco">
                             R. Dalva de Oliveira, 15 b - Parque Santa Teresa, Carapicuíba - SP, 06341-130
                         </span>
                     </a>
 
-                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)">
+                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)" data-loja-link="whatsapp">
                         <span class="icone">↗</span>
-                        (11) 99408-9606
+                        <span data-loja="telefone">(11) 99408-9606</span>
                     </a>
 
-                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" data-loja-link="instagram">
                         <span class="icone">@</span>
-                        @churrosemcasaof
+                        <span data-loja="instagramNome">@churrosemcasaof</span>
                     </a>
                 </div>
             </div>
             <div class="final">
-                <span> © 2026 Churros em Casa. Todos os direitos reservados. </span>
+                <span data-loja-copyright> © 2026 Churros em Casa. Todos os direitos reservados. </span>
                 <span> Feito com carinho em Carapicuíba, SP.</span>
             </div>
         </footer>

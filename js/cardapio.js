@@ -4,12 +4,12 @@ const busca = document.getElementById("buscaCardapio");
 const filtro = document.getElementById("filtroCategoria");
 if (busca && filtro) {
     const normalizar = (texto) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    const secoes = [...document.querySelectorAll("[data-categoria]")];
     const resultado = document.getElementById("resultadoBusca");
     const semResultados = document.getElementById("semResultados");
     document.querySelector(".ferramentasCardapio").hidden = false;
 
     const filtrar = () => {
+        const secoes = [...document.querySelectorAll("[data-categoria]")];
         const termos = normalizar(busca.value.trim()).split(/\s+/).filter(Boolean);
         let total = 0;
         secoes.forEach((secao) => {
@@ -48,4 +48,6 @@ if (busca && filtro) {
         });
     });
     filtrar();
+    document.addEventListener('catalogo:atualizado',filtrar);
+    document.querySelector('.categoriasVitrine').addEventListener('click',e=>{if(e.target.closest('.atalhoCategoria')){busca.value='';filtro.value='';filtrar();}});
 }

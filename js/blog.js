@@ -1,8 +1,15 @@
 /* Renderiza os posts da fonte compartilhada e abre o artigo indicado pelo link. */
 "use strict";
-(() => {
+(async () => {
     const lista = document.querySelector(".listaPosts");
-    if (!lista || !Array.isArray(window.postsBlog)) return;
+    if (!lista) return;
+    let posts=window.postsBlog||[];
+    if(!window.conteudoCasa.demo){
+        document.querySelector('.avisoModelo')?.remove();
+        window.conteudoCasa.aviso(lista,'Carregando publicações…');
+        try{posts=(await window.conteudoCasa.consultar('blog')).items;}
+        catch{window.conteudoCasa.aviso(lista,'Publicações temporariamente indisponíveis.');return;}
+    }
 
     const criar = (tag, classe, texto) => {
         const elemento = document.createElement(tag);
@@ -11,12 +18,14 @@
         return elemento;
     };
     const fragmento = document.createDocumentFragment();
-    window.postsBlog.forEach((post, indice) => {
+    posts.forEach((post, indice) => {
         const artigo = criar("article", indice === 0 ? "postagem postagemPrincipal" : "postagem");
         artigo.id = post.id;
         const imagem = criar("img");
         // Os dados usam caminhos a partir da raiz; o Blog fica em paginas/.
-        imagem.src = "../" + post.imagem;
+        const src=window.conteudoCasa.imagem(post.imagem);
+        if(src)imagem.src=src;
+        else imagem.hidden=true;
         imagem.alt = post.alt;
         imagem.loading = "lazy";
         const texto = criar("div", "textoPost");
@@ -30,13 +39,14 @@
         const corpo = criar("div", "corpoPost");
         post.paragrafos.forEach((paragrafo) => corpo.append(criar("p", "", paragrafo)));
         const link = criar("a", "", post.textoLink);
-        link.href = post.link;
+        if(post.link)link.href = post.link;
+        else link.hidden=true;
         if (post.link.startsWith("https://")) {
             link.target = "_blank";
             link.rel = "noopener noreferrer";
         }
         corpo.append(link);
-        if (post.link.startsWith("https://www.ifood.com.br/")) {
+        if (window.conteudoCasa.demo && post.link.startsWith("https://www.ifood.com.br/")) {
             const link99 = criar("a", "", "Visitar a loja na 99 Food ↗");
             link99.href = "https://oia.99app.com/dlp9/KAuIUf?share_media=";
             link99.target = "_blank";
@@ -50,7 +60,8 @@
     });
     lista.replaceChildren(fragmento);
     const total = document.querySelector(".totalPosts");
-    if (total) total.textContent = window.postsBlog.length + " postagens";
+    if (total) total.textContent = posts.length + " postagens";
+    if(!posts.length)window.conteudoCasa.aviso(lista,'Ainda não há publicações disponíveis.');
 
     const abrirPostIndicado = () => {
         let id;

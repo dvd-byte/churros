@@ -1,5 +1,39 @@
 # API — revisão de integração de 23/10/2026
 
+## Estado mais recente: módulos administrativos e públicos
+
+Implementados GET/POST/PUT/PATCH/DELETE de categorias, grupos (sem PATCH de estado), produtos, blog, galeria e cupons; GET dashboard/resgates; POST/GET midias. Todos privados para proprietário, com CSRF nas escritas. Cupons são arquivados por DELETE, sem apagar histórico. Upload multipart campo `arquivo`, JPG/PNG/WebP até 8 MiB, validação real e reprocessamento em WebP. Foto da Loja aceita nova referência cadastrada com alt, preservando a anterior até salvar; remover imagem não está disponível nesse fluxo.
+
+Públicos: GET `/api/public/loja`, `/catalogo`, `/blog`, `/galeria`, `/cupons`; POST `/api/public/eventos` com corpo enumerado. `/api/public/resgates` retorna 409 e não coleta CPF. Códigos não são públicos. Catálogo, Blog/Novidades, Galeria/fotos da inicial, categorias/destaques, Loja e condições de Promoções conectados à API. A demonstração estática permanece para file://.
+
+O processo Node e a sessão SQL usam UTC. A opção timezone do conector sozinha não evitou interpretação local de Date neste computador; agora database.js define TZ=UTC antes do pool. Formulários/dias comerciais continuam em São Paulo por conversão explícita. Nenhum dado histórico foi convertido automaticamente.
+
+Resultado atual: 12 testes automatizados aprovados e 77 verificações no ensaio `node testes/modulos-real.js --confirmar-banco-teste`, com fixtures limpas. O modo `--aguardar-navegador` usa sinal em arquivo local e limite de dez minutos; não usar enquanto houver edição humana. Testes reais não são parte de npm test. Backup/restauração de 15 tabelas em base separada aprovados. `npm audit` reportou zero vulnerabilidades conhecidas nesta execução.
+
+Operações: `operacoes/backup-teste.js`, `restaurar-teste.js`, `preparar-restauracao.js`, `limpar-midias.js`. Somente o último é dry-run por padrão; `--excluir` é destrutivo e explícito, restrito a órfãos antigos no banco de testes. O backup exige API parada e permanece local. Ver `../PUBLICACAO-HOSTINGER.md` e `../RELATORIO-MODULOS-2026-10-23.md` para comandos, resultados e limitações.
+
+**Travas de testes preservadas. Nenhuma publicação ou configuração de produção foi realizada.** As seções posteriores registram etapas anteriores; este estado mais recente prevalece.
+
+## Atualização após validação local com MariaDB
+
+Consulta pública implementada: `GET /api/public/loja`, sem autenticação, somente para `loja_unica=1 AND publicada=1`. Retorna exclusivamente nome, endereço, telefone, links públicos, história, imagem permitida, alt, fuso e horários por dia. Não expõe IDs, versão, hashes ou sessões. Respostas sem cache; loja ausente/não publicada retorna 404; falha retorna 503 genérico. Loja e horários são lidos na mesma transação de leitura consistente.
+
+`js/loja-publica.js` conecta Sobre, Onde Comprar, links de navegação/delivery e rodapés das sete páginas. Usa consulta sem cookies, texto via textContent, links HTTP(S) sem credenciais e iframe restrito ao Google Maps. Campos vazios não reutilizam contatos antigos. Falha exibe aviso e oculta dados antigos; em file:// permanece a demonstração. A API continua exclusivamente de testes: isso não habilita produção.
+
+O login calcula `expira_em` com `DATE_ADD(NOW(3), INTERVAL 8 HOUR)`, no mesmo relógio usado para validar a sessão. Foi observada diferença de três horas entre Node e MariaDB neste computador; a causa do relógio não foi alterada. Não converter registros históricos automaticamente. Cookie mantém duração de oito horas.
+
+Validação real detalhada em `../VALIDACAO-LOJA-2026-10-23.md`. Scripts manuais, separados de npm test:
+
+```powershell
+node testes/estrutura-real.js
+node testes/rollback-loja-real.js --confirmar-banco-teste
+node testes/concorrencia-loja-real.js --confirmar-banco-teste
+```
+
+O primeiro só lê. O segundo grava dentro de transação revertida, com autenticação simulada somente no processo. O terceiro cria uma sessão temporária real, faz duas requisições simultâneas, restaura conteúdo pela API e testa logout; remove somente a própria sessão ao terminar. Esse terceiro ensaio incrementa versão e timestamps e pode avançar AUTO_INCREMENT. Ambos os ensaios de escrita exigem a conta restrita configurada e não devem rodar durante edição humana. Nunca executar no banco original. Não executam migrações.
+
+Os registros abaixo descrevem o estado anterior à validação local e suas limitações históricas; a atualização acima e o relatório prevalecem para Loja.
+
 ## Estado e limites
 
 Node/Express com login, sessão, logout, GET /api/produtos e GET/PUT /api/admin/loja. Os demais módulos de CRUD, upload, dashboard e endpoints públicos de conteúdo ainda não estão prontos. A aplicação continua restrita a NODE_ENV=test e DB_NAME=churros_em_casa_teste_017. Não conectar ao banco original churros_em_casa; não remover essas proteções para publicar.

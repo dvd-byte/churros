@@ -1,11 +1,11 @@
-/* Ativar SOMENTE após implementar e testar os endpoints documentados em admin/INTEGRACAO.md. */
+/* Consultas públicas; coleta de CPF e resgates continuam desativados. */
 "use strict";
 (() => {
-    const ATIVADO = false;
+    const ATIVADO = !window.conteudoCasa.demo;
     if (!ATIVADO) return;
+    document.querySelector('.moldeGaleria')?.remove();
     const base = new URL("../api/public/", document.currentScript.src);
     async function request(path, data) {
-        if (location.protocol !== "https:") throw new Error("A integração pública exige HTTPS.");
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 15000);
         try {
@@ -25,8 +25,8 @@
             if (estado) { estado.hidden = false; document.getElementById("tituloEstadoGaleria").textContent = "Fotos temporariamente indisponíveis"; document.getElementById("textoEstadoGaleria").textContent = "Não foi possível consultar a galeria. Tente novamente mais tarde."; }
         });
     }
-    if (window.promocoesCasa && location.protocol === "https:") window.promocoesCasa.conectar({
-        listar: async () => { const data = await request("cupons"); if (!Array.isArray(data?.items)) throw new Error("Resposta inválida"); return data.items; },
-        resgatar: data => request("resgates", data)
-    });
+    if (window.promocoesCasa) request('cupons').then(data=>{
+        if(!Array.isArray(data?.items))throw new Error('Resposta inválida');
+        window.promocoesCasa.exibir(data.items);
+    }).catch(()=>{const estado=document.getElementById('estadoCupons');estado.hidden=false;estado.textContent='Promoções temporariamente indisponíveis.';});
 })();

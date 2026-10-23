@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../css/paginas.css">
     <link rel="stylesheet" href="../css/sobre.css">
     <script src="../js/paginas.js" defer></script>
+    <script src="../js/conteudo-publico.js" defer></script>
+    <script src="../js/loja-publica.js" defer></script>
 </head>
 <body class="paginaInterna paginaInstitucional">
     <header><nav aria-label="Navegação principal">
@@ -31,8 +33,8 @@
                 <li><a href="galeria.html">Galeria</a></li>
             </ul>
             <div>
-                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)"><img src="../images/instagram.svg" alt="" id="insta"></a>
-                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood ↗</a>
+                <a class="linkInstagram" href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Churros em Casa (abre em outra aba)" data-loja-link="instagram"><img src="../images/instagram.svg" alt="" id="insta"></a>
+                <a class="direcional" href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood ↗</a>
             </div>
         </nav></header>
     <main id="conteudoPrincipal">
@@ -45,7 +47,7 @@
         </section>
         <section class="areaPagina" aria-labelledby="tituloHistoria">
             <div class="historiaCasa">
-                <div class="espacoReservado fotoHistoria" id="fotoHistoria">
+                <div class="espacoReservado fotoHistoria" id="fotoHistoria" data-loja-foto>
                     <!-- CONFIGURAR FOTO: substituir o conteúdo deste container por
                          <img src="../images/NOME-DO-ARQUIVO" alt="Descrição da foto confirmada">
                          Somente depois que a imagem real estiver disponível no projeto. -->
@@ -56,10 +58,12 @@
                 </div>
                 <article class="cardInstitucional textoHistoria">
                     <span class="subtitulo">TUDO COMEÇOU EM CASA</span>
-                    <h2 id="tituloHistoria">Churros em Casa</h2>
+                    <h2 id="tituloHistoria" data-loja="nome">Churros em Casa</h2>
+                    <div data-loja-historia>
                     <p>A Churros em Casa foi fundada em 2016. O começo foi em casa, com apenas uma panela, duas recheadoras e muita vontade de fazer as pessoas provarem algo diferente.</p>
                     <p>A ideia era apresentar um doce diferente e oferecer uma experiência nova. Na cidade, ainda não havia nada parecido com aquela proposta.</p>
                     <p>Sem contar com aplicativos de comida naquele início, a Churros em Casa nasceu dessa vontade de levar um novo sabor às pessoas. Foi assim, com uma estrutura simples e vontade de começar, que a nossa história ganhou forma.</p>
+                    </div>
                     <a class="linkPill" href="cardapio.html">Conheça nossos sabores ↗</a>
                 </article>
             </div>
@@ -85,31 +89,31 @@
                 <div class="linksRodape">
                     <h6>Peça já</h6>
                     <a href="cardapio.html">Explorar o cardápio <span>↗</span></a>
-                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer">Pedir no iFood <span>↗</span></a>
-<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer">Pedir no 99 Food <span>↗</span></a>
+                    <a href="https://www.ifood.com.br/delivery/carapicuiba-sp/churros-em-casa-parque-santa-teresa/2021b359-6ff6-45ac-83ca-c3119e7714bf?UTM_Medium=share" target="_blank" rel="noopener noreferrer" data-loja-link="ifood">Pedir no iFood <span>↗</span></a>
+<a href="https://oia.99app.com/dlp9/KAuIUf?share_media=" target="_blank" rel="noopener noreferrer" data-loja-link="food99">Pedir no 99 Food <span>↗</span></a>
                 </div>
                 <div class="contatoRodape">
                     <h6>Onde encontrar</h6>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Dalva+de+Oliveira+15+B+Parque+Santa+Teresa+Carapicuiba+SP" target="_blank" rel="noopener noreferrer" data-loja-link="endereco">
                         <span class="icone">⌖</span>
-                        <span>
+                        <span data-loja="endereco">
                             R. Dalva de Oliveira, 15 b - Parque Santa Teresa, Carapicuíba - SP, 06341-130
                         </span>
                     </a>
 
-                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)">
+                    <a href="https://wa.me/5511994089606?text=ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp: (11) 99408-9606 (abre em outra aba)" data-loja-link="whatsapp">
                         <span class="icone">↗</span>
-                        (11) 99408-9606
+                        <span data-loja="telefone">(11) 99408-9606</span>
                     </a>
 
-                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/churrosemcasaof/" target="_blank" rel="noopener noreferrer" data-loja-link="instagram">
                         <span class="icone">@</span>
-                        @churrosemcasaof
+                        <span data-loja="instagramNome">@churrosemcasaof</span>
                     </a>
                 </div>
             </div>
             <div class="final">
-                <span> © 2026 Churros em Casa. Todos os direitos reservados. </span>
+                <span data-loja-copyright> © 2026 Churros em Casa. Todos os direitos reservados. </span>
                 <span> Feito com carinho em Carapicuíba, SP.</span>
             </div>
         </footer>

@@ -1,5 +1,19 @@
 # Painel novo — contrato e limites da entrega
 
+## Contrato implementado após a continuidade local
+
+Os recursos CRUD e endpoints de dashboard/resgates/mídias descritos abaixo estão implementados em ambiente test. Proprietário, Origin e CSRF são verificados no servidor. DELETE de cupons arquiva e desabilita editar/ativar no painel; outros recursos respeitam dependências e versão. PATCH altera somente estado, sem regravar conteúdo/datas. A foto da Loja agora permite upload/troca por mídia registrada com descrição; continua sem remoção arbitrária.
+
+Dashboard inclui `cobertura:{inicio,parcial}`; coleta não iniciada retorna null nos indicadores de visita/clique e não vira zero fictício nos gráficos. Resgates administrativos são apenas leitura, com limite explícito de 500 registros e sem hashes/CPF/códigos. Upload retorna `{id,src}` e grava WebP com nome aleatório. `GET midias` lista as últimas 200 referências.
+
+Páginas públicas conectadas a catálogo, blog, galeria, Loja e condições dos cupons. Código público de resgate/CPF não foi habilitado. Confira `../RELATORIO-MODULOS-2026-10-23.md`; as referências posteriores a módulos não implementados são históricas.
+
+## Atualização: Loja integrada no ambiente local de testes
+
+`GET /api/public/loja` foi implementado e consumido nas páginas públicas por `js/loja-publica.js`. Sobre recebe nome/história/imagem; Onde Comprar recebe endereço/horários/mapa/contatos; todas as páginas recebem links e rodapé. Campos sem configuração ficam ocultos e falhas não reutilizam dados estáticos como atuais. O HTML de demonstração é preservado para file://.
+
+Validado em MariaDB real: consulta/edição pelo painel, rejeição de formulário antigo, duas requisições simultâneas (200/409), rollback controlado e logout por HTTP com sessão temporária real. Também foi observada uma edição do painel aparecer no site público sem enviar cookie administrativo na consulta. Produção, upload e demais módulos continuam fora dessa entrega. O estado anterior descrito abaixo não substitui o relatório atualizado em `../VALIDACAO-LOJA-2026-10-23.md`.
+
 ## Estado atual
 Atualizado em 23/10/2026. Frontend em admin/index.html. API implementada: login, sessão, logout, consulta pública de produtos e GET/PUT administrativos de Loja. A revisão atual passou em sete testes automatizados com banco simulado; não homologou MariaDB real nem navegador. Demais módulos de CRUD, upload e métricas continuam pendentes. A imagem de Loja permanece somente leitura até o serviço de mídia existir. Não publicar como painel operacional. A prévia não concede autenticação, não lê registros privados, não grava no navegador e não modifica o site. Campos SQL e migrações atuais: ../banco/INTEGRACAO-API.md; execução: ../api/README.md.
 

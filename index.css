@@ -1318,3 +1318,7 @@ nav .direcional{
 
 
  
+/* Os dados de Loja indisponíveis não devem reaparecer por regras de display. */
+[hidden] { display: none !important; }
+.avisoLoja { margin: 1rem auto; padding: 1rem; max-width: 1100px; text-align: center; }
+[data-loja="endereco"] { white-space: pre-line; overflow-wrap: anywhere; }
