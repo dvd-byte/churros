@@ -177,6 +177,8 @@ test('cliente administrativo preserva erros de validacao sem expor falhas intern
     await assert.rejects(context.window.apiAdmin.request('loja'),/O servidor não confirmou/);
     response={ok:false,status:409,json:async()=>{throw new Error('HTML');}};
     await assert.rejects(context.window.apiAdmin.request('loja'),/Este registro mudou/);
+    response={ok:false,status:401};
+    await assert.rejects(context.window.apiAdmin.request('login',{method:'POST',data:{email:'teste@example.invalid',senha:'credencial-ficticia'}}),/E-mail ou senha administrativos inválidos/);
 });
 
 test('Loja publica: campos permitidos, publicacao, links e falha sem detalhes', async()=>{

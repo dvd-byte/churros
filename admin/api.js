@@ -21,7 +21,12 @@ window.apiAdmin = (() => {
             response = await fetch(new URL(path, base), { method, headers, credentials: "same-origin", cache: "no-store", signal: controller.signal, body: data ? (multipart ? data : JSON.stringify(data)) : undefined });
         } catch { throw new Error("Não foi possível acessar o serviço. Em caso de gravação, confira a lista antes de tentar novamente."); }
         finally { clearTimeout(timeout); signal?.removeEventListener("abort", abort); }
-        if (response.status === 401) { csrf = ""; window.dispatchEvent(new Event("admin:expirou")); throw new Error("Sessão encerrada. Entre novamente."); }
+        if (response.status === 401) {
+            csrf = "";
+            if (path === 'login') throw new Error('E-mail ou senha administrativos inválidos.');
+            window.dispatchEvent(new Event("admin:expirou"));
+            throw new Error("Sessão encerrada. Entre novamente.");
+        }
         if (!response.ok) {
             let mensagem;
             if ([400,404,409,422].includes(response.status)) {
