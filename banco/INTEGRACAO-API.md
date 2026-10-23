@@ -1,6 +1,8 @@
-# Banco para integração — atualizado em 20/10/2026
+# Banco para integração — atualizado em 23/10/2026
 
-O colaborador entregou API inicial e autenticação local; CRUD e integração pública ainda faltam. O relatório de 20/10 informa testes em `churros_em_casa_teste_017` e preservação do banco original `churros_em_casa`. Esses testes reais foram relatados pelo colaborador, não reproduzidos nesta revisão. Não executar migrações/testes no banco original. Confirmar quem assume os endpoints restantes. Versão exata do MariaDB ainda precisa ser registrada.
+API atual: autenticação, consulta pública de produtos e GET/PUT administrativos de Loja. Demais módulos de CRUD e integração pública de Loja ainda faltam. Em 23/10, sete testes automatizados passaram com banco simulado; nenhum SQL foi executado em MariaDB nesta etapa. O relatório de 20/10 informa testes em `churros_em_casa_teste_017` e preservação do banco original `churros_em_casa`. Esses testes reais foram relatados pelo colaborador, não reproduzidos nesta revisão. Não executar migrações/testes no banco original. Confirmar quem assume os endpoints restantes. Versão exata do MariaDB ainda precisa ser registrada.
+
+Não houve alteração de estrutura ou nova migração em 23/10. Loja usa `loja_unica=1`, ID real, versão e transação com horários. Deve existir uma loja inicial com conteúdo aprovado antes de usar o editor. A mídia existente é resolvida por `midias.caminho_arquivo` e preservada; upload/substituição continuam pendentes. Próximo requisito: configurar o ambiente local de testes e homologar a gravação real antes da integração pública.
 
 ## Aplicação
 

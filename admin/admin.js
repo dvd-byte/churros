@@ -181,6 +181,11 @@
             input.id="campo-"+f.key;input.name=f.key;input.required=f.required;
             if(f.type==="checkbox")input.checked=!!item[f.key];else if(f.type==="days")for(const opt of input.options)opt.selected=(item[f.key]||[]).includes(opt.value);else input.value=f.type==="paragraphs"?(item[f.key]||[]).join("\n\n"):item[f.key]??(f.type==="select"?f.options[0]:"");box.append(input);
             if(f.type==="image"){const upload=make("input");upload.type="file";upload.accept="image/jpeg,image/png,image/webp";upload.setAttribute("aria-label","Enviar arquivo: "+f.label);upload.disabled=preview;upload.addEventListener("change",async()=>{const file=upload.files[0];if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>8*1024*1024){$("erroEditor").textContent="Use JPG, PNG ou WebP de até 8 MB.";return;}$("salvar").disabled=true;upload.disabled=true;try{const form=new FormData();form.append("arquivo",file);const media=await window.apiAdmin.request("midias",{method:"POST",data:form});if(typeof media?.src!=="string"||!safeImage(media.src))throw new Error("Referência de imagem inválida.");input.value=media.src;$("erroEditor").textContent="Upload confirmado. Salve o registro para associar a foto.";}catch(error){$("erroEditor").textContent=error.message;}finally{upload.disabled=false;$("salvar").disabled=!permitted(resource);}});box.append(upload,make("small","Imagens são armazenadas no serviço de mídia, não no navegador."));}
+            if (resource === "loja" && f.type === "image") {
+                input.readOnly = true;
+                box.querySelector('input[type="file"]').disabled = true;
+                box.querySelector("small").textContent = "Imagem atual preservada. Substituição e upload dependem do serviço de mídia ainda não implementado.";
+            }
             $("campos").append(box);
         }
         $("editor").showModal();

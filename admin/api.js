@@ -22,7 +22,16 @@ window.apiAdmin = (() => {
         } catch { throw new Error("Não foi possível acessar o serviço. Em caso de gravação, confira a lista antes de tentar novamente."); }
         finally { clearTimeout(timeout); signal?.removeEventListener("abort", abort); }
         if (response.status === 401) { csrf = ""; window.dispatchEvent(new Event("admin:expirou")); throw new Error("Sessão encerrada. Entre novamente."); }
-        if (!response.ok) throw new Error(({403:"Ação não autorizada.",404:"Serviço ainda não disponível.",409:"Este registro mudou ou ainda está em uso. Atualize a lista.",413:"Arquivo muito grande.",422:"Revise os campos informados.",429:"Muitas tentativas. Aguarde antes de tentar novamente."})[response.status] || "O servidor não confirmou a operação.");
+        if (!response.ok) {
+            let mensagem;
+            if ([400,404,409,422].includes(response.status)) {
+                try {
+                    const result = await response.json();
+                    if (typeof result?.mensagem === "string" && result.mensagem.trim() && result.mensagem.length <= 500) mensagem = result.mensagem;
+                } catch { /* Resposta sem JSON: usar mensagem local. */ }
+            }
+            throw new Error(mensagem || ({400:"Revise os campos informados.",403:"Ação não autorizada.",404:"Serviço ainda não disponível.",409:"Este registro mudou ou ainda está em uso. Atualize a lista.",413:"Arquivo muito grande.",422:"Revise os campos informados.",429:"Muitas tentativas. Aguarde antes de tentar novamente."})[response.status] || "O servidor não confirmou a operação.");
+        }
         let result;
         try { result = await response.json(); } catch { throw new Error("Resposta inválida do serviço."); }
         if (result?.ok !== true) throw new Error("O serviço não confirmou a operação.");

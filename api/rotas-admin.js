@@ -323,11 +323,7 @@ if (tokenValido(tokenAnterior)) {
     }
 });
           }  catch (erro) {
-    console.error(
-        'Erro no login:',
-        erro.name,
-        erro.message
-    );
+    console.error('Falha interna no login administrativo.');
         if (conexao && transacaoIniciada) {
             try {
                 await conexao.rollback();
@@ -476,7 +472,7 @@ res.clearCookie(COOKIE, opcoesCookie);
     }
 });
 
-router.get('/loja', exigirAutenticacao, async (req, res) => {
+router.get('/loja', exigirAutenticacao, exigirPermissao('loja'), async (req, res) => {
     let conexao;
 
     try {
@@ -499,7 +495,8 @@ router.get('/loja', exigirAutenticacao, async (req, res) => {
         if (!loja) {
             return res.status(404).json({
                 ok: false,
-                data: null
+                data: null,
+                mensagem: 'A loja ainda não foi cadastrada no banco. Solicite a configuração inicial.'
             });
         }
         let historia = [];
@@ -514,10 +511,16 @@ try {
         valor.every(item => typeof item === 'string')
     ) {
         historia = valor;
+    } else {
+        throw new Error('Formato inválido');
     }
 } catch {
-    console.error('História da loja contém JSON inválido');
+    return res.status(409).json({ok: false, data: null,
+        mensagem: 'A história cadastrada está em formato inválido. Corrija os dados antes de editar a loja.'});
 }
+
+        const midias = loja.imagem_sobre_id == null ? [] : await conexao.query(
+            'SELECT caminho_arquivo FROM midias WHERE id = ?', [loja.imagem_sobre_id]);
 
         const horarios = await conexao.query(
             `SELECT
@@ -559,21 +562,26 @@ const horariosIguais = intervalos.every(
 if (!horariosIguais) {
     return res.status(409).json({
         ok: false,
-        data: null
+        data: null,
+        mensagem: 'Os horários cadastrados variam por dia. Este formulário aceita apenas um intervalo comum; os dados foram preservados.'
     });
 }
 
         return res.json({
     ok: true,
     data: {
-        ...loja,
+        id: String(loja.id),
+        nome: loja.nome,
+        endereco: loja.endereco ?? '',
+        telefone: loja.telefone ?? '',
+        versao: Number(loja.versao),
         whatsapp: loja.whatsapp_url ?? '',
         instagram: loja.instagram_url ?? '',
         ifood: loja.link_ifood ?? '',
         food99: loja.link_99food ?? '',
         mapa: loja.mapa_url ?? '',
         altSobre: loja.alt_sobre ?? '',
-        imagemSobre: '',
+        imagemSobre: midias[0]?.caminho_arquivo ?? '',
        historia,
 dias: diasAbertos,
 abertura: intervalos[0]?.abertura ?? '',
@@ -783,12 +791,12 @@ const imagemSobre = req.body?.imagemSobre;
 
 if (
     imagemSobre != null &&
-    imagemSobre !== ''
+    (typeof imagemSobre !== 'string' || imagemSobre.length > 500)
 ) {
     return res.status(400).json({
         ok: false,
         data: null,
-        mensagem: 'O gerenciamento de imagens ainda não está disponível.'
+        mensagem: 'A referência da imagem é inválida.'
     });
 }
 let conexao;
@@ -798,7 +806,7 @@ try {
     await conexao.beginTransaction();
 
 const lojas = await conexao.query(
-    `SELECT id, versao
+    `SELECT id, versao, imagem_sobre_id
      FROM loja
      WHERE loja_unica = 1
      FOR UPDATE`
@@ -824,6 +832,17 @@ if (Number(lojaAtual.versao) !== versao) {
         data: null,
         mensagem: 'A loja foi modificada. Atualize a página antes de salvar.'
     });
+}
+
+// Não substituir nem remover uma imagem enquanto o serviço de mídia não existir.
+if (imagemSobre != null) {
+    const midias = lojaAtual.imagem_sobre_id == null ? [] : await conexao.query(
+        'SELECT caminho_arquivo FROM midias WHERE id = ?', [lojaAtual.imagem_sobre_id]);
+    if (imagemSobre !== (midias[0]?.caminho_arquivo ?? '')) {
+        await conexao.rollback();
+        return res.status(400).json({ok: false, data: null,
+            mensagem: 'A imagem atual deve ser preservada. O gerenciamento de imagens ainda não está disponível.'});
+    }
 }
 
 const dadosLoja = {
@@ -920,7 +939,9 @@ for (const horario of horariosParaSalvar) {
 await conexao.commit();
 } catch (erro) {
     if (conexao) {
-        await conexao.rollback();
+        try { await conexao.rollback(); } catch {
+            // A conexão pode ter sido interrompida; não expor detalhes internos.
+        }
     }
 
     console.error('Erro ao preparar edição da loja:', erro.code || 'desconhecido');
@@ -938,7 +959,8 @@ await conexao.commit();
        return res.status(200).json({
     ok: true,
     data: {
-        mensagem: 'Loja atualizada com sucesso.'
+        mensagem: 'Loja atualizada com sucesso.',
+        versao: versao + 1
     }
 });
     }

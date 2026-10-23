@@ -139,11 +139,7 @@ app.use('/api', (req, res) => {
 });
 app.use((erro, req, res, next) => {
     if (res.headersSent) return next(erro);
-        console.error(
-    'Erro global da API:',
-    erro.name,
-    erro.message
-);
+    console.error('Falha no processamento da requisição da API.');
     const status = erro.type === 'entity.parse.failed' ? 400
         : erro.type === 'entity.too.large' ? 413
         : erro.status === 404 ? 404 : 500;

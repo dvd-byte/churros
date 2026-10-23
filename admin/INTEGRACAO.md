@@ -1,7 +1,7 @@
 # Painel novo — contrato e limites da entrega
 
 ## Estado atual
-Atualizado em 20/10/2026. Frontend em admin/index.html. API Node/Express inicial entregue: login, sessão, logout e consulta pública de produtos. O colaborador relatou testes com MariaDB em banco separado. Nesta revisão executamos HTTP com banco simulado. CRUD administrativo, upload e métricas ainda não implementados. Não publicar como painel operacional. A prévia não concede autenticação, não lê registros privados, não grava no navegador e não modifica o site. Campos SQL e migrações atuais: ../banco/INTEGRACAO-API.md; execução: ../api/README.md.
+Atualizado em 23/10/2026. Frontend em admin/index.html. API implementada: login, sessão, logout, consulta pública de produtos e GET/PUT administrativos de Loja. A revisão atual passou em sete testes automatizados com banco simulado; não homologou MariaDB real nem navegador. Demais módulos de CRUD, upload e métricas continuam pendentes. A imagem de Loja permanece somente leitura até o serviço de mídia existir. Não publicar como painel operacional. A prévia não concede autenticação, não lê registros privados, não grava no navegador e não modifica o site. Campos SQL e migrações atuais: ../banco/INTEGRACAO-API.md; execução: ../api/README.md.
 
 Não se copiou a autenticação do painel antigo. Rotas hash são navegação de interface, não barreiras de segurança. Servidor deve proteger TODOS os endpoints /api/admin, independentemente do que a interface exibe. HTML/CSS/JS do painel não contêm segredos e podem ser públicos; dados e operações não podem.
 
@@ -25,7 +25,7 @@ Recursos: blog, galeria, categorias, grupos, produtos, cupons.
 - PUT recurso/:id → registro atualizado.
 - PATCH recurso/:id → alteração de status.
 - DELETE recurso/:id → confirmação após exclusão.
-- GET loja → objeto único; PUT loja → objeto atualizado.
+- GET loja → objeto único com id, versao e campos do formulário; PUT loja → confirmação {mensagem,versao}, seguida de nova consulta pelo painel. Ambos exigem proprietário; PUT também exige CSRF. Sem loja inicial, GET retorna 404 orientando o provisionamento. História inválida ou horários distintos por dia retornam 409 para evitar perda de informação. A imagem atual não pode ser substituída ou removida por este endpoint.
 - Toda mutação recebe versao quando disponível. Validar concorrência e retornar 409 se desatualizado. Não atualizar conteúdo com base apenas no ID enviado.
 - Nomes e tipos dos campos estão centralizados em schemas, no admin.js. IDs são opacos. Preços decimais exatos no banco. Ordem é inteiro não negativo. Limite vazio significa null; zero não significa ilimitado. Produtos referenciam grupos; grupos referenciam categorias. Exclusões com dependências retornam 409.
 - Blog: paragrafos é array de strings. Loja: historia é array; dias contém nomes em português. Datas dos formulários datetime-local são horário de São Paulo, SEM offset; backend converte para UTC e devolve os campos de edição no mesmo formato local. Não misturar esse formato com a resposta pública de validade, que exige ISO com offset.

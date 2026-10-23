@@ -7,8 +7,11 @@ const path = require('node:path');
 const vm = require('node:vm');
 const argon2 = require('argon2');
 let servidor, base, senhaHash, sessao, consultas = [], falharProdutos = false;
+let perfil = 'proprietario', loja, horarios = [], snapshot, falharHorario = false;
 const conexao = {
-    async beginTransaction() {}, async commit() {}, async rollback() {}, release() {},
+    async beginTransaction() { snapshot = structuredClone({loja, horarios}); },
+    async commit() { snapshot = undefined; },
+    async rollback() { if (snapshot) { ({loja, horarios} = snapshot); snapshot = undefined; } }, release() {},
     async query(sql, params = []) {
         consultas.push(sql);
         if (sql.includes('FROM produtos AS p')) {
@@ -27,13 +30,28 @@ const conexao = {
         }
         if (sql.includes('FROM sessoes_admin s')) {
             return sessao && !sessao.revogada && sessao.token === params[0]
-                ? [{id:1,nome:'Teste',ativo:1,perfil:'proprietario',csrf_hash:sessao.csrf}] : [];
+                ? [{id:1,nome:'Teste',ativo:1,perfil,csrf_hash:sessao.csrf}] : [];
         }
         if (sql.includes('UPDATE sessoes_admin')) {
             if (sessao && !sessao.revogada && sessao.token === params[0] && (!params[1] || params[1] === sessao.csrf)) {
                 sessao.revogada=true; return {affectedRows:1};
             }
             return {affectedRows:0};
+        }
+        if (sql.includes('FROM loja')) return loja ? [structuredClone(loja)] : [];
+        if (sql.includes('FROM midias')) return params[0] === 7 ? [{caminho_arquivo:'/images/sobre.png'}] : [];
+        if (sql.includes('FROM horarios_semanais')) { assert.equal(params[0],42); return structuredClone(horarios); }
+        if (sql.includes('UPDATE loja')) {
+            assert.equal(params[10],42); assert.equal(params[11],loja.versao);
+            const keys=['nome','endereco','telefone','historia_json','instagram_url','whatsapp_url','link_ifood','link_99food','mapa_url','alt_sobre'];
+            keys.forEach((key,i)=>{loja[key]=params[i];});loja.versao++; return {affectedRows:1};
+        }
+        if (sql.includes('INSERT INTO horarios_semanais')) {
+            assert.equal(params[0],42);
+            if (falharHorario && params[1] === 3) throw Object.assign(new Error('falha simulada'),{code:'TESTE_HORARIO'});
+            horarios=horarios.filter(h=>h.dia_semana!==params[1]);
+            horarios.push({dia_semana:params[1],hora_abertura:params[2],hora_fechamento:params[3],fechado:params[4]});
+            return {affectedRows:1};
         }
         throw new Error('SQL inesperado no double');
     }
@@ -106,4 +124,46 @@ test('configuracao absoluta, UTC e bloqueios antes do pool',()=>{
     assert.throws(()=>load({...env,NODE_ENV:'production'}),/bloqueada/);
     assert.throws(()=>load({...env,DB_NAME:'churros_em_casa'}),/não autorizado/);
     assert.throws(()=>load({...env,DB_PORT:'abc'}),/DB_PORT/);
+});
+
+test('Loja: permissoes, validacao, preservacao de imagem, versao e rollback simulado',async()=>{
+    let res=await fetch(base+'/api/admin/loja');assert.equal(res.status,401);
+    res=await fetch(base+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:base},body:JSON.stringify({email:'teste@example.invalid',senha:'senha-somente-para-teste'})});
+    assert.equal(res.status,200);
+    const headers={Cookie:res.headers.get('set-cookie').split(';')[0],Origin:base,'Content-Type':'application/json'};
+    headers['X-CSRF-Token']=(await res.json()).data.csrfToken;
+    const get=()=>fetch(base+'/api/admin/loja',{headers});
+    const put=data=>fetch(base+'/api/admin/loja',{method:'PUT',headers,body:JSON.stringify(data)});
+    perfil='outro'; res=await get();assert.equal(res.status,403);res=await put({});assert.equal(res.status,403);perfil='proprietario';
+    res=await get();assert.equal(res.status,404);assert.match((await res.json()).mensagem,/configuração inicial/);
+    loja={id:42,nome:'Loja teste',endereco:'Endereço teste',versao:1,historia_json:'["História teste"]',imagem_sobre_id:7,alt_sobre:'Foto teste'};
+    horarios=[{dia_semana:1,hora_abertura:'10:00:00',hora_fechamento:'22:40:00',fechado:0}];
+    res=await get();assert.equal(res.status,200);const data=(await res.json()).data;
+    assert.equal(data.id,'42');assert.equal(data.imagemSobre,'/images/sobre.png');assert.equal(data.historia_json,undefined);
+    const token=headers['X-CSRF-Token'];delete headers['X-CSRF-Token'];res=await put(data);assert.equal(res.status,403);headers['X-CSRF-Token']=token;
+    for (const invalid of [{nome:''},{versao:0},{dias:['segunda','segunda']},{fechamento:'09:00'},{instagram:'javascript:alert(1)'},{imagemSobre:''}]) {
+        res=await put({...data,...invalid});assert.equal(res.status,400,JSON.stringify(invalid));assert.equal(typeof(await res.json()).mensagem,'string');
+    }
+    res=await put({...data,nome:'Nome atualizado'});assert.equal(res.status,200);assert.equal((await res.json()).data.versao,2);
+    assert.equal(loja.imagem_sobre_id,7);assert.equal(horarios.length,7);
+    res=await get();assert.equal((await res.json()).data.nome,'Nome atualizado');
+    res=await put(data);assert.equal(res.status,409);assert.equal(loja.versao,2);
+    falharHorario=true;
+    try {res=await put({...data,versao:2,nome:'Não gravar'});assert.equal(res.status,500);assert.equal(loja.nome,'Nome atualizado');assert.equal(loja.versao,2);}
+    finally {falharHorario=false;}
+    loja.historia_json='inválido';res=await get();assert.equal(res.status,409);loja.historia_json='["História"]';
+    horarios[1]={dia_semana:2,hora_abertura:'11:00:00',hora_fechamento:'22:40:00',fechado:0};res=await get();assert.equal(res.status,409);
+});
+
+test('cliente administrativo preserva erros de validacao sem expor falhas internas',async()=>{
+    const source=fs.readFileSync(path.join(__dirname,'../../admin/api.js'),'utf8');
+    let response;
+    const context={window:{},document:{currentScript:{src:'http://localhost/admin/api.js'}},location:{hostname:'localhost',protocol:'http:'},URL,FormData,AbortController,setTimeout,clearTimeout,fetch:async()=>response};
+    vm.runInNewContext(source,context);
+    response={ok:false,status:400,json:async()=>({mensagem:'O nome é obrigatório.'})};
+    await assert.rejects(context.window.apiAdmin.request('loja'),/O nome é obrigatório/);
+    response={ok:false,status:500,json:async()=>({mensagem:'segredo interno'})};
+    await assert.rejects(context.window.apiAdmin.request('loja'),/O servidor não confirmou/);
+    response={ok:false,status:409,json:async()=>{throw new Error('HTML');}};
+    await assert.rejects(context.window.apiAdmin.request('loja'),/Este registro mudou/);
 });
